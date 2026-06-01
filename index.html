@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAC Realty | Bienes Raíces en Panamá · Licencia PN-0931</title>
+<meta name="description" content="JAC Realty - Especialistas en bienes raíces en Panamá. Compra, venta y alquiler de propiedades. Miembro de ACOBIR y MLS Panamá. Licencia PN-0931.">
+<meta property="og:title" content="JAC Realty | Bienes Raíces en Panamá">
+<meta property="og:description" content="Tu agencia inmobiliaria de confianza en Panamá. Licencia PN-0931 · ACOBIR · MLS Panamá">
+<meta property="og:image" content="https://jacrealtypa.com/og-image.jpg">
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red:#C41E3A; --red-dark:#a01830; --red-light:rgba(196,30,58,0.08);
+  --black:#111; --dark:#1a1a1a; --taupe:#9B8E85; --taupe-light:#E8E3DF;
+  --gray:#F4F2F0; --white:#FAFAFA; --text:#2C2C2C;
+  --serif:'Cormorant Garamond',serif; --sans:'Inter',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:1000;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,250,250,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(155,142,133,0.12);transition:all .3s}
+nav.scrolled{padding:14px 60px;box-shadow:0 2px 30px rgba(0,0,0,0.06)}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-brand .jac{font-family:var(--serif);font-size:30px;font-weight:300;letter-spacing:3px;color:var(--black);line-height:1}
+.nav-brand .sep{width:1px;height:26px;background:var(--taupe-light)}
+.nav-brand .realty{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:600}
+.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;color:var(--text);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;position:relative;padding-bottom:2px;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--red);transition:width .3s}
+.nav-links a:hover{color:var(--red)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:var(--red)!important;color:white!important;padding:10px 22px!important;letter-spacing:1.5px!important}
+.nav-cta:hover{background:var(--red-dark)!important;color:white!important}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
+.hamburger span{width:24px;height:1.5px;background:var(--text);display:block;transition:all .3s}
+
+/* HERO */
+.hero{height:100vh;min-height:680px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 40px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1800&q=80') center/cover no-repeat;animation:heroZoom 20s ease-in-out infinite alternate}
+@keyframes heroZoom{0%{transform:scale(1)}100%{transform:scale(1.06)}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,10,10,.82) 0%,rgba(17,12,10,.65) 50%,rgba(10,10,10,.88) 100%)}
+.hero-content{position:relative;z-index:2;max-width:940px}
+.hero-eyebrow{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:30px}
+.hero-eyebrow span{display:block;width:40px;height:1px;background:var(--red)}
+.hero-eyebrow p{color:var(--taupe);font-size:10px;letter-spacing:3.5px;text-transform:uppercase}
+.hero h1{font-family:var(--serif);font-size:clamp(50px,7.5vw,100px);font-weight:300;color:white;line-height:1.04;letter-spacing:-1px;margin-bottom:26px}
+.hero h1 em{font-style:italic;color:rgba(232,227,223,.85)}
+.hero p.subtitle{font-size:15px;color:rgba(255,255,255,.6);letter-spacing:.5px;line-height:1.8;max-width:540px;margin:0 auto 50px}
+.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--red);color:white;padding:16px 42px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:all .3s;border:1px solid var(--red);display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--sans)}
+.btn-primary:hover{background:transparent;color:var(--red)}
+.btn-outline-hero{background:transparent;color:white;padding:16px 42px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:1px solid rgba(255,255,255,.35);transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-outline-hero:hover{border-color:white;background:rgba(255,255,255,.06)}
+.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.35);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;transition:color .3s}
+.hero-scroll:hover{color:rgba(255,255,255,.6)}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.35));animation:sa 2.2s ease-in-out infinite}
+@keyframes sa{0%,100%{opacity:.4}50%{opacity:.9}}
+
+/* SEARCH */
+.search-wrap{background:white;padding:48px 60px;box-shadow:0 4px 50px rgba(0,0,0,.06)}
+.search-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:24px;display:flex;align-items:center;gap:16px}
+.search-label::after{content:'';flex:1;height:1px;background:var(--taupe-light)}
+.stabs{display:flex;margin-bottom:28px}
+.stab{padding:10px 28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:1px solid var(--taupe-light);background:transparent;color:var(--taupe);transition:all .3s;font-family:var(--sans);font-weight:500;margin-right:-1px}
+.stab.active{background:var(--black);color:white;border-color:var(--black);z-index:1}
+.sform{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);font-weight:500}
+.fg select,.fg input{padding:12px 14px;border:1px solid var(--taupe-light);background:var(--gray);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .3s;border-radius:0;appearance:none;-webkit-appearance:none}
+.fg select:focus,.fg input:focus{border-color:var(--taupe);background:white}
+.btn-search{background:var(--red);color:white;border:none;padding:12px 32px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:var(--sans);transition:background .3s;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.btn-search:hover{background:var(--red-dark)}
+
+/* STATS */
+.stats{background:var(--black);padding:60px;display:grid;grid-template-columns:repeat(4,1fr)}
+.stat{text-align:center;padding:20px;border-right:1px solid rgba(255,255,255,.07)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:var(--serif);font-size:52px;font-weight:300;color:white;line-height:1;margin-bottom:8px}
+.stat-n span{color:var(--red)}
+.stat-l{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe)}
+
+/* SECTIONS */
+section{padding:100px 60px}
+.sh{text-align:center;margin-bottom:68px}
+.sey{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:500;margin-bottom:14px;display:block}
+.st{font-family:var(--serif);font-size:clamp(36px,4vw,56px);font-weight:300;color:var(--black);line-height:1.12}
+.ss{font-size:14px;color:var(--taupe);line-height:1.85;max-width:540px;margin:14px auto 0}
+.div{width:40px;height:1px;background:var(--red);margin:22px auto 0}
+
+/* PROPERTIES */
+.props{background:var(--gray)}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.pcard{background:white;overflow:hidden;cursor:pointer;transition:transform .4s,box-shadow .4s;position:relative}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.12);z-index:2}
+.pimg{height:280px;overflow:hidden;position:relative;background:var(--taupe-light);display:flex;align-items:center;justify-content:center}
+.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.pcard:hover .pimg img{transform:scale(1.06)}
+.pph{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--taupe);opacity:.45}
+.pph svg{width:52px;height:52px}
+.pph p{font-size:10px;letter-spacing:2px;text-transform:uppercase}
+.pbadge{position:absolute;top:20px;left:20px;background:var(--red);color:white;padding:5px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.pbadge.alq{background:var(--dark)}
+.pinfo{padding:28px 28px 32px}
+.ptyp{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.ptit{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--black);margin-bottom:6px;line-height:1.3}
+.ploc{font-size:12px;color:var(--taupe);margin-bottom:20px;display:flex;align-items:center;gap:6px}
+.pspecs{display:flex;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--taupe-light)}
+.spec{font-size:11px;color:var(--taupe);display:flex;align-items:center;gap:5px}
+.spec strong{color:var(--text);font-weight:500}
+.pfoot{display:flex;align-items:center;justify-content:space-between}
+.pprice{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--black)}
+.pprice small{font-size:13px;color:var(--taupe);font-family:var(--sans);font-weight:300}
+.pbtn{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:gap .3s}
+.pbtn:hover{gap:10px}
+.padd{background:white;border:2px dashed var(--taupe-light);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;min-height:430px;transition:all .3s;text-decoration:none;color:var(--taupe)}
+.padd:hover{border-color:var(--red);color:var(--red);background:rgba(196,30,58,.02)}
+.props-footer{text-align:center;margin-top:56px}
+
+/* SERVICES */
+.svgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.svcard{padding:40px 34px;border:1px solid var(--taupe-light);transition:all .4s;position:relative;overflow:hidden}
+.svcard::before{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:var(--red);transition:height .4s}
+.svcard:hover{border-color:transparent;box-shadow:0 16px 50px rgba(0,0,0,.08);transform:translateY(-4px)}
+.svcard:hover::before{height:100%}
+.svi{width:48px;height:48px;margin-bottom:26px;color:var(--red)}
+.svn{font-family:var(--serif);font-size:54px;font-weight:300;color:var(--taupe-light);position:absolute;top:24px;right:28px;line-height:1}
+.svt{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--black);margin-bottom:12px}
+.svd{font-size:13px;color:var(--taupe);line-height:1.95}
+
+/* ABOUT */
+.about{background:var(--black);display:grid;grid-template-columns:1fr 1fr;min-height:580px;padding:0}
+.about-img{background:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80') center/cover;min-height:480px;position:relative}
+.about-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,var(--black) 100%)}
+.about-body{padding:80px 70px 80px 56px;display:flex;flex-direction:column;justify-content:center}
+.about-body .sey{text-align:left}
+.about-body .st{text-align:left;color:white}
+.about-body .div{margin-left:0}
+.atext{font-size:14px;color:rgba(255,255,255,.58);line-height:1.95;margin:28px 0 20px}
+.abadges{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.abadge{padding:8px 18px;border:1px solid rgba(155,142,133,.35);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe)}
+.abadge.lic{background:rgba(196,30,58,.1);border-color:rgba(196,30,58,.3);color:var(--red)}
+
+/* BLOG */
+.blog{background:var(--gray)}
+.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.bcard{background:white;overflow:hidden;transition:box-shadow .3s}
+.bcard:hover{box-shadow:0 8px 40px rgba(0,0,0,.08)}
+.bimg{height:210px;background:var(--taupe-light);overflow:hidden}
+.bimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.bcard:hover .bimg img{transform:scale(1.04)}
+.bbody{padding:26px 26px 30px}
+.bcat{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:9px}
+.btit{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--black);line-height:1.35;margin-bottom:12px}
+.bexc{font-size:13px;color:var(--taupe);line-height:1.82;max-height:0;overflow:hidden;transition:max-height .5s ease,opacity .4s;opacity:0;margin-bottom:0}
+.bcard.open .bexc{max-height:400px;opacity:1;margin-bottom:14px}
+.bmeta{display:flex;align-items:center;justify-content:space-between}
+.bdate{font-size:11px;color:var(--taupe)}
+.btog{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);cursor:pointer;background:none;border:none;font-family:var(--sans);font-weight:500;display:flex;align-items:center;gap:5px;transition:gap .3s}
+.btog:hover{gap:8px}
+.btog .arr{transition:transform .35s;display:inline-block}
+.bcard.open .btog .arr{transform:rotate(90deg)}
+
+/* CONTACT */
+.contact-wrap{background:white}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+.cinfo h3{font-family:var(--serif);font-size:38px;font-weight:300;color:var(--black);line-height:1.2;margin-bottom:16px}
+.cinfo>p{font-size:14px;color:var(--taupe);line-height:1.9;margin-bottom:36px}
+.cdetails{display:flex;flex-direction:column;gap:18px}
+.citem{display:flex;align-items:flex-start;gap:14px}
+.cicon{width:40px;height:40px;background:var(--gray);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cicon svg{width:17px;height:17px;color:var(--red)}
+.citem label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:3px}
+.citem a,.citem p{font-size:14px;color:var(--text);text-decoration:none;line-height:1.55;transition:color .3s}
+.citem a:hover{color:var(--red)}
+.cform{display:flex;flex-direction:column;gap:14px}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cform .fg label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);font-weight:500;margin-bottom:4px;display:block}
+.cform input,.cform select,.cform textarea{padding:13px 14px;border:1px solid var(--taupe-light);background:var(--gray);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .3s;border-radius:0;width:100%;resize:none;-webkit-appearance:none}
+.cform input:focus,.cform select:focus,.cform textarea:focus{border-color:var(--taupe);background:white}
+.cform textarea{height:110px}
+.fsub{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:white;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:background .3s;width:100%}
+.wa-btn:hover{background:#1da851}
+.form-status{padding:12px 16px;font-size:13px;display:none;margin-top:4px}
+.form-status.ok{background:rgba(34,197,94,.1);color:#15803d;border-left:3px solid #22c55e}
+.form-status.err{background:var(--red-light);color:var(--red);border-left:3px solid var(--red)}
+
+/* WA FLOAT */
+.waf{position:fixed;bottom:32px;right:32px;z-index:999;background:#25D366;color:white;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(37,211,102,.4);text-decoration:none;transition:all .3s}
+.waf:hover{background:#1da851;transform:scale(1.1)}
+.waf svg{width:30px;height:30px}
+.waf::before{content:'¿Necesita ayuda?';position:absolute;right:74px;background:var(--dark);color:white;padding:8px 14px;font-size:12px;white-space:nowrap;opacity:0;transform:translateX(8px);transition:all .3s;pointer-events:none}
+.waf:hover::before{opacity:1;transform:translateX(0)}
+@keyframes wpulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.4)}50%{box-shadow:0 8px 48px rgba(37,211,102,.65),0 0 0 12px rgba(37,211,102,.08)}}
+.waf{animation:wpulse 3s ease-in-out infinite}
+
+/* FOOTER */
+footer{background:#0d0d0d;padding:70px 60px 0}
+.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:56px}
+.fbrand p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.85;max-width:280px;margin-top:16px}
+.fsoc{display:flex;gap:10px;margin-top:22px}
+.fsl{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);text-decoration:none;transition:all .3s}
+.fsl:hover{border-color:var(--red);color:var(--red)}
+.fsl svg{width:15px;height:15px}
+.fcol h4{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:22px}
+.fcol ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.fcol ul li a{font-size:13px;color:rgba(255,255,255,.42);text-decoration:none;transition:color .3s}
+.fcol ul li a:hover{color:white}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding:26px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.fbot p{font-size:11px;color:rgba(255,255,255,.22);line-height:1.7}
+.fleg{display:flex;gap:22px}
+.fleg a{font-size:11px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s}
+.fleg a:hover{color:rgba(255,255,255,.6)}
+
+/* TOAST */
+.toast{position:fixed;bottom:110px;right:32px;z-index:9999;background:var(--black);color:white;padding:16px 22px;font-size:13px;border-left:3px solid var(--red);box-shadow:0 8px 32px rgba(0,0,0,.2);transform:translateX(130%);transition:transform .4s;max-width:320px;line-height:1.6}
+.toast.show{transform:translateX(0)}
+
+/* LOADING OVERLAY */
+.loverlay{position:fixed;inset:0;background:rgba(17,17,17,.94);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;pointer-events:none;transition:opacity .3s}
+.loverlay.show{opacity:1;pointer-events:all}
+.spinner{width:44px;height:44px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loverlay p{color:rgba(255,255,255,.7);font-size:13px;letter-spacing:1px}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:16px 28px}
+  nav.scrolled{padding:12px 28px}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;top:72px;background:rgba(250,250,250,.98);backdrop-filter:blur(20px);align-items:center;justify-content:center;gap:36px;z-index:999}
+  .nav-links.open a{font-size:14px}
+  .hamburger{display:flex}
+  section{padding:70px 28px}
+  .search-wrap{padding:36px 28px}
+  .sform{grid-template-columns:1fr 1fr}
+  .btn-search{grid-column:1/-1}
+  .pgrid{grid-template-columns:1fr}
+  .svgrid{grid-template-columns:1fr;gap:18px}
+  .about{grid-template-columns:1fr}
+  .about-img{min-height:280px}
+  .about-img::after{background:linear-gradient(to bottom,transparent 55%,var(--black) 100%)}
+  .about-body{padding:56px 28px}
+  .stats{padding:56px 28px;grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .bgrid{grid-template-columns:1fr}
+  .cgrid{grid-template-columns:1fr;gap:48px}
+  .fgrid{grid-template-columns:1fr 1fr;gap:36px}
+  .hero-buttons{flex-direction:column;align-items:center}
+}
+@media(max-width:600px){
+  section{padding:60px 18px}
+  nav{padding:14px 18px}
+  .stats{padding:48px 18px}
+  .search-wrap{padding:30px 18px}
+  .sform{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr;gap:28px}
+  .frow,.fsub{grid-template-columns:1fr}
+  .fbot{flex-direction:column;text-align:center}
+  .fleg{justify-content:center;flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<div class="loverlay" id="loverlay"><div class="spinner"></div><p>Enviando mensaje…</p></div>
+<div class="toast" id="toast"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-brand">
+    <span class="jac">JAC</span>
+    <span class="sep"></span>
+    <span class="realty">REALTY</span>
+  </a>
+  <button class="hamburger" id="hbg" aria-label="Menú"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navl">
+    <li><a href="#propiedades" onclick="closeNav()">Propiedades</a></li>
+    <li><a href="#servicios" onclick="closeNav()">Servicios</a></li>
+    <li><a href="#nosotros" onclick="closeNav()">Nosotros</a></li>
+    <li><a href="#blog" onclick="closeNav()">Blog</a></li>
+    <li><a href="#contacto" onclick="closeNav()">Contacto</a></li>
+    <li><a href="crm.html" class="nav-cta" onclick="closeNav()">Portal Agentes</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span></span><p>Bienes Raíces en Panamá · Licencia PN-0931</p><span></span></div>
+    <h1>Encuentra tu <em>propiedad</em><br>ideal en Panamá</h1>
+    <p class="subtitle">Especialistas en propiedades residenciales y comerciales. Miembros de ACOBIR, MLS Panamá y regulados por la Junta Técnica de Bienes Raíces de la República de Panamá.</p>
+    <div class="hero-buttons">
+      <a href="#propiedades" class="btn-primary">Ver Propiedades</a>
+      <a href="#contacto" class="btn-outline-hero">Hablar con un Asesor</a>
+    </div>
+  </div>
+  <a href="#buscar" class="hero-scroll"><div class="scroll-line"></div><span>Explorar</span></a>
+</section>
+
+<!-- SEARCH -->
+<div class="search-wrap" id="buscar">
+  <div class="search-label">Buscar Propiedades</div>
+  <div class="stabs">
+    <button class="stab active" onclick="setTab(this)">Comprar</button>
+    <button class="stab" onclick="setTab(this)">Alquilar</button>
+    <button class="stab" onclick="setTab(this)">Comercial</button>
+    <button class="stab" onclick="setTab(this)">Pre-venta</button>
+  </div>
+  <div class="sform" id="searchForm">
+    <div class="fg"><label>Tipo de Propiedad</label>
+      <select id="sTipo"><option>Todos los tipos</option><option>Apartamento</option><option>Casa</option><option>Penthouse</option><option>Local Comercial</option><option>Oficina</option><option>Terreno</option></select></div>
+    <div class="fg"><label>Ubicación</label>
+      <select id="sZona"><option>Todas las áreas</option><option>Casco Antiguo</option><option>Costa del Este</option><option>Punta Pacífica</option><option>San Francisco</option><option>Marbella</option><option>Bella Vista</option><option>El Cangrejo</option><option>Obarrio</option><option>Coronado</option><option>Chiriquí</option></select></div>
+    <div class="fg"><label>Presupuesto Máximo</label>
+      <select id="sPrecio"><option>Sin límite</option><option>$100,000</option><option>$250,000</option><option>$500,000</option><option>$750,000</option><option>$1,000,000</option><option>$2,000,000+</option></select></div>
+    <div class="fg"><label>Habitaciones</label>
+      <select id="sHab"><option>Cualquiera</option><option>1 habitación</option><option>2 habitaciones</option><option>3 habitaciones</option><option>4+ habitaciones</option></select></div>
+    <button class="btn-search" onclick="doSearch()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Buscar
+    </button>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><div class="stat-n" data-target="150">0<span>+</span></div><div class="stat-l">Propiedades Listadas</div></div>
+  <div class="stat"><div class="stat-n" data-target="98">0<span>%</span></div><div class="stat-l">Clientes Satisfechos</div></div>
+  <div class="stat"><div class="stat-n" data-target="12">0<span>+</span></div><div class="stat-l">Años de Experiencia</div></div>
+  <div class="stat"><div class="stat-n" data-target="85">0<span>M</span></div><div class="stat-l">En Transacciones ($)</div></div>
+</div>
+
+<!-- PROPERTIES -->
+<section class="props" id="propiedades">
+  <div class="sh">
+    <span class="sey">Portafolio Exclusivo</span>
+    <h2 class="st">Propiedades Destacadas</h2>
+    <p class="ss">Selección curada de las mejores propiedades en las zonas más cotizadas de Panamá.</p>
+    <div class="div"></div>
+  </div>
+  <div class="pgrid" id="propGrid">
+    <!-- Property 1 -->
+    <div class="pcard" onclick="openPropertyModal('Residencia de Lujo con Vista al Mar','Apartamento · Punta Pacífica','3 Hab · 3 Baños · 185m²','$485,000 USD','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')">
+      <div class="pimg"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Residencia de Lujo" loading="lazy"><div class="pbadge">En Venta</div></div>
+      <div class="pinfo">
+        <div class="ptyp">Apartamento · Punta Pacífica</div>
+        <h3 class="ptit">Residencia de Lujo con Vista al Mar</h3>
+        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Punta Pacífica, Ciudad de Panamá</div>
+        <div class="pspecs"><div class="spec"><strong>3</strong> Hab.</div><div class="spec"><strong>3</strong> Baños</div><div class="spec"><strong>185 m²</strong></div><div class="spec"><strong>2</strong> Estac.</div></div>
+        <div class="pfoot"><div class="pprice">$485,000 <small>USD</small></div><button class="pbtn">Ver más →</button></div>
+      </div>
+    </div>
+    <!-- Property 2 -->
+    <div class="pcard" onclick="openPropertyModal('Penthouse Colonial con Terraza Privada','Penthouse · Casco Antiguo','4 Hab · 4 Baños · 320m²','$3,800 / mes','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')">
+      <div class="pimg"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Penthouse Colonial" loading="lazy"><div class="pbadge alq">Alquiler</div></div>
+      <div class="pinfo">
+        <div class="ptyp">Penthouse · Casco Antiguo</div>
+        <h3 class="ptit">Penthouse Colonial con Terraza Privada</h3>
+        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Casco Antiguo, Panamá</div>
+        <div class="pspecs"><div class="spec"><strong>4</strong> Hab.</div><div class="spec"><strong>4</strong> Baños</div><div class="spec"><strong>320 m²</strong></div><div class="spec"><strong>2</strong> Estac.</div></div>
+        <div class="pfoot"><div class="pprice">$3,800 <small>/ mes</small></div><button class="pbtn">Ver más →</button></div>
+      </div>
+    </div>
+    <!-- Property 3 -->
+    <div class="pcard" onclick="openPropertyModal('Casa de Campo con Piscina y Jardín','Casa · Costa del Este','5 Hab · 5 Baños · 480m²','$820,000 USD','https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&q=80')">
+      <div class="pimg"><img src="https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80" alt="Casa de Campo" loading="lazy"><div class="pbadge">En Venta</div></div>
+      <div class="pinfo">
+        <div class="ptyp">Casa · Costa del Este</div>
+        <h3 class="ptit">Casa de Campo con Piscina y Jardín</h3>
+        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Costa del Este, Panamá</div>
+        <div class="pspecs"><div class="spec"><strong>5</strong> Hab.</div><div class="spec"><strong>5</strong> Baños</div><div class="spec"><strong>480 m²</strong></div><div class="spec"><strong>3</strong> Estac.</div></div>
+        <div class="pfoot"><div class="pprice">$820,000 <small>USD</small></div><button class="pbtn">Ver más →</button></div>
+      </div>
+    </div>
+    <!-- Add more -->
+    <a href="crm.html" class="padd">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500">Agregar Propiedad</p>
+      <p style="font-size:10px;opacity:.45;letter-spacing:1px">Acceder al CRM</p>
+    </a>
+  </div>
+  <div class="props-footer"><a href="#contacto" class="btn-primary">Consultar Todas las Propiedades</a></div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicios">
+  <div class="sh"><span class="sey">Lo que hacemos</span><h2 class="st">Nuestros Servicios</h2><p class="ss">Acompañamiento integral en cada etapa de su proceso inmobiliario, con el más alto estándar profesional.</p><div class="div"></div></div>
+  <div class="svgrid">
+    <div class="svcard"><div class="svn">01</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg><h3 class="svt">Compra y Venta</h3><p class="svd">Asesoramiento experto en la compra y venta de propiedades residenciales y comerciales. Valuaciones precisas y estrategias de negociación para obtener el mejor precio del mercado.</p></div>
+    <div class="svcard"><div class="svn">02</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><h3 class="svt">Alquileres y Gestión</h3><p class="svd">Gestionamos su propiedad en renta: selección de inquilinos, contratos, mantenimiento y cobro. Maximice la rentabilidad sin preocupaciones.</p></div>
+    <div class="svcard"><div class="svn">03</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><h3 class="svt">Inversión Inmobiliaria</h3><p class="svd">Identificamos las mejores oportunidades de inversión en el mercado panameño. Análisis de ROI, due diligence y asesoría en financiamiento con entidades locales.</p></div>
+    <div class="svcard"><div class="svn">04</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg><h3 class="svt">Proyectos en Preventa</h3><p class="svd">Acceso exclusivo a los mejores proyectos en pre-construcción con precios de lanzamiento y condiciones especiales que maximizan su capital invertido.</p></div>
+    <div class="svcard"><div class="svn">05</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><h3 class="svt">Relocalización Corporativa</h3><p class="svd">Servicio especializado para ejecutivos y empresas internacionales que llegan a Panamá. Búsqueda personalizada, orientación legal y apoyo completo en el proceso.</p></div>
+    <div class="svcard"><div class="svn">06</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg><h3 class="svt">Avalúos y Consultoría</h3><p class="svd">Valuaciones certificadas para trámites bancarios, testamentarios o comerciales. Estudios de mercado y consultoría estratégica para desarrolladores.</p></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<div class="about" id="nosotros">
+  <div class="about-img"></div>
+  <div class="about-body">
+    <span class="sey">Quiénes Somos</span>
+    <h2 class="st">Expertos en el<br>mercado panameño</h2>
+    <div class="div" style="margin-left:0"></div>
+    <p class="atext">JAC Realty es una agencia inmobiliaria panameña fundada con la misión de ofrecer un servicio de excelencia en la compra, venta y arrendamiento de propiedades. Nuestro equipo combina conocimiento local profundo con estándares internacionales.</p>
+    <p class="atext" style="margin-top:-10px">Somos miembros activos de ACOBIR y de la MLS Panamá, con acceso a la base de datos más completa del país. Regulados por la Junta Técnica de Bienes Raíces de la República de Panamá.</p>
+    <div class="abadges">
+      <div class="abadge lic">Lic. PN-0931</div>
+      <div class="abadge">ACOBIR</div>
+      <div class="abadge">MLS Panamá</div>
+      <div class="abadge">Junta Técnica</div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG -->
+<section class="blog" id="blog">
+  <div class="sh"><span class="sey">Conocimiento e Información</span><h2 class="st">Blog Inmobiliario</h2><p class="ss">Artículos relevantes sobre el mercado inmobiliario de Panamá, tendencias, legislación y consejos de inversión.</p><div class="div"></div></div>
+  <div class="bgrid">
+    <div class="bcard" id="b1"><div class="bimg"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Mercado 2025" loading="lazy"></div><div class="bbody"><div class="bcat">Mercado · Tendencias</div><h3 class="btit">El Mercado Inmobiliario en Panamá 2025: Perspectivas y Oportunidades</h3><p class="bexc">El mercado inmobiliario panameño continúa mostrando solidez y resiliencia. Con un crecimiento del PIB estimado en 4.5% para 2025, la demanda de propiedades residenciales de mediana y alta gama mantiene su tendencia positiva. Zonas como Costa del Este, San Francisco y el Casco Antiguo lideran la apreciación de valor, con incrementos de hasta el 8% anual.<br><br>La llegada de empresas multinacionales y el fortalecimiento del hub logístico del Canal siguen impulsando la demanda de oficinas y propiedades corporativas. Para inversores, los segmentos de alquiler a corto plazo en Casco Antiguo y Amador han mostrado rentabilidades del 7% al 12% anual, superando ampliamente los depósitos bancarios tradicionales.</p><div class="bmeta"><span class="bdate">15 Mayo 2025</span><button class="btog" onclick="tog('b1',this)">Leer más <span class="arr">→</span></button></div></div></div>
+    <div class="bcard" id="b2"><div class="bimg"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80" alt="Guía extranjeros" loading="lazy"></div><div class="bbody"><div class="bcat">Guías · Legal</div><h3 class="btit">Guía Completa para Comprar una Propiedad en Panamá como Extranjero</h3><p class="bexc">Panamá es uno de los destinos más atractivos del mundo para la inversión inmobiliaria internacional. Los extranjeros tienen los mismos derechos que los ciudadanos panameños para adquirir bienes raíces. El proceso incluye promesa de compraventa (5-10% depósito), due diligence legal y escritura ante notario.<br><br>Costos típicos de cierre: 2% impuesto de transferencia, 0.1-0.3% honorarios notariales, $300-600 registro público y 1-2% honorarios de abogado. Los extranjeros pueden obtener residencia permanente invirtiendo desde $300,000 USD. Siempre trabaje con un agente certificado (Junta Técnica) y abogado independiente.</p><div class="bmeta"><span class="bdate">28 Abril 2025</span><button class="btog" onclick="tog('b2',this)">Leer más <span class="arr">→</span></button></div></div></div>
+    <div class="bcard" id="b3"><div class="bimg"><img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&q=80" alt="ROI Inversión" loading="lazy"></div><div class="bbody"><div class="bcat">Inversión · Finanzas</div><h3 class="btit">¿Cómo Calcular el Retorno de tu Inversión Inmobiliaria en Panamá?</h3><p class="bexc">El ROI inmobiliario en Panamá debe contemplar varios factores. Apartamentos de 1-2 habitaciones en áreas premium generan rentas de $800 a $2,500/mes, con rendimientos brutos del 5% al 9%. Para el ROI neto, descuente: impuesto sobre la renta del alquiler (15-25%), mantenimiento (1-2% anual), honorarios de administración (8-12%) y seguros.<br><br>Zonas de alto rendimiento: Casco Antiguo (alquiler vacacional, 8-12% bruto), Vía España (corporativo, 7-9%), Santa Ana (clase media, 8-10%). La apreciación histórica es del 3-7% anual en zonas consolidadas.</p><div class="bmeta"><span class="bdate">10 Abril 2025</span><button class="btog" onclick="tog('b3',this)">Leer más <span class="arr">→</span></button></div></div></div>
+    <div class="bcard" id="b4"><div class="bimg"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Zonas Panamá" loading="lazy"></div><div class="bbody"><div class="bcat">Zonas · Lifestyle</div><h3 class="btit">Las 5 Mejores Zonas para Vivir en Ciudad de Panamá en 2025</h3><p class="bexc">1) CASCO ANTIGUO: Patrimonio Mundial UNESCO. Ideal para cultura y comunidad cosmopolita. Desde $180,000. 2) COSTA DEL ESTE: Corredor financiero moderno, malls y colegios internacionales. Desde $250,000. 3) PUNTA PACÍFICA: Mayor precio/m², rascacielos frente al mar. 4) SAN FRANCISCO: Equilibrio perfecto entre ubicación y precio accesible, alta demanda. 5) CORONADO / LAS CUMBRES: Opciones suburbanas con más espacio y calidad de vida para familias.</p><div class="bmeta"><span class="bdate">2 Abril 2025</span><button class="btog" onclick="tog('b4',this)">Leer más <span class="arr">→</span></button></div></div></div>
+    <div class="bcard" id="b5"><div class="bimg"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" alt="Ley bienes raices" loading="lazy"></div><div class="bbody"><div class="bcat">Legal · Regulación</div><h3 class="btit">Todo sobre la Ley de Bienes Raíces en Panamá — Ley 84 de 2013</h3><p class="bexc">La actividad de corretaje está regulada por la Ley 84 de 2013. Todos los agentes deben estar inscritos en la Junta Técnica de Bienes Raíces y renovar su licencia cada 3 años. La comisión estándar varía entre 3% y 5% del valor de la transacción. En arrendamientos, equivale típicamente a un mes de alquiler.<br><br>Los contratos deben registrarse en el Registro Público. El Impuesto de Transferencia es del 2%. Las propiedades nuevas disfrutan de exoneración del impuesto de inmueble por 20 años bajo la Ley de Vivienda.</p><div class="bmeta"><span class="bdate">20 Marzo 2025</span><button class="btog" onclick="tog('b5',this)">Leer más <span class="arr">→</span></button></div></div></div>
+    <div class="bcard" id="b6"><div class="bimg"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Hipotecas Panama" loading="lazy"></div><div class="bbody"><div class="bcat">Financiamiento · Hipotecas</div><h3 class="btit">Opciones de Financiamiento Hipotecario en Panamá: Bancos y Tasas 2025</h3><p class="bexc">Tasas actuales: 5.5% a 7.5% anual en dólares. Principales prestamistas: Banco General (desde 5.75%), BAC Credomatic, Banistmo, Global Bank y Multibank. Requisitos: enganche del 10-20% para vivienda principal (30% para inversión), ingresos demostrables 3-4x la cuota, historial crediticio limpio.<br><br>Plazos de 15 a 30 años. Extranjeros pueden acceder con documentación migratoria en regla (enganche mayor, 20-30%). Líneas especiales FHIS para compradores primerizos disponibles.</p><div class="bmeta"><span class="bdate">5 Marzo 2025</span><button class="btog" onclick="tog('b6',this)">Leer más <span class="arr">→</span></button></div></div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-wrap" id="contacto">
+  <div class="sh"><span class="sey">Estamos para Ayudarle</span><h2 class="st">Contáctenos</h2><div class="div"></div></div>
+  <div class="cgrid">
+    <div class="cinfo">
+      <h3>Hablemos sobre su próxima propiedad</h3>
+      <p>Nuestro equipo está disponible para orientarle en cada paso de su proceso inmobiliario. Sin compromiso, con la discreción y profesionalismo que usted merece.</p>
+      <div class="cdetails">
+        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg></div><div><label>Teléfono Principal (WhatsApp)</label><a href="tel:+50764627763">+507 6462-7763</a></div></div>
+        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg></div><div><label>Teléfono Secundario / Admin</label><a href="tel:+50762926010">+507 6292-6010</a></div></div>
+        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><label>Correo Electrónico</label><a href="mailto:jcastro@jacrealtypa.com">jcastro@jacrealtypa.com</a></div></div>
+        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><label>Ubicación</label><p>Ciudad de Panamá, República de Panamá</p></div></div>
+        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><label>Horario</label><p>Lun–Vie: 8:00am–6:00pm · Sáb: 9:00am–2:00pm</p></div></div>
+      </div>
+    </div>
+    <div>
+      <form class="cform" id="contactForm" novalidate>
+        <div class="frow">
+          <div class="fg"><label>Nombre Completo *</label><input type="text" id="fNombre" placeholder="Su nombre" required></div>
+          <div class="fg"><label>Teléfono / WhatsApp *</label><input type="tel" id="fTelefono" placeholder="+507 0000-0000" required></div>
+        </div>
+        <div class="fg"><label>Correo Electrónico *</label><input type="email" id="fEmail" placeholder="su@correo.com" required></div>
+        <div class="frow">
+          <div class="fg"><label>Tipo de Consulta</label>
+            <select id="fTipo"><option>Comprar propiedad</option><option>Vender propiedad</option><option>Alquilar propiedad</option><option>Inversión</option><option>Avalúo</option><option>Otra consulta</option></select></div>
+          <div class="fg"><label>Presupuesto</label>
+            <select id="fPresupuesto"><option>Menos de $100K</option><option>$100K–$300K</option><option>$300K–$600K</option><option>$600K–$1M</option><option>Más de $1M</option></select></div>
+        </div>
+        <div class="fg"><label>Mensaje</label><textarea id="fMensaje" placeholder="Cuéntenos sobre la propiedad que busca, zona de interés, características importantes…"></textarea></div>
+        <div id="formStatus" class="form-status"></div>
+        <div class="fsub">
+          <button type="submit" class="btn-primary" id="submitBtn" style="justify-content:center;padding:14px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>
+            Enviar Consulta
+          </button>
+          <a href="https://wa.me/50764627763?text=Hola%20JAC%20Realty%2C%20quisiera%20informaci%C3%B3n%20sobre%20propiedades%20en%20Panam%C3%A1" target="_blank" rel="noopener" class="wa-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp Directo
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fgrid">
+    <div class="fbrand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-family:var(--serif);font-size:36px;font-weight:300;letter-spacing:4px;color:white;line-height:1">JAC</span>
+        <div style="width:1px;height:32px;background:rgba(155,142,133,.3)"></div>
+        <div><p style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:600">REALTY</p><p style="font-size:8px;letter-spacing:1.5px;color:rgba(155,142,133,.5);text-transform:uppercase">Panamá</p></div>
+      </div>
+      <div style="width:100%;height:1px;background:rgba(255,255,255,.07);margin-bottom:14px"></div>
+      <p>Especialistas en bienes raíces residenciales y comerciales en Panamá. Compromiso, transparencia y resultados superiores para nuestros clientes.</p>
+      <div class="fsoc">
+        <a href="https://instagram.com/jacrealtypa" target="_blank" rel="noopener" class="fsl" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+        <a href="https://facebook.com/jacrealtypa" target="_blank" rel="noopener" class="fsl" title="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="https://wa.me/50764627763" target="_blank" rel="noopener" class="fsl" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        <a href="mailto:jcastro@jacrealtypa.com" class="fsl" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+    </div>
+    <div class="fcol"><h4>Propiedades</h4><ul><li><a href="#propiedades">Apartamentos</a></li><li><a href="#propiedades">Casas</a></li><li><a href="#propiedades">Penthouses</a></li><li><a href="#propiedades">Comerciales</a></li><li><a href="#propiedades">Terrenos</a></li><li><a href="#propiedades">Pre-venta</a></li></ul></div>
+    <div class="fcol"><h4>Servicios</h4><ul><li><a href="#servicios">Compra y Venta</a></li><li><a href="#servicios">Alquiler</a></li><li><a href="#servicios">Gestión de Activos</a></li><li><a href="#servicios">Inversiones</a></li><li><a href="#servicios">Avalúos</a></li><li><a href="#servicios">Relocalización</a></li></ul></div>
+    <div class="fcol"><h4>Contacto</h4><ul><li><a href="tel:+50764627763">+507 6462-7763</a></li><li><a href="tel:+50762926010">+507 6292-6010</a></li><li><a href="mailto:jcastro@jacrealtypa.com">jcastro@jacrealtypa.com</a></li><li><a href="mailto:jelyanrealestate@gmail.com">jelyanrealestate@gmail.com</a></li><li><a href="https://wa.me/50764627763" target="_blank">WhatsApp Directo</a></li><li><a href="crm.html">Portal Agentes</a></li></ul></div>
+  </div>
+  <div class="fbot">
+    <div><p>© 2025 JAC Realty · jacrealtypa.com · Todos los derechos reservados.</p><p>Licencia PN-0931 · Miembro de ACOBIR · MLS Panamá · Regulado por la Junta Técnica de Bienes Raíces de la República de Panamá</p></div>
+    <div class="fleg"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Aviso Legal</a><a href="crm.html">Admin</a></div>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/50764627763?text=Hola%20JAC%20Realty%2C%20quisiera%20informaci%C3%B3n%20sobre%20propiedades%20en%20Panam%C3%A1" target="_blank" rel="noopener" class="waf" title="WhatsApp JAC Realty">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- PROPERTY MODAL -->
+<div id="propModal" style="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)" onclick="if(event.target===this)closePropModal()">
+  <div style="background:white;max-width:780px;width:95%;max-height:90vh;overflow-y:auto;position:relative">
+    <button onclick="closePropModal()" style="position:absolute;top:16px;right:16px;z-index:1;background:rgba(0,0,0,.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
+    <img id="pmImg" style="width:100%;height:320px;object-fit:cover" alt="">
+    <div style="padding:32px">
+      <p id="pmType" style="font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px"></p>
+      <h2 id="pmTitle" style="font-family:var(--serif);font-size:32px;font-weight:300;color:var(--black);margin-bottom:10px"></h2>
+      <p id="pmSpecs" style="font-size:13px;color:var(--taupe);margin-bottom:20px"></p>
+      <p id="pmPrice" style="font-family:var(--serif);font-size:36px;font-weight:300;color:var(--black);margin-bottom:24px"></p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <a id="pmWA" href="#" target="_blank" class="wa-btn" style="flex:1;min-width:200px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Consultar por WhatsApp
+        </a>
+        <a href="#contacto" onclick="closePropModal()" class="btn-primary" style="flex:1;min-width:200px;justify-content:center">Solicitar Información →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG EmailJS ───
+// INSTRUCCIÓN: Regístrese en emailjs.com con jcastro@jacrealtypa.com
+// Service ID: service_jacrealtypa | Template ID: template_contacto
+// Reemplace 'YOUR_PUBLIC_KEY' con su clave pública de EmailJS
+const EMAILJS_KEY = 'YOUR_PUBLIC_KEY';
+const EMAILJS_SERVICE = 'service_jacrealtypa';
+const EMAILJS_TEMPLATE = 'template_contacto';
+const WA_PRIMARY = '50764627763';
+const AGENT_EMAIL = 'jcastro@jacrealtypa.com';
+
+// Init EmailJS
+(function(){
+  try { emailjs.init({publicKey: EMAILJS_KEY}); } catch(e){}
+})();
+
+// ─── NAV ───
+const navEl = document.getElementById('nav');
+window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', scrollY > 60));
+const hbg = document.getElementById('hbg');
+const navl = document.getElementById('navl');
+hbg.addEventListener('click', () => {
+  const open = navl.classList.toggle('open');
+  const s = hbg.querySelectorAll('span');
+  if (open) { s[0].style.transform='rotate(45deg) translate(5px,5px)'; s[1].style.opacity='0'; s[2].style.transform='rotate(-45deg) translate(5px,-5px)'; }
+  else { s.forEach(x=>{x.style.transform='';x.style.opacity='';}); }
+});
+function closeNav(){ navl.classList.remove('open'); hbg.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';}); }
+
+// ─── SMOOTH SCROLL ───
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
+  });
+});
+
+// ─── SEARCH TABS ───
+function setTab(el){ document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
+
+// ─── SEARCH ───
+function doSearch(){
+  const tipo = document.getElementById('sTipo').value;
+  const zona = document.getElementById('sZona').value;
+  const precio = document.getElementById('sPrecio').value;
+  const hab = document.getElementById('sHab').value;
+  const msg = `Hola JAC Realty 👋 Estoy buscando:\n- Tipo: ${tipo}\n- Zona: ${zona}\n- Presupuesto: ${precio}\n- Habitaciones: ${hab}\n\n¿Pueden ayudarme?`;
+  window.open(`https://wa.me/${WA_PRIMARY}?text=${encodeURIComponent(msg)}`,'_blank');
+}
+
+// ─── COUNTER ANIMATION ───
+const counter = (el, target, suffix) => {
+  let current = 0; const step = Math.ceil(target / 60);
+  const t = setInterval(() => {
+    current = Math.min(current + step, target);
+    el.innerHTML = `${current}<span>${suffix}</span>`;
+    if(current >= target) clearInterval(t);
+  }, 25);
+};
+const statsObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      const els = document.querySelectorAll('.stat-n[data-target]');
+      els.forEach(el => {
+        const target = +el.dataset.target;
+        const suffix = el.querySelector('span').textContent;
+        counter(el, target, suffix);
+        el.removeAttribute('data-target');
+      });
+      statsObs.disconnect();
+    }
+  });
+}, {threshold:.3});
+const statsEl = document.querySelector('.stats');
+if(statsEl) statsObs.observe(statsEl);
+
+// ─── PROPERTY MODAL ───
+function openPropertyModal(title, type, specs, price, img){
+  document.getElementById('pmTitle').textContent = title;
+  document.getElementById('pmType').textContent = type;
+  document.getElementById('pmSpecs').textContent = specs;
+  document.getElementById('pmPrice').textContent = price;
+  document.getElementById('pmImg').src = img;
+  document.getElementById('pmImg').alt = title;
+  const waMsg = encodeURIComponent(`Hola JAC Realty 🏠 Estoy interesado/a en la propiedad: *${title}* (${price}). ¿Podría darme más información y agendar una visita?`);
+  document.getElementById('pmWA').href = `https://wa.me/${WA_PRIMARY}?text=${waMsg}`;
+  document.getElementById('propModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closePropModal(){
+  document.getElementById('propModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// ─── BLOG TOGGLE ───
+function tog(id, btn){
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+  const open = card.classList.contains('open');
+  btn.innerHTML = (open?'Leer menos':'Leer más') + ' <span class="arr">→</span>';
+  if(open) btn.querySelector('.arr').style.transform = 'rotate(90deg)';
+}
+
+// ─── CONTACT FORM ───
+document.getElementById('contactForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  const nombre = document.getElementById('fNombre').value.trim();
+  const telefono = document.getElementById('fTelefono').value.trim();
+  const email = document.getElementById('fEmail').value.trim();
+  const tipo = document.getElementById('fTipo').value;
+  const presupuesto = document.getElementById('fPresupuesto').value;
+  const mensaje = document.getElementById('fMensaje').value.trim();
+  const status = document.getElementById('formStatus');
+  const btn = document.getElementById('submitBtn');
+
+  // Validation
+  if(!nombre || !telefono || !email){ showStatus('Por favor complete los campos obligatorios (*)','err'); return; }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showStatus('Por favor ingrese un correo electrónico válido.','err'); return; }
+
+  // Loading
+  btn.disabled = true;
+  btn.innerHTML = '<div style="width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite"></div> Enviando…';
+
+  const params = {
+    from_name: nombre,
+    from_email: email,
+    phone: telefono,
+    tipo_consulta: tipo,
+    presupuesto,
+    message: mensaje || 'Sin mensaje adicional.',
+    to_email: AGENT_EMAIL,
+    reply_to: email,
+    date: new Date().toLocaleDateString('es-PA', {weekday:'long',year:'numeric',month:'long',day:'numeric'}),
+  };
+
+  let sent = false;
+
+  // Try EmailJS
+  if(EMAILJS_KEY !== 'YOUR_PUBLIC_KEY'){
+    try {
+      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params);
+      sent = true;
+    } catch(err){ console.warn('EmailJS error:', err); }
+  }
+
+  // Always send WhatsApp notification to agent
+  const waAgent = encodeURIComponent(
+    `🏠 *NUEVA CONSULTA - JAC Realty*\n\n👤 *Nombre:* ${nombre}\n📱 *Teléfono:* ${telefono}\n📧 *Email:* ${email}\n🔍 *Consulta:* ${tipo}\n💰 *Presupuesto:* ${presupuesto}\n💬 *Mensaje:* ${mensaje||'Sin mensaje'}\n\n_Enviado desde jacrealtypa.com_`
+  );
+
+  // Also save to CRM localStorage
+  saveToCRM({nombre, telefono, email, tipo, presupuesto, mensaje, fecha: new Date().toISOString(), fuente:'Sitio Web'});
+
+  // Auto WhatsApp to client
+  const waClient = encodeURIComponent(
+    `Hola ${nombre} 👋 Gracias por contactar a *JAC Realty*. Su consulta ha sido recibida y le responderemos dentro de las próximas 2 horas hábiles.\n\nSi prefiere atención inmediata, puede responder a este mensaje. ¡Estamos para ayudarle! 🏠\n\n_JAC Realty · Lic. PN-0931_`
+  );
+
+  // Notify agent via WhatsApp
+  window.open(`https://wa.me/${WA_PRIMARY}?text=${waAgent}`, '_blank');
+
+  btn.disabled = false;
+  btn.innerHTML = '✓ Mensaje Enviado';
+  btn.style.background = '#1a1a1a';
+  showStatus(`¡Gracias ${nombre}! Su consulta fue recibida. Le responderemos pronto.${!sent?' (Consejo: configure EmailJS para recibir el correo también.)':''}`, 'ok');
+  showToastMsg(`✅ Consulta recibida de ${nombre}. WhatsApp de notificación enviado.`);
+  this.reset();
+  setTimeout(() => { btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg> Enviar Consulta'; btn.style.background=''; }, 4000);
+});
+
+function showStatus(msg, type){
+  const s = document.getElementById('formStatus');
+  s.textContent = msg; s.className = 'form-status ' + type; s.style.display = 'block';
+  setTimeout(()=>{ s.style.display='none'; }, 6000);
+}
+
+// ─── SAVE LEAD TO CRM localStorage ───
+function saveToCRM(lead){
+  try {
+    const leads = JSON.parse(localStorage.getItem('jac_leads') || '[]');
+    lead.id = Date.now();
+    lead.status = 'lead_nuevo';
+    leads.unshift(lead);
+    localStorage.setItem('jac_leads', JSON.stringify(leads));
+  } catch(e){}
+}
+
+// ─── TOAST ───
+function showToastMsg(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(window._tt);
+  window._tt = setTimeout(() => t.classList.remove('show'), 5500);
+}
+
+// ─── FADE IN OBSERVER ───
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; io.unobserve(e.target); }
+  });
+}, {threshold:.08});
+document.querySelectorAll('.pcard,.svcard,.bcard,.stat,.citem').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(20px)';
+  el.style.transition='opacity .6s ease, transform .6s ease';
+  io.observe(el);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JAC Realty CRM Pro</title>
+<style>
+:root{--red:#C41E3A;--black:#111;--taupe:#9B8E85;--taupe-light:#E8E3DF;--bg:#F7F5F3;--white:#fff;--sidebar:220px;--success:#22c55e;--warning:#f59e0b;--info:#3b82f6;--purple:#8b5cf6}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--black);display:flex;min-height:100vh}
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+#login-screen{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;z-index:9999}
+.login-box{background:var(--white);padding:48px 40px;width:380px;border-radius:4px}
+.login-logo{text-align:center;margin-bottom:32px}
+.login-logo span{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;letter-spacing:3px;color:var(--red)}
+.login-logo small{display:block;font-size:10px;letter-spacing:2px;color:var(--taupe);margin-top:4px}
+.login-box input{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:3px;font-size:14px;margin-bottom:12px;outline:none;transition:.2s}
+.login-box input:focus{border-color:var(--red)}
+.login-btn{width:100%;padding:13px;background:var(--red);color:#fff;border:none;border-radius:3px;font-size:14px;font-weight:600;letter-spacing:1px;cursor:pointer;transition:.2s}
+.login-btn:hover{background:#a01830}
+.login-err{color:var(--red);font-size:12px;text-align:center;margin-top:8px;display:none}
+#sidebar{width:var(--sidebar);background:var(--black);color:#fff;display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100}
+.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid #222}
+.sidebar-logo span{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:700;letter-spacing:2px;color:var(--red)}
+.sidebar-logo small{display:block;font-size:9px;letter-spacing:1.5px;color:#666;margin-top:2px}
+.sidebar-user{padding:14px 20px;border-bottom:1px solid #222;display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:#fff}
+.user-info small{display:block;color:#666;font-size:10px}
+.user-info strong{font-size:12px;color:#ccc}
+nav{flex:1;overflow-y:auto;padding:8px 0}
+nav a{display:flex;align-items:center;gap:10px;padding:11px 20px;color:#999;text-decoration:none;font-size:13px;transition:.2s;cursor:pointer;border-left:3px solid transparent}
+nav a:hover,nav a.active{color:#fff;background:#1a1a1a;border-left-color:var(--red)}
+nav a svg{width:16px;height:16px;flex-shrink:0}
+.nav-section{padding:16px 20px 6px;font-size:9px;letter-spacing:2px;color:#444;text-transform:uppercase}
+.sidebar-bottom{padding:14px 20px;border-top:1px solid #222}
+.logout-btn{background:none;border:none;color:#666;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s}
+.logout-btn:hover{color:#fff}
+#main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{background:var(--white);border-bottom:1px solid #e5e5e5;padding:0 28px;height:58px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.topbar h1{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700;color:var(--black)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.btn{padding:8px 16px;border-radius:3px;font-size:13px;font-weight:500;cursor:pointer;border:none;transition:.2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--red);color:#fff}
+.btn-primary:hover{background:#a01830}
+.btn-outline{background:none;border:1px solid #ddd;color:var(--black)}
+.btn-outline:hover{border-color:var(--black)}
+.btn-sm{padding:5px 11px;font-size:12px}
+.btn-success{background:var(--success);color:#fff}
+.btn-wa{background:#25D366;color:#fff}
+.page{display:none;padding:28px;flex:1}
+.page.active{display:block}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border-radius:4px;padding:20px;border:1px solid #e5e5e5}
+.stat-card .num{font-size:32px;font-weight:700;font-family:'Cormorant Garamond',serif}
+.stat-card .lbl{font-size:12px;color:var(--taupe);margin-top:2px}
+.stat-card .delta{font-size:11px;margin-top:8px;color:var(--success)}
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.card{background:var(--white);border-radius:4px;border:1px solid #e5e5e5;padding:20px}
+.card-title{font-size:14px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.kanban-board{display:flex;gap:14px;overflow-x:auto;padding-bottom:12px;min-height:500px}
+.kanban-col{min-width:210px;max-width:210px;background:#f0eded;border-radius:4px;padding:12px}
+.kanban-col-header{font-size:11px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;text-transform:uppercase;letter-spacing:.5px}
+.col-count{background:var(--taupe);color:#fff;border-radius:10px;padding:1px 7px;font-size:10px}
+.kanban-cards{min-height:380px;display:flex;flex-direction:column;gap:8px}
+.kanban-card{background:var(--white);border-radius:3px;padding:11px;cursor:pointer;border:1px solid #e5e5e5;transition:.2s;border-left:3px solid var(--taupe)}
+.kanban-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.1);transform:translateY(-1px)}
+.kanban-card.dragging{opacity:.4}
+.kanban-card h4{font-size:13px;font-weight:600;margin-bottom:3px}
+.kanban-card p{font-size:11px;color:var(--taupe)}
+.card-tags{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.tag{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:500}
+.tag-compra{background:#fef3c7;color:#92400e}
+.tag-venta{background:#e0f2fe;color:#075985}
+.tag-alquiler{background:#f0fdf4;color:#166534}
+.tag-inversion{background:#ede9fe;color:#7c3aed}
+.drop-zone{border:2px dashed #ccc;border-radius:3px;min-height:50px;display:none;align-items:center;justify-content:center;font-size:11px;color:#aaa;margin-bottom:8px}
+.drop-zone.show{display:flex}
+.drop-zone.active{border-color:var(--red);background:#fff9f9;color:var(--red)}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow-y:auto}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:6px;width:100%;max-width:860px;margin:auto}
+.modal-header{padding:20px 24px;border-bottom:1px solid #e5e5e5;display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:700}
+.modal-close{background:none;border:none;font-size:24px;cursor:pointer;color:#999;line-height:1;padding:0 4px}
+.modal-close:hover{color:var(--black)}
+.modal-tabs{display:flex;border-bottom:1px solid #e5e5e5;padding:0 24px;overflow-x:auto}
+.modal-tab{padding:12px 14px;font-size:13px;font-weight:500;border-bottom:2px solid transparent;cursor:pointer;color:var(--taupe);transition:.2s;white-space:nowrap}
+.modal-tab.active{color:var(--red);border-bottom-color:var(--red)}
+.modal-body{padding:24px}
+.modal-tab-content{display:none}
+.modal-tab-content.active{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:4px}
+.form-group label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--taupe)}
+.form-group input,.form-group select,.form-group textarea{padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none;transition:.2s;font-family:'Inter',sans-serif;background:var(--white)}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--red)}
+.form-group textarea{resize:vertical;min-height:80px}
+.full{grid-column:1/-1}
+.timeline{display:flex;flex-direction:column}
+.timeline-item{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid #f0f0f0}
+.timeline-dot{width:10px;height:10px;border-radius:50%;background:var(--taupe);flex-shrink:0;margin-top:4px}
+.timeline-content small{font-size:11px;color:var(--taupe)}
+.timeline-content p{font-size:13px;margin-top:2px}
+.email-layout{display:grid;grid-template-columns:200px 1fr;height:calc(100vh - 180px);background:var(--white);border:1px solid #e5e5e5;border-radius:4px;overflow:hidden}
+.email-sidebar{border-right:1px solid #e5e5e5;padding:12px 0}
+.email-folder{padding:9px 16px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:.15s}
+.email-folder:hover,.email-folder.active{background:var(--taupe-light);color:var(--red)}
+.email-folder .badge{font-size:10px;background:var(--taupe);color:#fff;border-radius:10px;padding:1px 6px}
+.email-account-sel{padding:8px 16px;border-bottom:1px solid #e5e5e5;margin-bottom:8px}
+.email-account-sel select{width:100%;padding:6px 8px;border:1px solid #ddd;border-radius:3px;font-size:12px;outline:none}
+.email-main{display:flex;flex-direction:column;overflow:hidden}
+.email-toolbar{padding:10px 14px;border-bottom:1px solid #e5e5e5;display:flex;gap:8px;align-items:center}
+.email-list{flex:1;overflow-y:auto}
+.email-item{padding:12px 14px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:.15s}
+.email-item:hover{background:#fafafa}
+.email-item.unread{background:#fffbf9;border-left:3px solid var(--red)}
+.email-item .efrom{font-size:12px;font-weight:600}
+.email-item .esubject{font-size:13px;margin:2px 0}
+.email-item .epreview{font-size:11px;color:var(--taupe);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:400px}
+.email-item .etime{font-size:10px;color:var(--taupe);float:right;margin-left:8px}
+.email-compose{position:fixed;bottom:0;right:20px;width:480px;background:var(--white);border-radius:6px 6px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.15);z-index:300;display:none}
+.email-compose.open{display:block}
+.compose-header{background:var(--black);color:#fff;padding:11px 16px;border-radius:6px 6px 0 0;display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;cursor:pointer}
+.compose-body{padding:12px}
+.compose-field{width:100%;padding:7px 10px;border:none;border-bottom:1px solid #eee;font-size:13px;outline:none;font-family:'Inter',sans-serif;background:transparent}
+.compose-msg{width:100%;height:160px;resize:none;border:1px solid #eee;border-radius:3px;padding:10px;font-size:13px;outline:none;font-family:'Inter',sans-serif;margin-top:8px}
+.compose-footer{padding:8px 12px;border-top:1px solid #eee;display:flex;gap:8px}
+.calendar-wrapper{background:var(--white);border:1px solid #e5e5e5;border-radius:4px;overflow:hidden}
+.calendar-wrapper iframe{width:100%;height:calc(100vh - 200px);border:none;display:block}
+.report-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-box{background:var(--white);border:1px solid #e5e5e5;border-radius:4px;padding:20px}
+.bar-chart{display:flex;align-items:flex-end;gap:6px;height:150px;margin-top:12px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.bar{width:100%;background:var(--red);border-radius:2px 2px 0 0;transition:.5s;min-height:4px}
+.bar-lbl{font-size:10px;color:var(--taupe);text-align:center}
+.bar-val{font-size:11px;font-weight:600}
+.prop-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.prop-card{background:var(--white);border:1px solid #e5e5e5;border-radius:4px;overflow:hidden;transition:.2s}
+.prop-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.1)}
+.prop-img{height:130px;background:linear-gradient(135deg,var(--taupe-light),#d0c8c2);display:flex;align-items:center;justify-content:center;color:var(--taupe);font-size:13px;position:relative}
+.prop-badge{position:absolute;top:8px;left:8px;background:var(--red);color:#fff;padding:3px 8px;border-radius:2px;font-size:10px;font-weight:600}
+.prop-info{padding:14px}
+.prop-info h4{font-size:14px;font-weight:600;margin-bottom:3px}
+.prop-info .ploc{font-size:12px;color:var(--taupe);margin-bottom:6px}
+.prop-price{font-size:16px;font-weight:700;color:var(--red)}
+.prop-specs{display:flex;gap:10px;margin-top:6px;font-size:11px;color:var(--taupe)}
+.table-wrap{background:var(--white);border:1px solid #e5e5e5;border-radius:4px;overflow:auto}
+table{width:100%;border-collapse:collapse}
+th{padding:11px 14px;text-align:left;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--taupe);border-bottom:1px solid #e5e5e5;white-space:nowrap}
+td{padding:10px 14px;font-size:13px;border-bottom:1px solid #f5f5f5;vertical-align:middle}
+tr:hover td{background:#fafafa}
+.status-badge{padding:3px 9px;border-radius:10px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.s-prospecto{background:#f1f5f9;color:#475569}
+.s-contactado{background:#e0f2fe;color:#0369a1}
+.s-visita{background:#fef3c7;color:#92400e}
+.s-oferta{background:#ede9fe;color:#7c3aed}
+.s-negociando{background:#fee2e2;color:#991b1b}
+.s-cerrado{background:#dcfce7;color:#166534}
+.search-bar{display:flex;gap:10px;margin-bottom:16px;align-items:center}
+.search-bar input{flex:1;padding:9px 14px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none}
+.search-bar input:focus{border-color:var(--red)}
+.notif-panel{position:fixed;top:58px;right:0;width:300px;background:var(--white);border-left:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5;z-index:100;display:none;box-shadow:-4px 4px 16px rgba(0,0,0,.1);border-radius:0 0 0 4px}
+.notif-panel.open{display:block}
+.notif-header{padding:12px 16px;font-size:13px;font-weight:600;border-bottom:1px solid #e5e5e5;display:flex;justify-content:space-between;align-items:center}
+.notif-item{padding:11px 16px;border-bottom:1px solid #f5f5f5;font-size:12px}
+.notif-item strong{display:block;margin-bottom:2px}
+.notif-item small{color:var(--taupe)}
+.notif-badge{background:var(--red);color:#fff;border-radius:50%;width:16px;height:16px;font-size:9px;display:flex;align-items:center;justify-content:center;font-weight:700;position:absolute;top:-4px;right:-4px}
+.notif-btn-wrap{position:relative;display:inline-flex}
+.flex{display:flex}.gap-2{gap:8px}.gap-3{gap:12px}.items-center{align-items:center}.justify-between{justify-content:space-between}
+.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}.mb-4{margin-bottom:16px}
+.text-sm{font-size:12px}.text-xs{font-size:11px}.text-muted{color:var(--taupe)}.font-bold{font-weight:700}.font-semibold{font-weight:600}
+.wa-tmpl-list{display:flex;flex-direction:column;gap:12px}
+.wa-tmpl{background:var(--white);border:1px solid #e5e5e5;border-radius:4px;padding:14px}
+.wa-tmpl h4{font-size:13px;font-weight:600;margin-bottom:6px;text-transform:capitalize}
+.wa-tmpl p{font-size:12px;color:#555;line-height:1.6;background:#f9f9f9;padding:8px;border-radius:3px;margin-bottom:8px}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <span>JAC REALTY</span>
+      <small>CRM PRO · PANAMÁ</small>
+    </div>
+    <input type="email" id="l-email" placeholder="Correo electrónico">
+    <input type="password" id="l-pass" placeholder="Contraseña" onkeypress="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">INGRESAR</button>
+    <p class="login-err" id="l-err">Credenciales incorrectas. Intenta de nuevo.</p>
+    <p style="font-size:11px;color:#bbb;text-align:center;margin-top:12px">jcastro@jacrealtypa.com</p>
+  </div>
+</div>
+
+<aside id="sidebar">
+  <div class="sidebar-logo"><span>JAC REALTY</span><small>CRM PRO · PN-0931</small></div>
+  <div class="sidebar-user">
+    <div class="avatar">JA</div>
+    <div class="user-info">
+      <strong>Jely An Castro</strong>
+      <small>PN-0931 · ACOBIR · MLS</small>
+    </div>
+  </div>
+  <nav>
+    <a onclick="showPage('dashboard')" class="active" data-page="dashboard">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Dashboard
+    </a>
+    <div class="nav-section">CLIENTES</div>
+    <a onclick="showPage('pipeline')" data-page="pipeline">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>Pipeline Kanban
+    </a>
+    <a onclick="showPage('leads')" data-page="leads">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>Clientes &amp; Leads
+    </a>
+    <a onclick="showPage('properties')" data-page="properties">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Propiedades
+    </a>
+    <div class="nav-section">COMUNICACIÓN</div>
+    <a onclick="showPage('email')" data-page="email">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Centro de Emails
+    </a>
+    <a onclick="showPage('whatsapp')" data-page="whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741 1.027 1.000-3.618-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <div class="nav-section">HERRAMIENTAS</div>
+    <a onclick="showPage('calendar')" data-page="calendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendario
+    </a>
+    <a onclick="showPage('reports')" data-page="reports">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>Reportes
+    </a>
+  </nav>
+  <div class="sidebar-bottom">
+    <button class="logout-btn" onclick="doLogout()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>Cerrar sesión
+    </button>
+  </div>
+</aside>
+
+<div id="main">
+  <div class="topbar">
+    <h1 id="page-title">Dashboard</h1>
+    <div class="topbar-right">
+      <button class="btn btn-primary btn-sm" onclick="openNewLead()">+ Nuevo Lead</button>
+      <div class="notif-btn-wrap">
+        <button class="btn btn-outline btn-sm" onclick="toggleNotif()" style="padding:7px 10px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </button>
+        <span class="notif-badge" id="notif-count">0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="notif-panel" id="notif-panel">
+    <div class="notif-header">Notificaciones <button onclick="toggleNotif()" style="background:none;border:none;cursor:pointer;font-size:18px;color:#999">×</button></div>
+    <div id="notif-list"></div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="page active" id="page-dashboard">
+    <div class="stats-grid" id="dash-stats"></div>
+    <div class="grid-2">
+      <div class="card">
+        <div class="card-title">Pipeline por Etapa <button class="btn btn-outline btn-sm" onclick="showPage('pipeline')">Ver Kanban</button></div>
+        <div id="dash-pipeline"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Actividad Reciente</div>
+        <div class="timeline" id="dash-activity"></div>
+      </div>
+    </div>
+    <div class="mt-4 grid-3">
+      <div class="card">
+        <div class="card-title">Leads por Semana</div>
+        <div id="dash-weekly" style="margin-top:4px"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Próximos Seguimientos</div>
+        <div id="dash-followups" style="font-size:13px"></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Acciones Rápidas</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <button class="btn btn-wa" onclick="openWADirect('50764627763')">📱 WhatsApp Primario</button>
+          <button class="btn btn-primary" onclick="openCompose()">✉️ Redactar Email</button>
+          <button class="btn btn-outline" onclick="showPage('pipeline')">📋 Ver Pipeline</button>
+          <button class="btn btn-outline" onclick="showPage('calendar')">📅 Calendario</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PIPELINE -->
+  <div class="page" id="page-pipeline">
+    <div class="flex gap-2 mb-4 items-center justify-between">
+      <select id="pipeline-filter" onchange="renderKanban()" style="padding:8px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+        <option value="all">Todos</option><option value="compra">Compra</option>
+        <option value="venta">Venta</option><option value="alquiler">Alquiler</option><option value="inversion">Inversión</option>
+      </select>
+      <button class="btn btn-primary" onclick="openNewLead()">+ Nuevo Lead</button>
+    </div>
+    <div class="kanban-board" id="kanban-board"></div>
+  </div>
+
+  <!-- LEADS -->
+  <div class="page" id="page-leads">
+    <div class="search-bar">
+      <input type="text" id="leads-search" placeholder="Buscar por nombre, email, teléfono..." oninput="renderLeadsTable()">
+      <select id="leads-sf" onchange="renderLeadsTable()" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+        <option value="">Todos los estados</option>
+        <option value="prospecto">Prospecto</option><option value="contactado">Contactado</option>
+        <option value="visita">Visita</option><option value="oferta">Oferta</option>
+        <option value="negociando">Negociando</option><option value="cerrado">Cerrado</option>
+      </select>
+      <button class="btn btn-primary" onclick="openNewLead()">+ Nuevo</button>
+      <button class="btn btn-outline" onclick="exportCSV()">↓ CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Nombre</th><th>Email</th><th>Teléfono</th><th>Interés</th><th>Presupuesto</th><th>Estado</th><th>Fecha</th><th>Acciones</th></tr></thead>
+        <tbody id="leads-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- PROPERTIES -->
+  <div class="page" id="page-properties">
+    <div class="search-bar">
+      <input type="text" id="props-search" placeholder="Buscar propiedades..." oninput="renderProperties()">
+      <select id="props-type" onchange="renderProperties()" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+        <option value="">Todos</option><option value="venta">En Venta</option><option value="alquiler">En Alquiler</option>
+      </select>
+      <button class="btn btn-primary" onclick="openNewProperty()">+ Nueva Propiedad</button>
+    </div>
+    <div class="prop-grid" id="prop-grid"></div>
+  </div>
+
+  <!-- EMAIL -->
+  <div class="page" id="page-email">
+    <div class="email-layout">
+      <div class="email-sidebar">
+        <div class="email-account-sel">
+          <select id="email-account" onchange="renderEmails()">
+            <option value="jcastro@jacrealtypa.com">jcastro@jacrealtypa.com</option>
+            <option value="jelyanrealestate@gmail.com">jelyanrealestate@gmail.com</option>
+          </select>
+        </div>
+        <div class="email-folder active" onclick="setFolder('inbox')" id="fold-inbox">📥 Recibidos <span class="badge" id="cnt-inbox">0</span></div>
+        <div class="email-folder" onclick="setFolder('sent')" id="fold-sent">📤 Enviados <span class="badge" id="cnt-sent">0</span></div>
+        <div class="email-folder" onclick="setFolder('draft')" id="fold-draft">📝 Borradores</div>
+        <div class="email-folder" onclick="setFolder('all')" id="fold-all">📂 Todos</div>
+        <div style="padding:10px 12px;margin-top:8px">
+          <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="openCompose()">✉️ Redactar</button>
+        </div>
+        <div style="padding:4px 12px">
+          <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center" onclick="syncGmail()">↻ Abrir Gmail</button>
+        </div>
+      </div>
+      <div class="email-main">
+        <div class="email-toolbar">
+          <input type="text" id="email-search" placeholder="Buscar emails..." style="flex:1;padding:7px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none" oninput="renderEmails()">
+        </div>
+        <div class="email-list" id="email-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP -->
+  <div class="page" id="page-whatsapp">
+    <div class="grid-2">
+      <div>
+        <div class="card mb-4">
+          <div class="card-title">Enviar Mensaje</div>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="form-group">
+              <label>Seleccionar Contacto</label>
+              <select id="wa-contact" onchange="onWAContactChange()" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+                <option value="">— Seleccionar —</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>O número manual</label>
+              <input type="text" id="wa-manual" placeholder="+507 6000-0000" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none;width:100%">
+            </div>
+            <div class="form-group">
+              <label>Plantilla</label>
+              <select id="wa-tmpl-sel" onchange="loadWATmpl()" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+                <option value="">Personalizar...</option>
+                <option value="bienvenida">Bienvenida</option><option value="seguimiento">Seguimiento</option>
+                <option value="visita">Confirmar Visita</option><option value="oferta">Enviar Oferta</option>
+                <option value="cierre">Cierre</option><option value="cumple">Cumpleaños</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Mensaje</label>
+              <textarea id="wa-msg" rows="6" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none;resize:vertical;width:100%"></textarea>
+            </div>
+            <button class="btn btn-wa" onclick="sendWAMsg()" style="width:100%;justify-content:center;padding:12px">📱 Abrir en WhatsApp</button>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">Plantillas</div>
+        <div class="wa-tmpl-list" id="wa-tmpls"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="page" id="page-calendar">
+    <div class="calendar-wrapper">
+      <iframe src="https://calendar.google.com/calendar/embed?src=jelyancorredora%40gmail.com&ctz=America%2FPanama&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=1&showCalendars=0&mode=WEEK" frameborder="0" scrolling="no" title="Google Calendar"></iframe>
+    </div>
+  </div>
+
+  <!-- REPORTS -->
+  <div class="page" id="page-reports">
+    <div class="stats-grid" id="rpt-stats"></div>
+    <div class="report-grid mt-4">
+      <div class="chart-box">
+        <div class="card-title">Leads por Mes</div>
+        <div class="bar-chart" id="chart-monthly"></div>
+      </div>
+      <div class="chart-box">
+        <div class="card-title">Pipeline por Etapa</div>
+        <div id="chart-stages" style="margin-top:12px"></div>
+      </div>
+      <div class="chart-box">
+        <div class="card-title">Por Tipo de Interés</div>
+        <div class="bar-chart" id="chart-tipos"></div>
+      </div>
+      <div class="chart-box">
+        <div class="card-title">Embudo de Conversión</div>
+        <div id="chart-funnel" style="margin-top:12px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENT MODAL -->
+<div class="modal-overlay" id="modal-client" onclick="if(event.target===this)closeModal('modal-client')">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="mc-name">Cliente</h2>
+      <div class="flex gap-2">
+        <button class="btn btn-wa btn-sm" onclick="modalQuickWA()">📱 WA</button>
+        <button class="btn btn-primary btn-sm" onclick="saveClient()">💾 Guardar</button>
+        <button class="modal-close" onclick="closeModal('modal-client')">×</button>
+      </div>
+    </div>
+    <div class="modal-tabs" id="mc-tabs">
+      <div class="modal-tab active" onclick="mcTab(this,'mc-info')">Información</div>
+      <div class="modal-tab" onclick="mcTab(this,'mc-props')">Propiedades</div>
+      <div class="modal-tab" onclick="mcTab(this,'mc-hist')">Historial</div>
+      <div class="modal-tab" onclick="mcTab(this,'mc-mail')">Emails</div>
+      <div class="modal-tab" onclick="mcTab(this,'mc-notes')">Notas</div>
+      <div class="modal-tab" onclick="mcTab(this,'mc-auto')">Automatizaciones</div>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="mc-id">
+      <!-- INFO -->
+      <div class="modal-tab-content active" id="mc-info">
+        <div class="form-grid">
+          <div class="form-group"><label>Nombre Completo</label><input id="mc-name-i" type="text"></div>
+          <div class="form-group"><label>Email</label><input id="mc-email" type="email"></div>
+          <div class="form-group"><label>Teléfono</label><input id="mc-phone" type="text"></div>
+          <div class="form-group"><label>WhatsApp</label><input id="mc-wa" type="text"></div>
+          <div class="form-group"><label>Tipo de Interés</label>
+            <select id="mc-interest"><option value="compra">Compra</option><option value="venta">Venta</option><option value="alquiler">Alquiler</option><option value="inversion">Inversión</option></select>
+          </div>
+          <div class="form-group"><label>Presupuesto</label><input id="mc-budget" type="text" placeholder="$150,000"></div>
+          <div class="form-group"><label>Estado Pipeline</label>
+            <select id="mc-status">
+              <option value="prospecto">Prospecto</option><option value="contactado">Contactado</option>
+              <option value="visita">Visita Agendada</option><option value="oferta">Oferta</option>
+              <option value="negociando">Negociando</option><option value="cerrado">Cerrado</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Zona de Interés</label><input id="mc-zone" type="text" placeholder="Costa del Este..."></div>
+          <div class="form-group"><label>Fuente</label>
+            <select id="mc-source"><option value="web">Sitio Web</option><option value="referido">Referido</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
+          </div>
+          <div class="form-group"><label>Próximo Seguimiento</label><input id="mc-followup" type="date"></div>
+          <div class="form-group full"><label>Requerimientos / Descripción</label><textarea id="mc-desc"></textarea></div>
+        </div>
+      </div>
+      <!-- PROPS -->
+      <div class="modal-tab-content" id="mc-props">
+        <div id="mc-props-list" style="display:flex;flex-direction:column;gap:8px;margin-bottom:12px"></div>
+        <button class="btn btn-outline btn-sm" onclick="showPage('properties');closeModal('modal-client')">+ Ver / Asociar Propiedades</button>
+      </div>
+      <!-- HISTORY -->
+      <div class="modal-tab-content" id="mc-hist">
+        <div class="flex gap-2 mb-4">
+          <input type="text" id="hist-txt" placeholder="Agregar actividad..." style="flex:1;padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+          <select id="hist-type" style="padding:9px 12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none">
+            <option value="nota">Nota</option><option value="llamada">Llamada</option>
+            <option value="email">Email</option><option value="visita">Visita</option><option value="whatsapp">WhatsApp</option>
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="addHistory()">+</button>
+        </div>
+        <div class="timeline" id="mc-hist-list"></div>
+      </div>
+      <!-- EMAILS -->
+      <div class="modal-tab-content" id="mc-mail">
+        <div class="flex gap-2 mb-4">
+          <button class="btn btn-primary btn-sm" onclick="emailClient()">✉️ Nuevo Email</button>
+        </div>
+        <div id="mc-email-list" style="display:flex;flex-direction:column;gap:8px"></div>
+      </div>
+      <!-- NOTES -->
+      <div class="modal-tab-content" id="mc-notes">
+        <textarea id="mc-notes-txt" style="width:100%;min-height:220px;padding:12px;border:1px solid #ddd;border-radius:3px;font-size:13px;outline:none;resize:vertical;font-family:'Inter',sans-serif" placeholder="Notas privadas..."></textarea>
+        <button class="btn btn-primary btn-sm mt-2" onclick="saveClient()">Guardar Notas</button>
+      </div>
+      <!-- AUTO -->
+      <div class="modal-tab-content" id="mc-auto">
+        <div class="grid-2" style="gap:12px">
+          <div class="card" style="padding:16px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">WhatsApp Automático</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <button class="btn btn-wa btn-sm" onclick="autoWA('bienvenida')">📱 Bienvenida</button>
+              <button class="btn btn-wa btn-sm" onclick="autoWA('seguimiento')">📱 Seguimiento</button>
+              <button class="btn btn-wa btn-sm" onclick="autoWA('visita')">📱 Confirmar Visita</button>
+              <button class="btn btn-wa btn-sm" onclick="autoWA('oferta')">📱 Enviar Oferta</button>
+              <button class="btn btn-wa btn-sm" onclick="autoWA('cierre')">📱 Mensaje Cierre</button>
+            </div>
+          </div>
+          <div class="card" style="padding:16px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">Email Automático</div>
+            <div style="display:flex;flex-direction:column;gap:7px">
+              <button class="btn btn-primary btn-sm" onclick="autoEmail('bienvenida')">✉️ Bienvenida</button>
+              <button class="btn btn-primary btn-sm" onclick="autoEmail('seguimiento')">✉️ Seguimiento</button>
+              <button class="btn btn-primary btn-sm" onclick="autoEmail('propiedades')">✉️ Propiedades</button>
+            </div>
+          </div>
+          <div class="card full" style="padding:16px">
+            <div style="font-size:13px;font-weight:600;margin-bottom:10px">Cambiar Etapa</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px">
+              <button class="btn btn-outline btn-sm" onclick="stageClient('contactado')">→ Contactado</button>
+              <button class="btn btn-outline btn-sm" onclick="stageClient('visita')">→ Visita</button>
+              <button class="btn btn-outline btn-sm" onclick="stageClient('oferta')">→ Oferta</button>
+              <button class="btn btn-outline btn-sm" onclick="stageClient('negociando')">→ Negociando</button>
+              <button class="btn btn-success btn-sm" style="grid-column:2/4" onclick="stageClient('cerrado')">✓ Cerrar Trato</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW LEAD MODAL -->
+<div class="modal-overlay" id="modal-newlead" onclick="if(event.target===this)closeModal('modal-newlead')">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header"><h2>Nuevo Lead</h2><button class="modal-close" onclick="closeModal('modal-newlead')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label>Nombre *</label><input id="nl-name" type="text" placeholder="Juan Pérez"></div>
+        <div class="form-group"><label>Email</label><input id="nl-email" type="email"></div>
+        <div class="form-group"><label>Teléfono</label><input id="nl-phone" type="text" placeholder="+507 6000-0000"></div>
+        <div class="form-group"><label>WhatsApp</label><input id="nl-wa" type="text" placeholder="+507 6000-0000"></div>
+        <div class="form-group"><label>Interés</label>
+          <select id="nl-interest"><option value="compra">Compra</option><option value="venta">Venta</option><option value="alquiler">Alquiler</option><option value="inversion">Inversión</option></select>
+        </div>
+        <div class="form-group"><label>Presupuesto</label><input id="nl-budget" type="text" placeholder="$150,000"></div>
+        <div class="form-group"><label>Estado</label>
+          <select id="nl-status"><option value="prospecto">Prospecto</option><option value="contactado">Contactado</option><option value="visita">Visita</option><option value="oferta">Oferta</option><option value="negociando">Negociando</option><option value="cerrado">Cerrado</option></select>
+        </div>
+        <div class="form-group"><label>Fuente</label>
+          <select id="nl-source"><option value="web">Web</option><option value="referido">Referido</option><option value="instagram">Instagram</option><option value="whatsapp">WhatsApp</option><option value="llamada">Llamada</option><option value="otro">Otro</option></select>
+        </div>
+        <div class="form-group full"><label>Notas / Requerimientos</label><textarea id="nl-notes"></textarea></div>
+      </div>
+      <div class="mt-4 flex gap-2">
+        <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveNewLead()">Guardar Lead</button>
+        <button class="btn btn-outline" onclick="closeModal('modal-newlead')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NEW PROPERTY MODAL -->
+<div class="modal-overlay" id="modal-newprop" onclick="if(event.target===this)closeModal('modal-newprop')">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-header"><h2>Nueva Propiedad</h2><button class="modal-close" onclick="closeModal('modal-newprop')">×</button></div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group full"><label>Título</label><input id="np-title" type="text" placeholder="Apto 3/2 en Costa del Este"></div>
+        <div class="form-group"><label>Operación</label><select id="np-type"><option value="venta">En Venta</option><option value="alquiler">En Alquiler</option></select></div>
+        <div class="form-group"><label>Precio</label><input id="np-price" type="text" placeholder="$280,000"></div>
+        <div class="form-group"><label>Ubicación</label><input id="np-loc" type="text" placeholder="Costa del Este, Panamá"></div>
+        <div class="form-group"><label>Tipo</label><select id="np-cat"><option value="apartamento">Apartamento</option><option value="casa">Casa</option><option value="local">Local Comercial</option><option value="oficina">Oficina</option><option value="terreno">Terreno</option><option value="penthouse">Penthouse</option></select></div>
+        <div class="form-group"><label>m²</label><input id="np-sqm" type="number" placeholder="120"></div>
+        <div class="form-group"><label>Habitaciones</label><input id="np-beds" type="number" placeholder="3"></div>
+        <div class="form-group"><label>Baños</label><input id="np-baths" type="number" placeholder="2"></div>
+        <div class="form-group full"><label>Descripción</label><textarea id="np-desc"></textarea></div>
+      </div>
+      <div class="mt-4 flex gap-2">
+        <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveNewProperty()">Guardar Propiedad</button>
+        <button class="btn btn-outline" onclick="closeModal('modal-newprop')">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EMAIL COMPOSE -->
+<div class="email-compose" id="compose-box">
+  <div class="compose-header" onclick="toggleCompose()">
+    <span>✉️ Nuevo Mensaje</span><span id="compose-toggle">−</span>
+  </div>
+  <div id="compose-body-wrap">
+    <div class="compose-body">
+      <select id="c-from" style="width:100%;padding:7px 10px;border:1px solid #eee;border-radius:3px;font-size:12px;outline:none;margin-bottom:4px;background:#fff">
+        <option value="jcastro@jacrealtypa.com">De: jcastro@jacrealtypa.com</option>
+        <option value="jelyanrealestate@gmail.com">De: jelyanrealestate@gmail.com</option>
+      </select>
+      <input class="compose-field" type="email" id="c-to" placeholder="Para: email@ejemplo.com">
+      <input class="compose-field" type="text" id="c-subject" placeholder="Asunto">
+      <textarea class="compose-msg" id="c-body" placeholder="Escribe tu mensaje..."></textarea>
+    </div>
+    <div class="compose-footer">
+      <button class="btn btn-primary btn-sm" onclick="sendEmail()">Enviar</button>
+      <button class="btn btn-outline btn-sm" onclick="saveDraft()">Borrador</button>
+      <button class="btn btn-outline btn-sm" onclick="closeCompose()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ================================================================
+// DATA
+// ================================================================
+const DB={
+  get:k=>JSON.parse(localStorage.getItem(k)||'[]'),
+  set:(k,v)=>localStorage.setItem(k,JSON.stringify(v)),
+  obj:k=>JSON.parse(localStorage.getItem(k)||'{}')
+};
+
+const STAGES=[
+  {id:'prospecto',lbl:'Prospecto'},
+  {id:'contactado',lbl:'Contactado'},
+  {id:'visita',lbl:'Visita Agendada'},
+  {id:'oferta',lbl:'Oferta'},
+  {id:'negociando',lbl:'Negociando'},
+  {id:'cerrado',lbl:'Cerrado / Cliente'}
+];
+const SC={prospecto:'#94a3b8',contactado:'#3b82f6',visita:'#f59e0b',oferta:'#8b5cf6',negociando:'#C41E3A',cerrado:'#22c55e'};
+
+const WA={
+  bienvenida:'Hola {n}! 👋 Soy Jely An Castro de JAC Realty Panama (Lic. PN-0931). Gracias por contactarnos. Estoy aquí para ayudarte a encontrar la propiedad ideal. ¿Cuándo podemos hablar? 🏠',
+  seguimiento:'Hola {n}! Te escribo de JAC Realty para dar seguimiento a tu consulta. ¿Has tenido oportunidad de revisar las opciones? Quedo a tu disposición. 😊',
+  visita:'Hola {n}! Confirmo tu visita. Por favor avísame si todo sigue en pie. Te espero con gusto. - Jely An Castro, JAC Realty PN-0931 📍',
+  oferta:'Hola {n}! Tenemos excelentes opciones preparadas para ti. ¿Podemos agendar una llamada para revisarlas juntos? 🏠✨',
+  cierre:'Hola {n}! Gracias por confiar en JAC Realty. Ha sido un placer trabajar contigo. ¡Bienvenido/a a tu nuevo hogar! 🎉🏠',
+  cumple:'Hola {n}! Todo el equipo de JAC Realty te desea un muy feliz cumpleaños! 🎂 Que este año esté lleno de éxitos! 🎊'
+};
+
+const ETMPL={
+  bienvenida:{s:'Bienvenido/a a JAC Realty Panama',b:'Estimado/a {n},\n\nGracias por contactar a JAC Realty. Mi nombre es Jely An Castro, agente licenciada (PN-0931), miembro de ACOBIR y MLS Panama.\n\nEstoy comprometida a ayudarte a encontrar la propiedad ideal en Panama.\n\nQuedo a tu disposición para cualquier consulta.\n\nSaludos,\nJely An Castro\nJAC Realty Panama\njcastro@jacrealtypa.com\n+507 6462-7763\nwww.jacrealtypa.com'},
+  seguimiento:{s:'Seguimiento - JAC Realty Panama',b:'Estimado/a {n},\n\nEspero que te encuentres muy bien. Te escribo para hacer seguimiento y verificar si tienes alguna consulta adicional.\n\nEstamos listos para programar una visita o resolver cualquier duda.\n\nSaludos,\nJely An Castro\nJAC Realty Panama'},
+  propiedades:{s:'Propiedades seleccionadas para ti',b:'Estimado/a {n},\n\nBasándonos en tus preferencias, hemos seleccionado propiedades que podrían interesarte.\n\nPuedes ver más opciones en: www.jacrealtypa.com\n\nSaludos,\nJely An Castro\nJAC Realty Panama'}
+};
+
+// AUTH
+function doLogin(){
+  const e=document.getElementById('l-email').value;
+  const p=document.getElementById('l-pass').value;
+  if(e==='jcastro@jacrealtypa.com'&&p==='jacrealty2025'){
+    document.getElementById('login-screen').style.display='none';
+    init();
+  } else {
+    document.getElementById('l-err').style.display='block';
+  }
+}
+function doLogout(){ document.getElementById('login-screen').style.display='flex'; }
+
+function init(){
+  seedData();
+  renderDashboard();
+  renderKanban();
+  renderLeadsTable();
+  renderProperties();
+  renderEmails();
+  buildWAPage();
+  updateNotifBadge();
+  setInterval(checkNewLeads,30000);
+}
+
+function seedData(){
+  if(DB.get('jac_leads').length>0) return;
+  DB.set('jac_leads',[
+    {id:1001,name:'María González',email:'maria.g@gmail.com',phone:'+507 6111-2233',wa:'50761112233',interest:'compra',budget:'$250,000',status:'negociando',source:'web',zone:'Costa del Este',desc:'Busca apto 2/2 con vista al mar',notes:'Muy interesada, visita realizada',history:[{type:'llamada',text:'Primera llamada. Muy interesada en Costa del Este.',date:'2025-05-10'},{type:'visita',text:'Visita a apto en PH. Encantada.',date:'2025-05-18'}],date:'2025-05-01'},
+    {id:1002,name:'Carlos Herrera',email:'c.herrera@hotmail.com',phone:'+507 6222-3344',wa:'50762223344',interest:'alquiler',budget:'$1,800/mes',status:'visita',source:'referido',zone:'Casco Viejo',desc:'Local comercial zona turística',notes:'Referido por María González',history:[{type:'email',text:'Enviado catálogo de locales en Casco Viejo',date:'2025-05-15'}],date:'2025-05-08'},
+    {id:1003,name:'Ana Rodríguez',email:'ana.r@empresa.com',phone:'+507 6333-4455',wa:'50763334455',interest:'inversion',budget:'$500,000',status:'oferta',source:'instagram',zone:'San Francisco',desc:'Inversionista. Busca local o apt para renta.',notes:'Alta prioridad. Tiene capital listo.',history:[],date:'2025-05-12'},
+    {id:1004,name:'Roberto Pérez',email:'r.perez@yahoo.com',phone:'+507 6444-5566',wa:'50764445566',interest:'compra',budget:'$180,000',status:'contactado',source:'web',zone:'Miraflores',desc:'Primera vivienda, familia joven',notes:'',history:[],date:'2025-05-20'},
+    {id:1005,name:'Laura Martínez',email:'laura.m@gmail.com',phone:'+507 6555-6677',wa:'50765556677',interest:'venta',budget:'$320,000',status:'prospecto',source:'llamada',zone:'Bella Vista',desc:'Quiere vender su casa actual',notes:'',history:[],date:'2025-05-25'}
+  ]);
+  DB.set('jac_properties',[
+    {id:2001,title:'Apto 3/2 Vista al Mar',type:'venta',price:'$285,000',loc:'Costa del Este',cat:'apartamento',sqm:'120',beds:'3',baths:'2',desc:'Hermoso apto con vista panorámica al Pacífico'},
+    {id:2002,title:'Local Comercial Casco Viejo',type:'alquiler',price:'$1,800/mes',loc:'Casco Viejo',cat:'local',sqm:'85',beds:'0',baths:'1',desc:'Excelente ubicación turística. Planta baja.'},
+    {id:2003,title:'Casa en Miraflores',type:'venta',price:'$195,000',loc:'Miraflores',cat:'casa',sqm:'180',beds:'3',baths:'2',desc:'Casa de dos plantas con jardín y piscina'},
+    {id:2004,title:'Penthouse San Francisco',type:'venta',price:'$550,000',loc:'San Francisco',cat:'penthouse',sqm:'250',beds:'4',baths:'3',desc:'PH de lujo con terraza privada y jacuzzi'}
+  ]);
+  DB.set('jac_emails',[
+    {id:3001,from:'maria.g@gmail.com',to:'jcastro@jacrealtypa.com',subject:'Consulta sobre propiedades en Costa del Este',body:'Buenos días Jely An,\n\nVi tu anuncio y me interesa mucho saber más sobre las propiedades disponibles en Costa del Este. Mi presupuesto es hasta $250,000. ¿Puedes enviarme más información?\n\nGracias,\nMaría González',preview:'Vi tu anuncio y me interesa saber más...',type:'inbox',date:'2025-05-20',unread:true,account:'jcastro@jacrealtypa.com'},
+    {id:3002,from:'jcastro@jacrealtypa.com',to:'maria.g@gmail.com',subject:'Re: Propiedades en Costa del Este',body:'Estimada María,\n\nMuchas gracias por contactarnos. Tenemos excelentes opciones en Costa del Este dentro de tu presupuesto...',preview:'Tenemos excelentes opciones...',type:'sent',date:'2025-05-20',unread:false,account:'jcastro@jacrealtypa.com'},
+    {id:3003,from:'c.herrera@hotmail.com',to:'jcastro@jacrealtypa.com',subject:'Local en Casco Viejo',body:'Hola, busco un local comercial en Casco Viejo para un restaurante. ¿Tienen disponible?',preview:'Busco local comercial en Casco Viejo...',type:'inbox',date:'2025-05-19',unread:false,account:'jcastro@jacrealtypa.com'}
+  ]);
+}
+
+// NAVIGATION
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('nav a').forEach(a=>a.classList.remove('active'));
+  const lnk=document.querySelector(`nav a[data-page="${id}"]`);
+  if(lnk) lnk.classList.add('active');
+  const ttl={dashboard:'Dashboard',pipeline:'Pipeline Kanban',leads:'Clientes & Leads',properties:'Propiedades',email:'Centro de Emails',whatsapp:'WhatsApp',calendar:'Calendario Google',reports:'Reportes'};
+  document.getElementById('page-title').textContent=ttl[id]||id;
+  if(id==='dashboard') renderDashboard();
+  if(id==='pipeline') renderKanban();
+  if(id==='leads') renderLeadsTable();
+  if(id==='properties') renderProperties();
+  if(id==='email') renderEmails();
+  if(id==='reports') renderReports();
+}
+
+// DASHBOARD
+function renderDashboard(){
+  const leads=DB.get('jac_leads');
+  const props=DB.get('jac_properties');
+  const emails=DB.get('jac_emails');
+  const cerrados=leads.filter(l=>l.status==='cerrado');
+  const now=new Date();
+  const week7=leads.filter(l=>(now-new Date(l.date||now))<7*864e5);
+  document.getElementById('dash-stats').innerHTML=[
+    {n:leads.length,l:'Total Leads',d:`+${week7.length} esta semana`,c:'var(--red)'},
+    {n:cerrados.length,l:'Clientes Cerrados',d:'conversiones',c:'var(--success)'},
+    {n:props.length,l:'Propiedades Activas',d:'en inventario',c:'var(--info)'},
+    {n:emails.filter(e=>e.type==='inbox').length,l:'Emails Recibidos',d:'en historial',c:'var(--purple)'}
+  ].map(s=>`<div class="stat-card"><div class="num" style="color:${s.c}">${s.n}</div><div class="lbl">${s.l}</div><div class="delta">${s.d}</div></div>`).join('');
+
+  // Pipeline bars
+  const sc={};STAGES.forEach(s=>sc[s.id]=0);leads.forEach(l=>sc[l.status]!==undefined&&sc[l.status]++);
+  const mx=Math.max(...Object.values(sc),1);
+  document.getElementById('dash-pipeline').innerHTML=`<div style="display:flex;gap:8px;align-items:flex-end;height:90px;margin-top:8px">${STAGES.map(s=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px"><span style="font-size:11px;font-weight:700">${sc[s.id]}</span><div style="width:100%;background:${SC[s.id]};border-radius:2px 2px 0 0;height:${Math.max((sc[s.id]/mx)*70,3)}px"></div><span style="font-size:9px;color:var(--taupe);text-align:center;line-height:1.2">${s.lbl.split(' ')[0]}</span></div>`).join('')}</div>`;
+
+  // Activity
+  const hist=[];leads.forEach(l=>(l.history||[]).forEach(h=>hist.push({...h,ln:l.name})));
+  hist.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const dc={nota:'var(--taupe)',llamada:'var(--info)',email:'var(--purple)',visita:'var(--warning)',whatsapp:'var(--success)'};
+  document.getElementById('dash-activity').innerHTML=hist.slice(0,6).map(h=>`<div class="timeline-item"><div class="timeline-dot" style="background:${dc[h.type]||'var(--taupe)'}"></div><div class="timeline-content"><small>${h.type.toUpperCase()} · ${h.ln} · ${h.date||''}</small><p>${h.text}</p></div></div>`).join('')||'<p style="font-size:13px;color:var(--taupe);padding:8px 0">Sin actividad reciente</p>';
+
+  // Weekly
+  const wd=['D','L','M','X','J','V','S'];const wc=Array(7).fill(0);
+  leads.forEach(l=>{const d=new Date(l.date||now);const diff=Math.floor((now-d)/864e5);if(diff<7)wc[6-diff]++;});
+  const wm=Math.max(...wc,1);
+  document.getElementById('dash-weekly').innerHTML=`<div style="display:flex;gap:4px;align-items:flex-end;height:50px">${wc.map((c,i)=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:2px"><div style="width:100%;background:var(--red);opacity:.75;border-radius:2px 2px 0 0;height:${Math.max((c/wm)*38,2)}px"></div><span style="font-size:9px;color:var(--taupe)">${wd[(now.getDay()-6+i+7)%7]}</span></div>`).join('')}</div>`;
+
+  // Followups
+  const fu=leads.filter(l=>l.followup).sort((a,b)=>new Date(a.followup)-new Date(b.followup));
+  document.getElementById('dash-followups').innerHTML=fu.slice(0,4).map(l=>`<div style="padding:6px 0;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:center"><span style="cursor:pointer;color:var(--red)" onclick="openClient(${l.id})">${l.name}</span><small style="color:var(--taupe)">${l.followup}</small></div>`).join('')||'<p style="color:var(--taupe);font-size:13px">Sin seguimientos pendientes</p>';
+}
+
+// KANBAN
+let dragId=null,isDragging=false;
+function renderKanban(){
+  const leads=DB.get('jac_leads');
+  const filt=document.getElementById('pipeline-filter')?.value||'all';
+  const board=document.getElementById('kanban-board');
+  board.innerHTML=STAGES.map(s=>{
+    let cards=leads.filter(l=>l.status===s.id);
+    if(filt!=='all') cards=cards.filter(l=>l.interest===filt);
+    return `<div class="kanban-col" data-col="${s.id}" ondragover="event.preventDefault()" ondrop="dropCard(event,'${s.id}')" ondragenter="showDrop('${s.id}',true)" ondragleave="showDrop('${s.id}',false)">
+      <div class="kanban-col-header" style="color:${SC[s.id]}">${s.lbl} <span class="col-count">${cards.length}</span></div>
+      <div class="drop-zone show" id="dz-${s.id}">⬇ Soltar aquí</div>
+      <div class="kanban-cards" id="kc-${s.id}">${cards.map(l=>`<div class="kanban-card" draggable="true" data-id="${l.id}" ondragstart="dragCard(event,${l.id})" ondragend="dragEnd(event)" onclick="openClient(${l.id})"><h4>${l.name}</h4><p>${l.budget||'Sin presupuesto'}</p>${l.zone?`<p class="text-xs" style="margin-top:2px">${l.zone}</p>`:''}<div class="card-tags"><span class="tag tag-${l.interest}">${l.interest}</span></div></div>`).join('')}</div>
+    </div>`;
+  }).join('');
+}
+function dragCard(e,id){dragId=id;isDragging=true;e.target.classList.add('dragging');}
+function dragEnd(e){isDragging=false;e.target.classList.remove('dragging');document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('active'));}
+function showDrop(col,show){if(!isDragging)return;const dz=document.getElementById('dz-'+col);if(dz){if(show)dz.classList.add('active');else dz.classList.remove('active');}}
+function dropCard(e,col){
+  e.preventDefault();
+  if(dragId){
+    const leads=DB.get('jac_leads');
+    const l=leads.find(x=>x.id===dragId);
+    if(l&&l.status!==col){
+      const old=l.status;l.status=col;
+      if(!l.history)l.history=[];
+      l.history.unshift({type:'nota',text:`Movido de "${STAGES.find(s=>s.id===old)?.lbl}" a "${STAGES.find(s=>s.id===col)?.lbl}"`,date:new Date().toISOString().split('T')[0]});
+      DB.set('jac_leads',leads);
+      addNotif('📋 '+l.name+' → '+STAGES.find(s=>s.id===col)?.lbl);
+      renderKanban();
+    }
+  }
+  dragId=null;
+  document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('active'));
+}
+
+// LEADS TABLE
+function renderLeadsTable(){
+  const leads=DB.get('jac_leads');
+  const s=(document.getElementById('leads-search')?.value||'').toLowerCase();
+  const sf=document.getElementById('leads-sf')?.value||'';
+  const f=leads.filter(l=>(!s||l.name.toLowerCase().includes(s)||(l.email||'').toLowerCase().includes(s)||(l.phone||'').includes(s))&&(!sf||l.status===sf));
+  document.getElementById('leads-tbody').innerHTML=f.map(l=>`<tr>
+    <td><strong style="cursor:pointer;color:var(--red)" onclick="openClient(${l.id})">${l.name}</strong></td>
+    <td>${l.email||'—'}</td><td>${l.phone||'—'}</td>
+    <td><span class="tag tag-${l.interest}">${l.interest}</span></td>
+    <td>${l.budget||'—'}</td>
+    <td><span class="status-badge s-${l.status}">${l.status}</span></td>
+    <td>${l.date||'—'}</td>
+    <td><div class="flex gap-2">
+      <button class="btn btn-sm btn-wa" style="padding:4px 8px" onclick="openWANum('${l.wa||l.phone||''}','${l.name}')">📱</button>
+      <button class="btn btn-outline btn-sm" onclick="openClient(${l.id})">Ver</button>
+      <button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;padding:4px 8px;border:none;border-radius:3px;cursor:pointer" onclick="delLead(${l.id})">✕</button>
+    </div></td></tr>`).join('')||'<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--taupe)">Sin leads</td></tr>';
+}
+function delLead(id){if(confirm('¿Eliminar lead?')){DB.set('jac_leads',DB.get('jac_leads').filter(l=>l.id!==id));renderLeadsTable();renderKanban();}}
+function exportCSV(){
+  const h=['Nombre','Email','Teléfono','Interés','Presupuesto','Estado','Fuente','Fecha'];
+  const r=DB.get('jac_leads').map(l=>[l.name,l.email,l.phone,l.interest,l.budget,l.status,l.source,l.date]);
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent([h,...r].map(r=>r.join(',')).join('\n'));a.download='jac_leads_'+Date.now()+'.csv';a.click();
+}
+
+// CLIENT MODAL
+let curId=null;
+function openClient(id){
+  const l=DB.get('jac_leads').find(x=>x.id===id);
+  if(!l) return;
+  curId=id;
+  document.getElementById('mc-id').value=id;
+  document.getElementById('mc-name').textContent=l.name;
+  document.getElementById('mc-name-i').value=l.name||'';
+  document.getElementById('mc-email').value=l.email||'';
+  document.getElementById('mc-phone').value=l.phone||'';
+  document.getElementById('mc-wa').value=l.wa||'';
+  document.getElementById('mc-interest').value=l.interest||'compra';
+  document.getElementById('mc-budget').value=l.budget||'';
+  document.getElementById('mc-status').value=l.status||'prospecto';
+  document.getElementById('mc-zone').value=l.zone||'';
+  document.getElementById('mc-source').value=l.source||'web';
+  document.getElementById('mc-followup').value=l.followup||'';
+  document.getElementById('mc-desc').value=l.desc||'';
+  document.getElementById('mc-notes-txt').value=l.notes||'';
+  renderMCHistory(l);renderMCEmails(l);renderMCProps(l);
+  document.getElementById('modal-client').classList.add('open');
+  mcTab(document.querySelector('#mc-tabs .modal-tab'),'mc-info');
+}
+function renderMCHistory(l){
+  const dc={nota:'var(--taupe)',llamada:'var(--info)',email:'var(--purple)',visita:'var(--warning)',whatsapp:'var(--success)'};
+  document.getElementById('mc-hist-list').innerHTML=(l.history||[]).map(h=>`<div class="timeline-item"><div class="timeline-dot" style="background:${dc[h.type]||'var(--taupe)'}"></div><div class="timeline-content"><small>${h.type.toUpperCase()} · ${h.date||''}</small><p>${h.text}</p></div></div>`).join('')||'<p style="font-size:13px;color:var(--taupe);padding:8px 0">Sin historial</p>';
+}
+function renderMCEmails(l){
+  const emails=DB.get('jac_emails').filter(e=>e.from===l.email||e.to===l.email);
+  document.getElementById('mc-email-list').innerHTML=emails.map(e=>`<div style="background:#f9f9f9;border-radius:3px;padding:11px;border-left:3px solid var(--${e.type==='inbox'?'info':'red'})"><div class="flex justify-between mb-1"><strong style="font-size:12px">${e.subject}</strong><small style="color:var(--taupe)">${e.date}</small></div><p style="font-size:12px;color:#555">${e.preview||''}</p><small style="color:var(--taupe)">${e.type==='inbox'?'↓ De: '+e.from:'↑ Para: '+e.to}</small></div>`).join('')||'<p style="font-size:13px;color:var(--taupe)">Sin emails</p>';
+}
+function renderMCProps(l){
+  const props=DB.get('jac_properties');
+  const assoc=l.properties||[];
+  document.getElementById('mc-props-list').innerHTML=props.filter(p=>assoc.includes(p.id)).map(p=>`<div style="background:#f9f9f9;border-radius:3px;padding:11px;display:flex;justify-content:space-between;align-items:center"><div><strong style="font-size:13px">${p.title}</strong><p style="font-size:11px;color:var(--taupe)">${p.loc} · ${p.price}</p></div><span class="status-badge s-${p.type==='venta'?'oferta':'contactado'}">${p.type}</span></div>`).join('')||'<p style="font-size:13px;color:var(--taupe)">Sin propiedades asociadas</p>';
+}
+function addHistory(){
+  const txt=document.getElementById('hist-txt').value.trim();
+  const t=document.getElementById('hist-type').value;
+  if(!txt) return;
+  const leads=DB.get('jac_leads');
+  const l=leads.find(x=>x.id===curId);
+  if(!l) return;
+  if(!l.history) l.history=[];
+  l.history.unshift({type:t,text:txt,date:new Date().toISOString().split('T')[0]});
+  DB.set('jac_leads',leads);
+  document.getElementById('hist-txt').value='';
+  renderMCHistory(l);
+}
+function saveClient(){
+  const leads=DB.get('jac_leads');
+  const i=leads.findIndex(l=>l.id===curId);
+  if(i===-1) return;
+  leads[i]={...leads[i],
+    name:document.getElementById('mc-name-i').value,
+    email:document.getElementById('mc-email').value,
+    phone:document.getElementById('mc-phone').value,
+    wa:document.getElementById('mc-wa').value,
+    interest:document.getElementById('mc-interest').value,
+    budget:document.getElementById('mc-budget').value,
+    status:document.getElementById('mc-status').value,
+    zone:document.getElementById('mc-zone').value,
+    source:document.getElementById('mc-source').value,
+    followup:document.getElementById('mc-followup').value,
+    desc:document.getElementById('mc-desc').value,
+    notes:document.getElementById('mc-notes-txt').value
+  };
+  DB.set('jac_leads',leads);
+  closeModal('modal-client');
+  renderLeadsTable();renderKanban();
+  addNotif('✅ Guardado: '+leads[i].name);
+}
+function modalQuickWA(){
+  const wa=document.getElementById('mc-wa').value||document.getElementById('mc-phone').value;
+  const n=document.getElementById('mc-name-i').value;
+  openWANum(wa,n);
+}
+function stageClient(s){
+  const leads=DB.get('jac_leads');
+  const l=leads.find(x=>x.id===curId);
+  if(!l) return;
+  l.status=s;
+  if(!l.history) l.history=[];
+  l.history.unshift({type:'nota',text:`Etapa cambiada a: ${s}`,date:new Date().toISOString().split('T')[0]});
+  DB.set('jac_leads',leads);
+  document.getElementById('mc-status').value=s;
+  renderMCHistory(l);renderKanban();
+  addNotif('📋 '+l.name+' → '+s);
+}
+function autoWA(type){
+  const n=document.getElementById('mc-name-i').value;
+  const wa=document.getElementById('mc-wa').value||document.getElementById('mc-phone').value;
+  const num=wa.replace(/[^0-9]/g,'');
+  const msg=(WA[type]||'').replace('{n}',n);
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
+  const leads=DB.get('jac_leads');
+  const l=leads.find(x=>x.id===curId);
+  if(l){if(!l.history)l.history=[];l.history.unshift({type:'whatsapp',text:'WA automático: '+type,date:new Date().toISOString().split('T')[0]});DB.set('jac_leads',leads);renderMCHistory(l);}
+}
+function autoEmail(type){
+  const n=document.getElementById('mc-name-i').value;
+  const e=document.getElementById('mc-email').value;
+  const t=ETMPL[type];if(!t) return;
+  openCompose();
+  document.getElementById('c-to').value=e;
+  document.getElementById('c-subject').value=t.s;
+  document.getElementById('c-body').value=t.b.replace('{n}',n);
+}
+function emailClient(){
+  openCompose();
+  document.getElementById('c-to').value=document.getElementById('mc-email').value;
+}
+function mcTab(el,id){
+  document.querySelectorAll('#mc-tabs .modal-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('#modal-client .modal-tab-content').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(id)?.classList.add('active');
+}
+
+// NEW LEAD
+function openNewLead(){
+  ['nl-name','nl-email','nl-phone','nl-wa','nl-budget','nl-notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('modal-newlead').classList.add('open');
+}
+function saveNewLead(){
+  const name=document.getElementById('nl-name').value.trim();
+  if(!name){alert('El nombre es requerido');return;}
+  const lead={id:Date.now(),name,email:document.getElementById('nl-email').value,phone:document.getElementById('nl-phone').value,wa:document.getElementById('nl-wa').value,interest:document.getElementById('nl-interest').value,budget:document.getElementById('nl-budget').value,status:document.getElementById('nl-status').value,source:document.getElementById('nl-source').value,notes:document.getElementById('nl-notes').value,history:[{type:'nota',text:'Lead creado manualmente',date:new Date().toISOString().split('T')[0]}],date:new Date().toISOString().split('T')[0]};
+  const leads=DB.get('jac_leads');leads.unshift(lead);DB.set('jac_leads',leads);
+  closeModal('modal-newlead');renderLeadsTable();renderKanban();
+  addNotif('🆕 Nuevo lead: '+name);
+}
+
+// PROPERTIES
+function renderProperties(){
+  const props=DB.get('jac_properties');
+  const s=(document.getElementById('props-search')?.value||'').toLowerCase();
+  const tf=document.getElementById('props-type')?.value||'';
+  const f=props.filter(p=>(!s||p.title.toLowerCase().includes(s)||(p.loc||'').toLowerCase().includes(s))&&(!tf||p.type===tf));
+  document.getElementById('prop-grid').innerHTML=f.map(p=>`<div class="prop-card"><div class="prop-img"><span class="prop-badge">${p.type.toUpperCase()}</span>${p.cat}</div><div class="prop-info"><h4>${p.title}</h4><p class="ploc">📍 ${p.loc}</p><div class="prop-price">${p.price}</div><div class="prop-specs">${p.beds>0?`🛏 ${p.beds}`:''} ${p.baths>0?`🚿 ${p.baths}`:''} ${p.sqm?`📐 ${p.sqm}m²`:''}</div><div class="flex gap-2 mt-2"><button class="btn btn-outline btn-sm" onclick="editProp(${p.id})">Editar</button><button class="btn btn-sm" style="background:#fee2e2;color:#991b1b;border:none;border-radius:3px;cursor:pointer;padding:5px 10px;font-size:12px" onclick="delProp(${p.id})">✕</button></div></div></div>`).join('')||'<p style="color:var(--taupe);padding:20px">Sin propiedades</p>';
+}
+function openNewProperty(){
+  ['np-title','np-price','np-loc','np-sqm','np-beds','np-baths','np-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('modal-newprop').classList.add('open');
+}
+function saveNewProperty(){
+  const title=document.getElementById('np-title').value.trim();
+  if(!title){alert('El título es requerido');return;}
+  const p={id:Date.now(),title,type:document.getElementById('np-type').value,price:document.getElementById('np-price').value,loc:document.getElementById('np-loc').value,cat:document.getElementById('np-cat').value,sqm:document.getElementById('np-sqm').value,beds:document.getElementById('np-beds').value,baths:document.getElementById('np-baths').value,desc:document.getElementById('np-desc').value};
+  const props=DB.get('jac_properties');props.unshift(p);DB.set('jac_properties',props);
+  closeModal('modal-newprop');renderProperties();
+}
+function delProp(id){if(confirm('¿Eliminar propiedad?')){DB.set('jac_properties',DB.get('jac_properties').filter(p=>p.id!==id));renderProperties();}}
+function editProp(id){openNewProperty();}
+
+// EMAIL
+let curFolder='inbox';
+function setFolder(f){
+  curFolder=f;
+  ['inbox','sent','draft','all'].forEach(x=>{
+    const el=document.getElementById('fold-'+x);
+    if(el) el.classList.toggle('active',x===f);
+  });
+  renderEmails();
+}
+function renderEmails(){
+  const all=DB.get('jac_emails');
+  const s=(document.getElementById('email-search')?.value||'').toLowerCase();
+  let f=all;
+  if(curFolder==='inbox') f=all.filter(e=>e.type==='inbox');
+  else if(curFolder==='sent') f=all.filter(e=>e.type==='sent');
+  else if(curFolder==='draft') f=all.filter(e=>e.type==='draft');
+  if(s) f=f.filter(e=>(e.subject||'').toLowerCase().includes(s)||(e.from||'').toLowerCase().includes(s)||(e.to||'').toLowerCase().includes(s));
+  document.getElementById('cnt-inbox').textContent=all.filter(e=>e.type==='inbox').length;
+  document.getElementById('cnt-sent').textContent=all.filter(e=>e.type==='sent').length;
+  document.getElementById('email-list').innerHTML=f.length?f.map(e=>`<div class="email-item ${e.unread?'unread':''}" onclick="viewEmail(${e.id})"><span class="etime">${e.date||''}</span><div class="efrom">${e.type==='sent'?'→ '+e.to:e.from||'?'}</div><div class="esubject">${e.subject||'Sin asunto'}</div><div class="epreview">${e.preview||e.body?.substring(0,80)||''}</div></div>`).join(''):'<div style="padding:32px;text-align:center;color:var(--taupe);font-size:13px">Sin emails</div>';
+}
+function viewEmail(id){
+  const e=DB.get('jac_emails').find(x=>x.id===id);if(!e) return;
+  const em=DB.get('jac_emails');const idx=em.findIndex(x=>x.id===id);if(idx>-1){em[idx].unread=false;DB.set('jac_emails',em);}
+  const info=`Cuenta: ${e.account||''}\nDe: ${e.from||''}\nPara: ${e.to||''}\nAsunto: ${e.subject||''}\nFecha: ${e.date||''}\n${'─'.repeat(40)}\n\n${e.body||''}`;
+  alert(info);renderEmails();
+}
+function openCompose(){
+  document.getElementById('compose-box').classList.add('open');
+  document.getElementById('compose-body-wrap').style.display='block';
+  document.getElementById('compose-toggle').textContent='−';
+}
+function toggleCompose(){
+  const bw=document.getElementById('compose-body-wrap');
+  const shown=bw.style.display!=='none';
+  bw.style.display=shown?'none':'block';
+  document.getElementById('compose-toggle').textContent=shown?'+':'−';
+}
+function closeCompose(){ document.getElementById('compose-box').classList.remove('open'); }
+function sendEmail(){
+  const from=document.getElementById('c-from').value;
+  const to=document.getElementById('c-to').value;
+  const sub=document.getElementById('c-subject').value;
+  const body=document.getElementById('c-body').value;
+  if(!to||!sub){alert('Completa destinatario y asunto');return;}
+  const emails=DB.get('jac_emails');
+  emails.unshift({id:Date.now(),from,to,subject:sub,body,preview:body.substring(0,80),type:'sent',date:new Date().toLocaleDateString('es-PA'),unread:false,account:from});
+  DB.set('jac_emails',emails);
+  const gmailUser=from.includes('gmail')?'jelyanrealestate@gmail.com':'jcastro@jacrealtypa.com';
+  window.open(`https://mail.google.com/mail/u/0/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(sub)}&body=${encodeURIComponent(body)}`,'_blank');
+  closeCompose();renderEmails();addNotif('📧 Email enviado a: '+to);
+  // Log to lead history
+  const leads=DB.get('jac_leads');const l=leads.find(x=>x.email===to);
+  if(l){if(!l.history)l.history=[];l.history.unshift({type:'email',text:'Email enviado: '+sub,date:new Date().toISOString().split('T')[0]});DB.set('jac_leads',leads);}
+}
+function saveDraft(){
+  const emails=DB.get('jac_emails');
+  emails.unshift({id:Date.now(),from:document.getElementById('c-from').value,to:document.getElementById('c-to').value,subject:document.getElementById('c-subject').value,body:document.getElementById('c-body').value,type:'draft',date:new Date().toLocaleDateString('es-PA'),unread:false});
+  DB.set('jac_emails',emails);closeCompose();renderEmails();
+}
+function syncGmail(){
+  const acc=document.getElementById('email-account').value;
+  window.open('https://mail.google.com','_blank');
+  addNotif('↻ Abriendo Gmail: '+acc);
+}
+
+// WHATSAPP
+function buildWAPage(){
+  const leads=DB.get('jac_leads');
+  const sel=document.getElementById('wa-contact');
+  sel.innerHTML='<option value="">— Seleccionar —</option>'+leads.map(l=>`<option value="${(l.wa||l.phone||'').replace(/[^0-9]/g,'')}" data-name="${l.name}">${l.name}</option>`).join('');
+  document.getElementById('wa-tmpls').innerHTML=Object.entries(WA).map(([k,v])=>`<div class="wa-tmpl"><h4>${k}</h4><p>${v.replace('{n}','[cliente]').substring(0,120)}...</p><div class="flex gap-2"><button class="btn btn-wa btn-sm" onclick="quickUseTmpl('${k}')">Usar</button></div></div>`).join('');
+}
+function onWAContactChange(){
+  const sel=document.getElementById('wa-contact');
+  const n=sel.selectedOptions[0]?.dataset?.name||'cliente';
+  const tmpl=document.getElementById('wa-tmpl-sel').value;
+  if(tmpl) document.getElementById('wa-msg').value=(WA[tmpl]||'').replace('{n}',n);
+}
+function loadWATmpl(){
+  const k=document.getElementById('wa-tmpl-sel').value;
+  if(!k) return;
+  const sel=document.getElementById('wa-contact');
+  const n=sel.selectedOptions[0]?.dataset?.name||'cliente';
+  document.getElementById('wa-msg').value=(WA[k]||'').replace('{n}',n);
+}
+function quickUseTmpl(k){document.getElementById('wa-tmpl-sel').value=k;loadWATmpl();}
+function sendWAMsg(){
+  const num=(document.getElementById('wa-contact').value||document.getElementById('wa-manual').value).replace(/[^0-9]/g,'');
+  const msg=document.getElementById('wa-msg').value;
+  if(!num){alert('Ingresa un número');return;}
+  window.open('https://wa.me/'+num+'?text='+encodeURIComponent(msg),'_blank');
+}
+function openWANum(num,name){
+  const n=(num||'').replace(/[^0-9]/g,'');if(!n) return;
+  const msg=(WA.seguimiento||'').replace('{n}',name||'cliente');
+  window.open('https://wa.me/'+n+'?text='+encodeURIComponent(msg),'_blank');
+}
+function openWADirect(num){window.open('https://wa.me/'+num,'_blank');}
+
+// REPORTS
+function renderReports(){
+  const leads=DB.get('jac_leads');
+  const props=DB.get('jac_properties');
+  const cerrados=leads.filter(l=>l.status==='cerrado');
+  document.getElementById('rpt-stats').innerHTML=[
+    {n:leads.length,l:'Total Leads',c:'var(--red)'},
+    {n:cerrados.length,l:'Clientes Cerrados',c:'var(--success)'},
+    {n:leads.length?Math.round((cerrados.length/leads.length)*100):0,l:'% Conversión',c:'var(--info)',suf:'%'},
+    {n:props.length,l:'Propiedades',c:'var(--purple)'}
+  ].map(s=>`<div class="stat-card"><div class="num" style="color:${s.c}">${s.n}${s.suf||''}</div><div class="lbl">${s.l}</div></div>`).join('');
+
+  const mon=Array(12).fill(0);leads.forEach(l=>mon[new Date(l.date||Date.now()).getMonth()]++);
+  const mm=Math.max(...mon,1);
+  const mnames=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  document.getElementById('chart-monthly').innerHTML=mon.map((c,i)=>`<div class="bar-wrap"><div class="bar-val">${c||''}</div><div class="bar" style="height:${Math.max((c/mm)*130,3)}px"></div><div class="bar-lbl">${mnames[i]}</div></div>`).join('');
+
+  const sc={};STAGES.forEach(s=>sc[s.id]=0);leads.forEach(l=>sc[l.status]!==undefined&&sc[l.status]++);
+  const tot=leads.length||1;
+  document.getElementById('chart-stages').innerHTML=STAGES.map(s=>`<div style="margin-bottom:7px"><div class="flex justify-between text-xs mb-1"><span>${s.lbl}</span><strong>${sc[s.id]}</strong></div><div style="background:#f0f0f0;border-radius:2px;height:9px"><div style="background:${SC[s.id]};height:100%;border-radius:2px;width:${Math.round((sc[s.id]/tot)*100)}%"></div></div></div>`).join('');
+
+  const tipos={compra:0,venta:0,alquiler:0,inversion:0};leads.forEach(l=>tipos[l.interest]!==undefined&&tipos[l.interest]++);
+  const tc={compra:'var(--red)',venta:'var(--info)',alquiler:'var(--success)',inversion:'var(--purple)'};
+  const tm=Math.max(...Object.values(tipos),1);
+  document.getElementById('chart-tipos').innerHTML=Object.entries(tipos).map(([k,v])=>`<div class="bar-wrap"><div class="bar-val">${v||''}</div><div class="bar" style="height:${Math.max((v/tm)*130,3)}px;background:${tc[k]}"></div><div class="bar-lbl">${k}</div></div>`).join('');
+
+  document.getElementById('chart-funnel').innerHTML=STAGES.map(s=>`<div style="margin-bottom:7px"><div class="flex justify-between text-xs mb-1"><span>${s.lbl}</span><strong>${sc[s.id]} (${Math.round((sc[s.id]/tot)*100)}%)</strong></div><div style="background:#f0f0f0;border-radius:2px;height:9px"><div style="background:${SC[s.id]};height:100%;border-radius:2px;width:${Math.round((sc[s.id]/tot)*100)}%;transition:.5s"></div></div></div>`).join('');
+}
+
+// NOTIFICATIONS
+const NOTIFS=[];
+function addNotif(msg){NOTIFS.unshift({msg,time:new Date().toLocaleTimeString('es-PA')});updateNotifBadge();}
+function updateNotifBadge(){document.getElementById('notif-count').textContent=Math.min(NOTIFS.length,9);}
+function toggleNotif(){
+  const p=document.getElementById('notif-panel');p.classList.toggle('open');
+  document.getElementById('notif-list').innerHTML=NOTIFS.slice(0,10).map(n=>`<div class="notif-item"><strong>${n.msg}</strong><small>${n.time}</small></div>`).join('')||'<div class="notif-item">Sin notificaciones</div>';
+}
+
+// MODALS
+function closeModal(id){document.getElementById(id)?.classList.remove('open');}
+
+// AUTO-CHECK new leads from website
+function checkNewLeads(){
+  const leads=DB.get('jac_leads');
+  const last=parseInt(localStorage.getItem('jac_last_check')||'0');
+  const fresh=leads.filter(l=>l.id>last&&l.source==='web');
+  if(fresh.length){fresh.forEach(l=>addNotif('🌐 Lead del sitio web: '+l.name));localStorage.setItem('jac_last_check',Date.now().toString());}
+}
+
+// KEYBOARD
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){document.querySelectorAll('.modal-overlay.open').forEach(m=>m.classList.remove('open'));closeCompose();}
+  if(e.ctrlKey&&e.key==='n'){e.preventDefault();openNewLead();}
+  if(e.ctrlKey&&e.key==='m'){e.preventDefault();openCompose();}
+});
+</script>
+</body>
+</html>
