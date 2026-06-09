@@ -3,743 +3,573 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JAC Realty | Bienes Raíces en Panamá · Licencia PN-0931</title>
-<meta name="description" content="JAC Realty - Especialistas en bienes raíces en Panamá. Compra, venta y alquiler de propiedades. Miembro de ACOBIR y MLS Panamá. Licencia PN-0931.">
-<meta property="og:title" content="JAC Realty | Bienes Raíces en Panamá">
-<meta property="og:description" content="Tu agencia inmobiliaria de confianza en Panamá. Licencia PN-0931 · ACOBIR · MLS Panamá">
-<meta property="og:image" content="https://jacrealtypa.com/og-image.jpg">
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<title>JAC Realty Panama — Propiedades de Venta y Alquiler</title>
+<meta name="description" content="JAC Realty Panama — Especialistas en venta y alquiler de propiedades premium. Licencia #0931. 20 anos de experiencia.">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  --red:#C41E3A; --red-dark:#a01830; --red-light:rgba(196,30,58,0.08);
-  --black:#111; --dark:#1a1a1a; --taupe:#9B8E85; --taupe-light:#E8E3DF;
-  --gray:#F4F2F0; --white:#FAFAFA; --text:#2C2C2C;
-  --serif:'Cormorant Garamond',serif; --sans:'Inter',sans-serif;
-}
-*{margin:0;padding:0;box-sizing:border-box}
+:root{--ng:#000;--rj:#E60909;--tp:#999084;--bl:#fff;--gr:#F7F7F7;--gm:#E8E8E8;--gt:#555;}
+*{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--sans);color:var(--text);background:var(--white);overflow-x:hidden}
+body{font-family:'Montserrat',sans-serif;color:var(--ng);background:var(--bl)}
 
-/* NAV */
-nav{position:fixed;top:0;width:100%;z-index:1000;padding:20px 60px;display:flex;align-items:center;justify-content:space-between;background:rgba(250,250,250,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(155,142,133,0.12);transition:all .3s}
-nav.scrolled{padding:14px 60px;box-shadow:0 2px 30px rgba(0,0,0,0.06)}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.nav-brand .jac{font-family:var(--serif);font-size:30px;font-weight:300;letter-spacing:3px;color:var(--black);line-height:1}
-.nav-brand .sep{width:1px;height:26px;background:var(--taupe-light)}
-.nav-brand .realty{font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:600}
-.nav-links{display:flex;gap:36px;list-style:none;align-items:center}
-.nav-links a{text-decoration:none;color:var(--text);font-size:11px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;position:relative;padding-bottom:2px;transition:color .3s}
-.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--red);transition:width .3s}
-.nav-links a:hover{color:var(--red)}
-.nav-links a:hover::after{width:100%}
-.nav-cta{background:var(--red)!important;color:white!important;padding:10px 22px!important;letter-spacing:1.5px!important}
-.nav-cta:hover{background:var(--red-dark)!important;color:white!important}
-.nav-cta::after{display:none!important}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}
-.hamburger span{width:24px;height:1.5px;background:var(--text);display:block;transition:all .3s}
+/* HEADER */
+header{position:fixed;top:0;width:100%;background:rgba(255,255,255,.97);backdrop-filter:blur(8px);z-index:1000;border-bottom:1px solid var(--gm)}
+.nw{max-width:1200px;margin:0 auto;padding:0 24px;height:70px;display:flex;align-items:center;gap:32px}
+.nl img{height:38px}
+.nl2{display:flex;gap:28px;flex:1;justify-content:center}
+.nl2 a{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ng);text-decoration:none;transition:.2s}
+.nl2 a:hover{color:var(--rj)}
+.nr{display:flex;align-items:center;gap:12px}
+.nlic{font-size:10px;color:var(--tp);letter-spacing:1px}
+.bwa{background:var(--ng);color:#fff;padding:9px 20px;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;transition:.2s;border-radius:3px}
+.bwa:hover{background:var(--rj)}
 
 /* HERO */
-.hero{height:100vh;min-height:680px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 40px;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1800&q=80') center/cover no-repeat;animation:heroZoom 20s ease-in-out infinite alternate}
-@keyframes heroZoom{0%{transform:scale(1)}100%{transform:scale(1.06)}}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(160deg,rgba(10,10,10,.82) 0%,rgba(17,12,10,.65) 50%,rgba(10,10,10,.88) 100%)}
-.hero-content{position:relative;z-index:2;max-width:940px}
-.hero-eyebrow{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:30px}
-.hero-eyebrow span{display:block;width:40px;height:1px;background:var(--red)}
-.hero-eyebrow p{color:var(--taupe);font-size:10px;letter-spacing:3.5px;text-transform:uppercase}
-.hero h1{font-family:var(--serif);font-size:clamp(50px,7.5vw,100px);font-weight:300;color:white;line-height:1.04;letter-spacing:-1px;margin-bottom:26px}
-.hero h1 em{font-style:italic;color:rgba(232,227,223,.85)}
-.hero p.subtitle{font-size:15px;color:rgba(255,255,255,.6);letter-spacing:.5px;line-height:1.8;max-width:540px;margin:0 auto 50px}
-.hero-buttons{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
-.btn-primary{background:var(--red);color:white;padding:16px 42px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;transition:all .3s;border:1px solid var(--red);display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-family:var(--sans)}
-.btn-primary:hover{background:transparent;color:var(--red)}
-.btn-outline-hero{background:transparent;color:white;padding:16px 42px;text-decoration:none;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:1px solid rgba(255,255,255,.35);transition:all .3s;display:inline-flex;align-items:center;gap:8px}
-.btn-outline-hero:hover{border-color:white;background:rgba(255,255,255,.06)}
-.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,.35);font-size:9px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;transition:color .3s}
-.hero-scroll:hover{color:rgba(255,255,255,.6)}
-.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.35));animation:sa 2.2s ease-in-out infinite}
-@keyframes sa{0%,100%{opacity:.4}50%{opacity:.9}}
+.hero{min-height:100vh;background:linear-gradient(135deg,#000 0%,#1a1a1a 60%,#111 100%);display:flex;align-items:center;justify-content:center;text-align:center;color:#fff;position:relative;overflow:hidden;padding-top:70px}
+.hero::before{content:"";position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80') center/cover;opacity:.2}
+.hc{position:relative;z-index:1;max-width:820px;padding:40px 24px}
+.hey{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--rj);margin-bottom:20px}
+.ht{font-size:clamp(38px,6vw,70px);font-weight:800;line-height:1.1;margin-bottom:16px;letter-spacing:-1px}
+.ht span{color:var(--rj)}
+.hln{width:50px;height:2px;background:var(--tp);margin:16px auto 24px}
+.hs2{font-size:15px;font-weight:300;color:rgba(255,255,255,.65);margin-bottom:40px;line-height:1.7}
 
 /* SEARCH */
-.search-wrap{background:white;padding:48px 60px;box-shadow:0 4px 50px rgba(0,0,0,.06)}
-.search-label{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:24px;display:flex;align-items:center;gap:16px}
-.search-label::after{content:'';flex:1;height:1px;background:var(--taupe-light)}
-.stabs{display:flex;margin-bottom:28px}
-.stab{padding:10px 28px;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:1px solid var(--taupe-light);background:transparent;color:var(--taupe);transition:all .3s;font-family:var(--sans);font-weight:500;margin-right:-1px}
-.stab.active{background:var(--black);color:white;border-color:var(--black);z-index:1}
-.sform{display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:12px;align-items:end}
-.fg{display:flex;flex-direction:column;gap:6px}
-.fg label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);font-weight:500}
-.fg select,.fg input{padding:12px 14px;border:1px solid var(--taupe-light);background:var(--gray);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .3s;border-radius:0;appearance:none;-webkit-appearance:none}
-.fg select:focus,.fg input:focus{border-color:var(--taupe);background:white}
-.btn-search{background:var(--red);color:white;border:none;padding:12px 32px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;cursor:pointer;font-family:var(--sans);transition:background .3s;white-space:nowrap;display:flex;align-items:center;gap:8px}
-.btn-search:hover{background:var(--red-dark)}
+.sb{background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.15);padding:20px 24px;border-radius:4px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin-bottom:40px}
+.sb select,.sb input{padding:10px 14px;border:none;background:rgba(255,255,255,.92);font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;outline:none;color:var(--ng);border-radius:3px;flex:1;min-width:130px}
+.bsr{background:var(--rj);color:#fff;border:none;padding:10px 28px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:3px;transition:.2s;white-space:nowrap}
+.bsr:hover{background:#c00}
 
-/* STATS */
-.stats{background:var(--black);padding:60px;display:grid;grid-template-columns:repeat(4,1fr)}
-.stat{text-align:center;padding:20px;border-right:1px solid rgba(255,255,255,.07)}
-.stat:last-child{border-right:none}
-.stat-n{font-family:var(--serif);font-size:52px;font-weight:300;color:white;line-height:1;margin-bottom:8px}
-.stat-n span{color:var(--red)}
-.stat-l{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--taupe)}
+/* HERO STATS */
+.hsts{display:flex;gap:40px;justify-content:center}
+.hst{text-align:center}
+.hst-n{font-size:30px;font-weight:800;color:var(--rj)}
+.hst-l{font-size:10px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:4px}
 
 /* SECTIONS */
-section{padding:100px 60px}
-.sh{text-align:center;margin-bottom:68px}
-.sey{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:500;margin-bottom:14px;display:block}
-.st{font-family:var(--serif);font-size:clamp(36px,4vw,56px);font-weight:300;color:var(--black);line-height:1.12}
-.ss{font-size:14px;color:var(--taupe);line-height:1.85;max-width:540px;margin:14px auto 0}
-.div{width:40px;height:1px;background:var(--red);margin:22px auto 0}
+.sec{max-width:1200px;margin:0 auto;padding:72px 24px}
+.se{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--rj);margin-bottom:12px}
+.st{font-size:clamp(22px,4vw,38px);font-weight:800;line-height:1.2;margin-bottom:36px;letter-spacing:-0.5px}
+.st span{color:var(--rj)}
 
-/* PROPERTIES */
-.props{background:var(--gray)}
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.pcard{background:white;overflow:hidden;cursor:pointer;transition:transform .4s,box-shadow .4s;position:relative}
-.pcard:hover{transform:translateY(-8px);box-shadow:0 24px 60px rgba(0,0,0,.12);z-index:2}
-.pimg{height:280px;overflow:hidden;position:relative;background:var(--taupe-light);display:flex;align-items:center;justify-content:center}
-.pimg img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-.pcard:hover .pimg img{transform:scale(1.06)}
-.pph{display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--taupe);opacity:.45}
-.pph svg{width:52px;height:52px}
-.pph p{font-size:10px;letter-spacing:2px;text-transform:uppercase}
-.pbadge{position:absolute;top:20px;left:20px;background:var(--red);color:white;padding:5px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
-.pbadge.alq{background:var(--dark)}
-.pinfo{padding:28px 28px 32px}
-.ptyp{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
-.ptit{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--black);margin-bottom:6px;line-height:1.3}
-.ploc{font-size:12px;color:var(--taupe);margin-bottom:20px;display:flex;align-items:center;gap:6px}
-.pspecs{display:flex;gap:18px;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--taupe-light)}
-.spec{font-size:11px;color:var(--taupe);display:flex;align-items:center;gap:5px}
-.spec strong{color:var(--text);font-weight:500}
-.pfoot{display:flex;align-items:center;justify-content:space-between}
-.pprice{font-family:var(--serif);font-size:26px;font-weight:400;color:var(--black)}
-.pprice small{font-size:13px;color:var(--taupe);font-family:var(--sans);font-weight:300}
-.pbtn{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);text-decoration:none;font-weight:500;display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;font-family:var(--sans);transition:gap .3s}
-.pbtn:hover{gap:10px}
-.padd{background:white;border:2px dashed var(--taupe-light);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;min-height:430px;transition:all .3s;text-decoration:none;color:var(--taupe)}
-.padd:hover{border-color:var(--red);color:var(--red);background:rgba(196,30,58,.02)}
-.props-footer{text-align:center;margin-top:56px}
+/* PROPERTY CARDS */
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pc{background:#fff;border-radius:3px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.07);transition:.3s;cursor:pointer;border:1px solid var(--gm)}
+.pc:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.14)}
+.pi{position:relative;height:210px;overflow:hidden;background:var(--gr)}
+.pi img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.pc:hover .pi img{transform:scale(1.06)}
+.pni{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--gm)}
+.pbs{position:absolute;top:12px;left:12px;display:flex;gap:6px;flex-wrap:wrap}
+.pb{padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;border-radius:2px}
+.pbv{background:var(--ng);color:#fff}.pba{background:var(--rj);color:#fff}
+.pbr{background:var(--tp);color:#fff}.pbd{background:#fff;color:var(--ng);border:1px solid var(--ng)}
+.pby{position:absolute;bottom:0;left:0;right:0;background:rgba(153,144,132,.9);color:#fff;padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.pbo{padding:16px 18px}
+.pcd{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--tp);margin-bottom:4px}
+.pti{font-size:14px;font-weight:700;margin-bottom:4px;line-height:1.3}
+.plo{font-size:11px;color:var(--gt);margin-bottom:12px}
+.psp{display:flex;gap:10px;margin-bottom:12px;font-size:11px;color:var(--gt);flex-wrap:wrap}
+.ppr{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--gr);padding-top:12px}
+.ppv{font-size:17px;font-weight:800}
+.ppt{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--tp)}
 
-/* SERVICES */
-.svgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
-.svcard{padding:40px 34px;border:1px solid var(--taupe-light);transition:all .4s;position:relative;overflow:hidden}
-.svcard::before{content:'';position:absolute;left:0;top:0;width:3px;height:0;background:var(--red);transition:height .4s}
-.svcard:hover{border-color:transparent;box-shadow:0 16px 50px rgba(0,0,0,.08);transform:translateY(-4px)}
-.svcard:hover::before{height:100%}
-.svi{width:48px;height:48px;margin-bottom:26px;color:var(--red)}
-.svn{font-family:var(--serif);font-size:54px;font-weight:300;color:var(--taupe-light);position:absolute;top:24px;right:28px;line-height:1}
-.svt{font-family:var(--serif);font-size:23px;font-weight:400;color:var(--black);margin-bottom:12px}
-.svd{font-size:13px;color:var(--taupe);line-height:1.95}
+/* FILTERS */
+.fb{background:#fff;border:1px solid var(--gm);border-radius:3px;padding:14px 18px;display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.fb select,.fb input{padding:8px 12px;border:1px solid var(--gm);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;border-radius:3px;background:#fff;flex:1;min-width:120px}
+.fb select:focus,.fb input:focus{border-color:var(--ng)}
+.fc{font-size:12px;color:var(--tp);font-weight:500;white-space:nowrap}
+
+/* LOADING / EMPTY */
+.ldg{display:flex;align-items:center;justify-content:center;gap:12px;padding:60px;color:var(--gt);grid-column:1/-1}
+.spn{width:22px;height:22px;border:2px solid var(--gm);border-top-color:var(--rj);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.emp{text-align:center;padding:60px;color:var(--gt);grid-column:1/-1}
+.emp-i{font-size:44px;margin-bottom:14px}
+.emp h3{font-size:15px;font-weight:600;color:var(--ng);margin-bottom:8px}
+
+/* PAGINATION */
+.pag{display:flex;justify-content:center;gap:8px;margin-top:28px;flex-wrap:wrap}
+.pg-b{padding:8px 14px;border:1px solid var(--gm);background:#fff;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;cursor:pointer;border-radius:3px;transition:.2s}
+.pg-b:hover,.pg-b.on{background:var(--ng);color:#fff;border-color:var(--ng)}
+
+/* MODAL */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:2000;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;padding:20px}
+.mov.open{display:flex}
+.mbox{background:#fff;width:920px;max-width:95vw;margin:auto;border-radius:3px;overflow:hidden;position:relative}
+.mcl{position:absolute;top:16px;right:16px;background:#fff;border:1px solid var(--gm);width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:.2s}
+.mcl:hover{background:var(--rj);color:#fff;border-color:var(--rj)}
+.mgal{position:relative;height:380px;background:#111;overflow:hidden}
+.mgal img{width:100%;height:100%;object-fit:cover}
+.mgal .gn{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.gnb{background:rgba(255,255,255,.85);border:none;width:38px;height:38px;border-radius:50%;font-size:16px;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center}
+.gnb:hover{background:#fff}
+.mgal-no{height:100%;display:flex;align-items:center;justify-content:center;font-size:64px;color:#333}
+.mbd{padding:28px}
+.mgrid{display:grid;grid-template-columns:1fr 320px;gap:28px}
+.ml h2{font-size:20px;font-weight:800;margin-bottom:6px;line-height:1.3}
+.ml-loc{color:var(--gt);font-size:13px;margin-bottom:16px}
+.msp{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;padding:14px;background:var(--gr);border-radius:3px}
+.ms2{text-align:center;min-width:60px}
+.ms2-v{font-size:17px;font-weight:700}
+.ms2-l{font-size:10px;color:var(--gt);letter-spacing:1px;text-transform:uppercase;margin-top:2px}
+.mdesc{font-size:13px;line-height:1.75;color:var(--gt);margin-bottom:18px}
+.mcar h4{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tp);margin-bottom:10px}
+.clist{display:flex;flex-wrap:wrap;gap:6px}
+.ctag{padding:4px 10px;background:var(--gr);border-radius:2px;font-size:11px;font-weight:500}
+.mr{position:sticky;top:20px}
+.cbox{border:1px solid var(--gm);border-radius:3px;padding:22px}
+.cbox h3{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;color:var(--gt)}
+.cbox-pr{font-size:26px;font-weight:800;margin-bottom:6px}
+.cbox-ln{height:2px;background:var(--rj);width:36px;margin-bottom:18px}
+.cf input,.cf textarea{width:100%;padding:10px 12px;border:1px solid var(--gm);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;margin-bottom:10px;border-radius:3px}
+.cf input:focus,.cf textarea:focus{border-color:var(--ng)}
+.bc{width:100%;padding:12px;background:var(--ng);color:#fff;border:none;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.2s;margin-bottom:8px;border-radius:3px}
+.bc:hover{background:var(--rj)}
+.bw2{width:100%;padding:12px;background:#25D366;color:#fff;border:none;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s;border-radius:3px}
+.bw2:hover{background:#128C7E}
 
 /* ABOUT */
-.about{background:var(--black);display:grid;grid-template-columns:1fr 1fr;min-height:580px;padding:0}
-.about-img{background:url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80') center/cover;min-height:480px;position:relative}
-.about-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,transparent 55%,var(--black) 100%)}
-.about-body{padding:80px 70px 80px 56px;display:flex;flex-direction:column;justify-content:center}
-.about-body .sey{text-align:left}
-.about-body .st{text-align:left;color:white}
-.about-body .div{margin-left:0}
-.atext{font-size:14px;color:rgba(255,255,255,.58);line-height:1.95;margin:28px 0 20px}
-.abadges{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-.abadge{padding:8px 18px;border:1px solid rgba(155,142,133,.35);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe)}
-.abadge.lic{background:rgba(196,30,58,.1);border-color:rgba(196,30,58,.3);color:var(--red)}
-
-/* BLOG */
-.blog{background:var(--gray)}
-.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-.bcard{background:white;overflow:hidden;transition:box-shadow .3s}
-.bcard:hover{box-shadow:0 8px 40px rgba(0,0,0,.08)}
-.bimg{height:210px;background:var(--taupe-light);overflow:hidden}
-.bimg img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.bcard:hover .bimg img{transform:scale(1.04)}
-.bbody{padding:26px 26px 30px}
-.bcat{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:9px}
-.btit{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--black);line-height:1.35;margin-bottom:12px}
-.bexc{font-size:13px;color:var(--taupe);line-height:1.82;max-height:0;overflow:hidden;transition:max-height .5s ease,opacity .4s;opacity:0;margin-bottom:0}
-.bcard.open .bexc{max-height:400px;opacity:1;margin-bottom:14px}
-.bmeta{display:flex;align-items:center;justify-content:space-between}
-.bdate{font-size:11px;color:var(--taupe)}
-.btog{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--red);cursor:pointer;background:none;border:none;font-family:var(--sans);font-weight:500;display:flex;align-items:center;gap:5px;transition:gap .3s}
-.btog:hover{gap:8px}
-.btog .arr{transition:transform .35s;display:inline-block}
-.bcard.open .btog .arr{transform:rotate(90deg)}
+.abt{background:var(--ng);color:#fff;padding:72px 0}
+.abi{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.ab-ln1,.ab-ln2{height:2px;background:var(--tp);margin-bottom:5px;width:56px}
+.ab-ln2{width:32px;margin-bottom:20px}
+.abt h2{font-size:clamp(26px,4vw,44px);font-weight:800;line-height:1.2;margin-bottom:18px}
+.abt h2 span{color:var(--rj)}
+.abt p{font-size:13px;line-height:1.85;color:rgba(255,255,255,.65);margin-bottom:16px}
+.ast{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.as{background:rgba(255,255,255,.05);padding:18px;border-left:3px solid var(--rj)}
+.as-n{font-size:28px;font-weight:800;color:var(--rj)}
+.as-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-top:3px}
+.abr{background:rgba(255,255,255,.04);padding:28px;border:1px solid rgba(255,255,255,.08)}
+.abr h3{font-size:15px;font-weight:700;margin-bottom:18px}
+.abi2{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;font-size:13px;color:rgba(255,255,255,.65)}
+.abi2 em{color:var(--rj);font-style:normal;font-weight:700;flex-shrink:0}
 
 /* CONTACT */
-.contact-wrap{background:white}
-.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
-.cinfo h3{font-family:var(--serif);font-size:38px;font-weight:300;color:var(--black);line-height:1.2;margin-bottom:16px}
-.cinfo>p{font-size:14px;color:var(--taupe);line-height:1.9;margin-bottom:36px}
-.cdetails{display:flex;flex-direction:column;gap:18px}
-.citem{display:flex;align-items:flex-start;gap:14px}
-.cicon{width:40px;height:40px;background:var(--gray);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.cicon svg{width:17px;height:17px;color:var(--red)}
-.citem label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);display:block;margin-bottom:3px}
-.citem a,.citem p{font-size:14px;color:var(--text);text-decoration:none;line-height:1.55;transition:color .3s}
-.citem a:hover{color:var(--red)}
-.cform{display:flex;flex-direction:column;gap:14px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.cform .fg label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--taupe);font-weight:500;margin-bottom:4px;display:block}
-.cform input,.cform select,.cform textarea{padding:13px 14px;border:1px solid var(--taupe-light);background:var(--gray);color:var(--text);font-family:var(--sans);font-size:13px;outline:none;transition:border-color .3s;border-radius:0;width:100%;resize:none;-webkit-appearance:none}
-.cform input:focus,.cform select:focus,.cform textarea:focus{border-color:var(--taupe);background:white}
-.cform textarea{height:110px}
-.fsub{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.wa-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:white;padding:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);text-decoration:none;transition:background .3s;width:100%}
-.wa-btn:hover{background:#1da851}
-.form-status{padding:12px 16px;font-size:13px;display:none;margin-top:4px}
-.form-status.ok{background:rgba(34,197,94,.1);color:#15803d;border-left:3px solid #22c55e}
-.form-status.err{background:var(--red-light);color:var(--red);border-left:3px solid var(--red)}
-
-/* WA FLOAT */
-.waf{position:fixed;bottom:32px;right:32px;z-index:999;background:#25D366;color:white;width:62px;height:62px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(37,211,102,.4);text-decoration:none;transition:all .3s}
-.waf:hover{background:#1da851;transform:scale(1.1)}
-.waf svg{width:30px;height:30px}
-.waf::before{content:'¿Necesita ayuda?';position:absolute;right:74px;background:var(--dark);color:white;padding:8px 14px;font-size:12px;white-space:nowrap;opacity:0;transform:translateX(8px);transition:all .3s;pointer-events:none}
-.waf:hover::before{opacity:1;transform:translateX(0)}
-@keyframes wpulse{0%,100%{box-shadow:0 8px 32px rgba(37,211,102,.4)}50%{box-shadow:0 8px 48px rgba(37,211,102,.65),0 0 0 12px rgba(37,211,102,.08)}}
-.waf{animation:wpulse 3s ease-in-out infinite}
+.csc{background:var(--gr);padding:72px 0}
+.csi{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.csl h2{font-size:32px;font-weight:800;margin-bottom:14px}
+.csl p{font-size:13px;line-height:1.75;color:var(--gt);margin-bottom:22px}
+.cin{display:flex;flex-direction:column;gap:10px}
+.cit{display:flex;align-items:center;gap:12px;font-size:13px;font-weight:500}
+.cic{width:34px;height:34px;background:var(--ng);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;border-radius:3px;flex-shrink:0}
+.csr2{background:#fff;padding:28px;border-radius:3px;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.csr2 h3{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:18px}
+.fc2 input,.fc2 select,.fc2 textarea{width:100%;padding:10px 13px;border:1px solid var(--gm);font-family:'Montserrat',sans-serif;font-size:12px;outline:none;margin-bottom:10px;border-radius:3px;transition:.2s}
+.fc2 input:focus,.fc2 select:focus,.fc2 textarea:focus{border-color:var(--ng)}
+.fc2 textarea{height:90px;resize:vertical}
+.bsend{width:100%;padding:13px;background:var(--ng);color:#fff;border:none;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.2s;border-radius:3px}
+.bsend:hover{background:var(--rj)}
+.fok{display:none;background:#e8f5e9;color:#2e7d32;padding:14px;border-radius:3px;font-size:13px;font-weight:500;margin-top:10px;text-align:center}
 
 /* FOOTER */
-footer{background:#0d0d0d;padding:70px 60px 0}
-.fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;margin-bottom:56px}
-.fbrand p{font-size:13px;color:rgba(255,255,255,.4);line-height:1.85;max-width:280px;margin-top:16px}
-.fsoc{display:flex;gap:10px;margin-top:22px}
-.fsl{width:36px;height:36px;border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.45);text-decoration:none;transition:all .3s}
-.fsl:hover{border-color:var(--red);color:var(--red)}
-.fsl svg{width:15px;height:15px}
-.fcol h4{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--taupe);margin-bottom:22px}
-.fcol ul{list-style:none;display:flex;flex-direction:column;gap:11px}
-.fcol ul li a{font-size:13px;color:rgba(255,255,255,.42);text-decoration:none;transition:color .3s}
-.fcol ul li a:hover{color:white}
-.fbot{border-top:1px solid rgba(255,255,255,.06);padding:26px 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.fbot p{font-size:11px;color:rgba(255,255,255,.22);line-height:1.7}
-.fleg{display:flex;gap:22px}
-.fleg a{font-size:11px;color:rgba(255,255,255,.28);text-decoration:none;transition:color .3s}
-.fleg a:hover{color:rgba(255,255,255,.6)}
+footer{background:var(--ng);padding:36px 0}
+.fi{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer img{height:30px;filter:invert(1);opacity:.6}
+.fl{display:flex;gap:20px;flex-wrap:wrap}
+.fl a{color:rgba(255,255,255,.35);text-decoration:none;font-size:10px;letter-spacing:1px;text-transform:uppercase;transition:.2s}
+.fl a:hover{color:#fff}
+.fc3{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.5px}
+
+/* WA FLOAT */
+.waf{position:fixed;bottom:24px;right:24px;z-index:999;background:#25D366;color:#fff;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none;transition:.3s}
+.waf:hover{transform:scale(1.1)}
 
 /* TOAST */
-.toast{position:fixed;bottom:110px;right:32px;z-index:9999;background:var(--black);color:white;padding:16px 22px;font-size:13px;border-left:3px solid var(--red);box-shadow:0 8px 32px rgba(0,0,0,.2);transform:translateX(130%);transition:transform .4s;max-width:320px;line-height:1.6}
-.toast.show{transform:translateX(0)}
-
-/* LOADING OVERLAY */
-.loverlay{position:fixed;inset:0;background:rgba(17,17,17,.94);z-index:99999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;opacity:0;pointer-events:none;transition:opacity .3s}
-.loverlay.show{opacity:1;pointer-events:all}
-.spinner{width:44px;height:44px;border:2px solid rgba(255,255,255,.1);border-top-color:var(--red);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loverlay p{color:rgba(255,255,255,.7);font-size:13px;letter-spacing:1px}
+.tst{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:var(--ng);color:#fff;padding:12px 24px;border-radius:3px;font-size:13px;font-weight:500;z-index:9999;display:none;box-shadow:0 4px 16px rgba(0,0,0,.3)}
 
 /* RESPONSIVE */
-@media(max-width:1024px){
-  nav{padding:16px 28px}
-  nav.scrolled{padding:12px 28px}
-  .nav-links{display:none}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;inset:0;top:72px;background:rgba(250,250,250,.98);backdrop-filter:blur(20px);align-items:center;justify-content:center;gap:36px;z-index:999}
-  .nav-links.open a{font-size:14px}
-  .hamburger{display:flex}
-  section{padding:70px 28px}
-  .search-wrap{padding:36px 28px}
-  .sform{grid-template-columns:1fr 1fr}
-  .btn-search{grid-column:1/-1}
-  .pgrid{grid-template-columns:1fr}
-  .svgrid{grid-template-columns:1fr;gap:18px}
-  .about{grid-template-columns:1fr}
-  .about-img{min-height:280px}
-  .about-img::after{background:linear-gradient(to bottom,transparent 55%,var(--black) 100%)}
-  .about-body{padding:56px 28px}
-  .stats{padding:56px 28px;grid-template-columns:repeat(2,1fr)}
-  .stat:nth-child(2){border-right:none}
-  .bgrid{grid-template-columns:1fr}
-  .cgrid{grid-template-columns:1fr;gap:48px}
-  .fgrid{grid-template-columns:1fr 1fr;gap:36px}
-  .hero-buttons{flex-direction:column;align-items:center}
+@media(max-width:900px){
+  .pg{grid-template-columns:repeat(2,1fr)}
+  .mgrid{grid-template-columns:1fr}
+  .abi,.csi{grid-template-columns:1fr}
+  .nl2{display:none}
 }
-@media(max-width:600px){
-  section{padding:60px 18px}
-  nav{padding:14px 18px}
-  .stats{padding:48px 18px}
-  .search-wrap{padding:30px 18px}
-  .sform{grid-template-columns:1fr}
-  .fgrid{grid-template-columns:1fr;gap:28px}
-  .frow,.fsub{grid-template-columns:1fr}
-  .fbot{flex-direction:column;text-align:center}
-  .fleg{justify-content:center;flex-wrap:wrap}
+@media(max-width:580px){
+  .pg{grid-template-columns:1fr}
+  .fi{flex-direction:column;text-align:center}
+  .sb{flex-direction:column}
+  .sb select,.sb input{min-width:100%}
+  .hsts{gap:20px}
 }
 </style>
 </head>
 <body>
 
-<div class="loverlay" id="loverlay"><div class="spinner"></div><p>Enviando mensaje…</p></div>
-<div class="toast" id="toast"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <a href="#" class="nav-brand">
-    <span class="jac">JAC</span>
-    <span class="sep"></span>
-    <span class="realty">REALTY</span>
-  </a>
-  <button class="hamburger" id="hbg" aria-label="Menú"><span></span><span></span><span></span></button>
-  <ul class="nav-links" id="navl">
-    <li><a href="#propiedades" onclick="closeNav()">Propiedades</a></li>
-    <li><a href="#servicios" onclick="closeNav()">Servicios</a></li>
-    <li><a href="#nosotros" onclick="closeNav()">Nosotros</a></li>
-    <li><a href="#blog" onclick="closeNav()">Blog</a></li>
-    <li><a href="#contacto" onclick="closeNav()">Contacto</a></li>
-    <li><a href="crm.html" class="nav-cta" onclick="closeNav()">Portal Agentes</a></li>
-  </ul>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="inicio">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow"><span></span><p>Bienes Raíces en Panamá · Licencia PN-0931</p><span></span></div>
-    <h1>Encuentra tu <em>propiedad</em><br>ideal en Panamá</h1>
-    <p class="subtitle">Especialistas en propiedades residenciales y comerciales. Miembros de ACOBIR, MLS Panamá y regulados por la Junta Técnica de Bienes Raíces de la República de Panamá.</p>
-    <div class="hero-buttons">
-      <a href="#propiedades" class="btn-primary">Ver Propiedades</a>
-      <a href="#contacto" class="btn-outline-hero">Hablar con un Asesor</a>
+<header>
+  <div class="nw">
+    <a href="#inicio" class="nl"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAIAAABEtEjdAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFY2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI2LTA0LTE1PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkRhdGE+eyZxdW90O2RvYyZxdW90OzomcXVvdDtEQUdKVmhEM0YycyZxdW90OywmcXVvdDt1c2VyJnF1b3Q7OiZxdW90O1VBRHBUdmZaTVY4JnF1b3Q7LCZxdW90O2JyYW5kJnF1b3Q7OiZxdW90O3BhdGltYXlzJiMzOTtzIHRlYW0mcXVvdDt9PC9BdHRyaWI6RGF0YT4KICAgICA8QXR0cmliOkV4dElkPjc4OTU5ZDBiLTA4MWEtNDNiYy05N2JmLWU2ZGViYjEwZGY4MzwvQXR0cmliOkV4dElkPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvJz4KICA8ZGM6dGl0bGU+CiAgIDxyZGY6QWx0PgogICAgPHJkZjpsaSB4bWw6bGFuZz0neC1kZWZhdWx0Jz5MT0dPIEpBQyBiaWVuZXMgcmFpY2VzIC0gNjwvcmRmOmxpPgogICA8L3JkZjpBbHQ+CiAgPC9kYzp0aXRsZT4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6cGRmPSdodHRwOi8vbnMuYWRvYmUuY29tL3BkZi8xLjMvJz4KICA8cGRmOkF1dGhvcj5KYW4gVmFsZGVzPC9wZGY6QXV0aG9yPgogPC9yZGY6RGVzY3JpcHRpb24+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczp4bXA9J2h0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8nPgogIDx4bXA6Q3JlYXRvclRvb2w+Q2FudmEgKFJlbmRlcmVyKSBkb2M9REFHSlZoRDNGMnMgdXNlcj1VQURwVHZmWk1WOCBicmFuZD1wYXRpbWF5cyYjMzk7cyB0ZWFtPC94bXA6Q3JlYXRvclRvb2w+CiA8L3JkZjpEZXNjcmlwdGlvbj4KPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KPD94cGFja2V0IGVuZD0ncic/Pl2Yp+AAAABOZVhJZk1NACoAAAAIAAQBGgAFAAAAAQAAAD4BGwAFAAAAAQAAAEYBKAADAAAAAQACAAACEwADAAAAAQABAAAAAAAAAAAAYAAAAAEAAABgAAAAAXcF3+cAADKmSURBVHic7N17UNV1/sfxA4KBAqJionlJDRXXG1aaa5pJtRoMpqKAOJqibjmto03btmuz2za123bRcazdyYlq5XrwggQtizcyNN3yQrJe8JoYWrrG5SA34fD7g/k5TqW+D+f7Oed7PjwffzQK7+/3+5b0xZfP9/P9fLxaWlosAAC9eLu7AQCA8Qh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwANEe4AoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADRHuAKAhwh0ANES4A4CGCHcA0BDhDgAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwANEe4AoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADRHuAKAhwh0ANES4A4CGCHcA0BDhDgAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwANEe4AoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADRHuAKAhwh0ANES4A4CGCHcA0BDhDgAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwANEe4AoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADRHuAKAhwh0ANES4A4CGCHcA0BDhDgAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwAN+dz+0/X1dQ31da5pBQAg5+vr26lz4K0+e4dwP3Jwf/GBL4xuCQDgrH4D7psaE3erzzIsAwAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDd1h+wM+/U1BwV9e0AgCQ63zrhWUsFotXS0uLy1oBALgGwzIAoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADRHuAKAhwh0ANES4A4CGCHcA0BDhDgAaItwBQEOEOwBoiHAHAA0R7gCgIcIdADREuAOAhgh3ANAQ4Q4AGiLcAUBDhDsAaIhwBwANEe4AoCHCHQA0RLgDgIYIdwDQEOEOABoi3AFAQ4Q7AGiIcAcADfm4uwEAsFgslubm5m+++ebkyZOlpaWnTp26fPmyzWarqamx2WzV1dVVVVU1NTV+fn7+/y8kJCQ0NLRnz56hoaFDhw4dPXr0oEGDvLy83P3nMAuvlpYWd/fgSZKTk//85z/fsezuu+8+cOCAC/ppbxYuXLhz587b1zz22GMffviha/qBk0pLSwsLC/fs2XP8+PETJ07U1tY6c7bu3btHRESMHj169OjRERERQ4YM6dChg1GtehzC3THr1q1bvnz5Hcv69u1bVlbmgn7alStXrvTr16++vv72ZX5+fmVlZT169HBNV3BUeXn5rl27Pvvss8LCwnPnzqm7UFBQ0LRp02bMmBEVFRUQEKDuQubEsAw8RkZGxh2T3WKx1NfXZ2RkSL4Hw5Vqamq2bNmSmpq6c+dOu93ugitWV1dbrVar1RoQEBAVFdXeUp4HqvAYqampwsqUlBSlnUCupaVl9+7dS5Ys6dOnz4IFC7Zv3+6aZL9ZTU2N1WqNj4/v3bt3fHx8bm5uexixINzhGQ4fPvzVV18Jiw8cOHDo0CGl/eCOmpqaPv744+HDh0+ePPmDDz6oqqpyd0cWm81mtVpjYmIefPBBq9Xq+m8zrkS4wzM4ejPOzbsbXb9+/cMPPxw+fPjChQuPHTvm7nZ+xsGDB+Pj40eOHPnPf/6zqanJ3e0oQbjDAzQ2NmZkZDh0SEZGRkNDg6J+cCtNTU2tsZ6UlFRaWurudu7g6NGjTz/99LBhw95//339/rYQ7vAAeXl53333nUOHfP/997m5uYr6wc/av3//Qw89lJSUdPLkSXf34oBTp04988wzY8aM2b17t7t7MRLhDg8gf5R6M0ZmXKa6unrFihUTJ048ePCgu3tpo2PHjk2ZMmX58uU2m83dvRiDcIfZfffdd59++mkbDszPz7948aLh/eBHtm7dOmrUqLVr13r64LXdbl+3bt2YMWMKCgrc3YsBCHeYXXp6emNjYxsOvH79elpamuH94IZr167Nnz9/xowZ33zzjbt7Mczp06enTp26ePHiiooKd/fiFMIdZte2MZlWjMyoU1pa+vDDD7vyK9yxY0eXXSs5OTkiIkI++9aEeEMVpvbVV18dPny4zYeXlJTs27dv/PjxBrYEi8WSnZ2dlJRk+L1tYGDgkCFDhgwZMnjw4MGDB/fr1y8wMDAwMDAoKCgwMNDX17ehoaGioqKysrKysrKqqqqysvLs2bMlJSXFxcWlpaXGzls/f/58ZGTkxx9/PHPmTANP6zKEO0zN+RvDlJQUwt1Azc3NL7/88htvvGHUCYOCgiZNmjR58uQpU6aMGjXK2/t2wwl33XVXaGhoaGjoTz9VXV1dXFz89ddf79mzJz8/35Dnojabbfbs2W+88cZvf/tb58/mYiwc5hgWDnOl+vr6/v37X7582ZmTdO/evaysrFOnTkZ11Z41NjbOnz/farU6f6qQkJA5c+bExsZOmDDB8PGWa9eu5efn5+Tk5OXlVVZWOn/CpUuXvvvuu76+vs6fymUYc4d5ffLJJ04mu8ViuXr1anZ2tiH9tHN1dXWxsbFOJru3t/fUqVPT0tLKysree++9Rx99VMVIeufOnWNjY1NSUi5dupSTkxMVFeXkCdevXx8dHe1Zj1gJd5iXUQ/reKzqPJvNFhMT48x7Yb6+vosWLSotLc3Pz587d66/v7+B7d2Kn59fTExMXl7ewYMHExMTfXzaPhC9bdu2yMjIH374wcD2lCLcYVLl5eX//ve/DTnV9u3bdZqr53oVFRVPPvnkjh072na4j4/P008/ffTo0eTk5Pvuu8/Y3oTGjBmTmpp67NixZ599ts3fVw4fPjxz5kwndxRxGcIdJpWammrUSzF2u92Z+ZTtXG1tbXR09J49e9p2+BNPPFFSUvLRRx+FhYUZ21gbhIWF/f3vfy8pKZk2bVrbzrB79+65c+d6xOtahDtMytg4TklJYe5AG9jt9vnz53/xxRdtOLZHjx7JyckFBQVDhw41vDFnDBo06F//+ldKSkqvXr3acHhOTs7SpUvN/9eJcIcZffHFF//9738NPOHJkyc/++wzA0/YTrzwwgubN29uw4FxcXFHjhxZtGiR4S0ZZd68eW3u8KOPPnrppZcMb8lYhDvMSH7bPn36dGElj1UdtW7dujVr1jh6lJ+f3z/+8Y/MzMyfnY1uKiEhIcnJybm5ud27d3f02DfffPPtt99W0ZVRCHeYTl1dXVZWlqSya9euH3zwQdeuXSXFmzdv1mbBPxfIzc19/vnnHT2qT58+27dvf+aZZ1S0pEh0dHRRUdEvfvELRw/83e9+t2vXLhUtGYJwh+lkZ2dfvXpVUhkbGxsSEjJ79mxJcXV19caNG51rrb24cOFCUlKSo48NJ06cuH///ocfflhRV+qEh4cXFRU5Oh3ebrcvWbLEtJPfCXeYjnz8JDEx8cZ/JZgzI2G325OSkq5cueLQUdOmTSsoKLjnnnsUdaVa165dc3JyXnjhBYeOOnv27HPPPaeoJScR7jCXsrKybdu2SSrDwsImTZpksVgmTpw4ZMgQySGFhYWetUmQW7zzzjvbt2936JCYmJgtW7a45r0kdTp06PDWW2+9/vrrDh2Vnp6+YcMGRS05g3CHuaSmpgrX9ps7d66Xl5fFYvHy8pLfvPNY9fYOHTr0xz/+0aFDZs2atXHjRj8/P0Utudgf/vCHVatWOXTIihUrzp49q6ifNiPcYSItLS3ykZO5c+fe+HViYuLtVxO8IS0tzdiFYXVSV1e3cOHC+vp6+SFRUVEZGRmuXGndBV577bWVK1fK6ysqKhYtWtTc3KyupTYg3GEiRUVFx48fl1ROmjRp8ODBN347cODARx99VHLguXPnHB1zaD9Wr1595MgRef2oUaPS0tI8a61EoXfeeefZZ58VFnfs2HHQoEGGLD9pIMIdJiIfM7n5tv1WH3H+Ku1KeXn5m2++Ka8PDQ3dsmVLly5d1LXkRl5eXu++++5TTz11+zJ/f/9ly5adOHEiOTm5DZPllSLcYRbXrl3btGmTpNLf3/+n0x9jY2MDAwMlh2dnZ5t2+pobrVq1qrq6Wljs7+9vtVoHDhyotCX38vb2vs1KZ4GBgStXrjx58uR77703YMAAF/cmQbjDLDZt2iT8wXb69OndunX70QeDgoJmzJghOby2tjYzM9Ph/rS2f/9+h36gee2111qnKumtW7duqampP3pWHBwc/NJLL506dWr16tV9+vRxV293RLjDLNr2KPVm8+bNE56BkZmbtbS0vPjii/LnzJGRkStWrFDaknmMGzfub3/7W+uvQ0JCXnnlldOnT//1r3/t2bOnexu7I/ZQhSmcPXtW+CZ3r169pk6d+rOfioyMHDBgwLlz5+54kn379pWUlIwYMcKxLjWVk5NTVFQkLA4ODl6/fr1wbpIeli9ffvTo0XvvvXfZsmUe9IyhHf0fgpnJp7fHx8ffanqGt7d3QkKC8IrcvN+wdu1aefFbb72l91D7z3r//fd///vfe1CyWwh3mEGbp7f/lHxkJj09/fr168Jije3bt0++GPIjjzyyePFile3AMIQ73K+wsPDUqVOSylGjRj3wwAO3KQgPD58wYYLkVOXl5fn5+aL+tObQbftf/vIXdZ3AWIQ73M+Z6e0/xVIEcqdPn5bvxZGQkPDLX/5SaT8wEOEON7PZbFu2bJFU+vj4SMI9Li5OuILVJ598cvnyZUmlrtatWydc19fPz+/VV19V3Q8MRLjDzTZu3Ch8d+bxxx+XTCvu1q1bTEyM5ISNjY3p6emSSi01NDTI//iLFy++1es8MCfCHW5m7JhMK0ZmJAoKCv73v/9JKr29vU27ajluhXCHO8n3re7SpYvwBVSLxTJ16tTevXtLKg8dOnTgwAHhaTUj35cqOjpauGI+zINwhzvJb5xnzZrVuXNnYbGvr298fLzhPeiktrY2NzdXWMxtuyci3OE2drs9LS1NWCwfaWkln/CemZnZ0NDg0Mk1kJeXV1VVJakcOXLkY489profGI5wh9vs2LFDslSAxWIZOHDg5MmTHTp5RETE/fffL6m8fPlyTk6OQyfXgHABTovFkpiY2LrjFTwL4Q63cehRahsWM2Hj7Ftpbm7esWOHsHjmzJlKm4EihDvco7KycuvWrcJi+TyZmyUkJAg3CcrPzy8vL2/DJTxUcXGxcEX7sWPHMgPSQxHucI+srKyamhpJ5YQJE8LDw9twidDQ0CeffFJS2dTU1K5u3vfu3SuslM9QgtkQ7nAPFdPbf4oJ7z9LHu533GcOpkW4ww2OHz++Z88eSaWfn9+cOXPafKGYmJgePXpIKo8ePSqPPE8n/OL37dt36NChqpuBIoQ73GDDhg3Cyujo6JCQkDZf6K677pJ/b2gnN+8nTpy4ePGipFK4vibMiXCHqzU3N8untzszJtNKPjKTlZVVW1vr5OXM79ChQ8LKhx56SGknUIpwh6sVFBRcuHBBUtmzZ8+oqCgnLzd+/Pjhw4dLKisqKuTr33quM2fOCCvHjx+vtBMoRbjD1eSjH3FxcR07dnT+ivLb//YwMiMM94CAgIiICNXNQB3CHS519epV+eugzo/JtEpMTBS+A7Vz507hS7OeSxjuYWFhwrcEYE6EO1wqMzOzrq5OUjl8+PBx48YZctF+/fo9/vjjkkq73a79zbtwR8N2uAu2Zgh3uJRRG2E7yqGlCFpaWgy8tKn88MMP33//vaRywIABqpuBUoQ7XOfIkSP79++XVHp7exsb7jNnzgwODpZUnjp1qrCw0MBLm8rZs2eFldy5ezrCHa4jH/GIjIzs37+/gZfu3LnzrFmzhMUaj8wIl/m1cOfu+Qh3uMj169flO3Yae9veSj4ys3nzZuG2rh7n2rVrwkpn3h2DGRDucJH8/Hzhi5FBQUHyu2y5yZMnh4WFSSptNpt8CzrPIlyszWKxyPe9gjkR7nAR+VjHjBkzAgMDDW/Ay8uLCe/yO3fC3dMR7nCFK1eu5OXlCYsd3VFPTn7m3bt3nzhxQlEbbiS/cw8ICFDaCVQj3OEK6enp9fX1ksr+/ftPmTJFURthYWGPPPKIsFjLm3fu3NsPwh2uIJ/enpCQ0KFDB3WdyG/e09LSmpub1XXiFtevXxdW+vj4KO0EqhHuUO7QoUMHDhwQFquYJ3Oz2bNnCwcczp8/v23bNqXNuF6nTp2Ele1hgUy9Ee5QTj6+MW7cuBEjRihtJjg4ePr06cJi/UZm5CPp8gEcmBPhDrUaGxszMjKExeoepbbtKlu3br169arSZlxMPpIuf/QKcyLcoVZubq5wMZOOHTvGxcWp7sdisTzxxBN9+/aVVNbV1WVmZqrux5W4c28/CHeoJX+UGhUVdffddyttplWHDh0SEhKExfL+PYI83G02m9JOoBrhDoUuXbr06aefCotVP0q92bx584SV+/fvP3LkiNJmXEk+LFNWVqa0E6hGuEOh9PR04dy7kJCQ6Oho1f3cMGLECPli8fLtvM2vd+/ewkrtNy3RHuEOheRjGnPmzPHz81PazI/IH6tmZGTIp4eb3L333iv8OssXB4Y5Ee5Q5csvvywuLhYWu3JMplV8fLww5i5evCgfXDK5Dh06DBo0SFLJnbunI9yhinySeHh4+IQJE5Q281M9evSIiooSFus04V0Y7sLd+GBahDuUqK+vt1qtwmLXTG935rp5eXnCCZ3mJwz3b7/9try8XHUzUIdwhxI5OTlXrlwRFssnJhorKioqNDRUUtnY2JiWlqa6H9cQhrvFYtm3b5/STqAUawNBCfk4xrBhwy5cuHDhwgWl/dzKgw8+mJubK6lMSUl5/vnnVffjAuHh4cLKffv2xcbGKm0G6hDuMN63335bUFAgLD527NjkyZNVtmOM4uLiL7/8cuzYse5uxFljx47t2LFjY2PjHSuFu5nDnBiWgfFSU1Obmprc3YXx9HisGhAQ8MADD0gqDxw4wCIEnotwh/E0e2X/BqvVKtxyxOSEc5MaGxvlP4HBbAh3GGzv3r1Hjx51dxdKXLlyJScnx91dGEA+8TQ7O1tpJ1CHcIfBdL1tb6XHyMyECRO8vUX/9nNzc+vq6lT3AxUIdxiptrZ248aN7u5CoYKCAndN7DFQSEjIqFGjJJVVVVWMzHgowh1Gys7O1mx3ix9pamrS40eTp556Sli5efNmpZ1AEcIdRtJj1OL29Aj32bNnCys3bdp06dIlpc1ABcIdhjl//vz27dvd3YVyx44dKyoqcncXzgoPDxdOiKyvr1+/fr3qfmA4wh2GSU1Ntdvt7u7CFfT4AUX+9un69esbGhqUNgPDEe4wRktLix7jFRIbN27U4O0e+cjMxYsX5bucwyQIdxjj888/P3HihLu7cJHKyspNmza5uwtnDRw4cNKkScLi1atXa/nWscZYWwbGkI9U+Pv7h4SEKG2mzaqqqqqrqyWVqampCxYsUN2PasuWLfv8888llSUlJcnJyb/+9a9VtwSjeLW0tLi7B0+ybt265cuX37Gsb9++7Wp/4Zqamj59+lRVVUmKX3nllT/96U+qW2qbrKysuLg4SaW3t/fJkyfly+eaU1NT07Bhw4T7ctxzzz3Hjx8PDAxU3RUMwbAMDLBp0yZhslvctzWHRExMTI8ePSSVdrtdg2cMPj4+zz33nLC4vLz87bffVtoPDES4wwDyjSwiIyPvu+8+pc04w8/PT3jnbtFldtDChQvlo2Rr1qxhb1VPQbg7RrIKtsViCQgIUN2JeZw5c2bXrl3CYjPftreaN2+esPL06dOFhYVKm3GBwMDAJUuWCIttNtvSpUs1+JbmKKvVKt/t3SQId8cIn7Z16dJFdSfmIb+BDQoKMv/OPuPGjRs5cqSweMOGDUqbcY3f/OY38r+xO3bsWLt2rdJ+zGbv3r3z58+///774+Livv76a3e3I0W4O0YY7kFBQao7MQmHprfPmjXLIx7HyW/es7Oz5Q8bTKtXr14vvviivP7ll1/WdVXnn7p69eqCBQsaGxvtdntWVtaYMWPi4+M9IuIJd8cI/yUHBwer7sQkCgsLT58+LSyWh6Z7JSYm+vr6SiptNltWVpbqflxg5cqV8mchtbW1SUlJ7WEp4JaWliVLlpw5c+bGR+x2u9VqbY34I0eOuLG3OyLcHcOd+4/IxyUGDRrkEXulWiyW3r17/+pXvxIW67EUgb+//+uvvy6v/89//rNkyRLtJ1KvWbPmZ7craY34iIiIhIQE00Y84e6YiooKSVk7GXOvrq7esmWLsHjevHnCDSLMQP5DRlFR0fHjx5U24xpz5syZMmWKvD4tLe3VV19V14/b5efnr1q16jYFdrs9MzMzIiJi7ty5JSUlLmtM6P8AAAD//+3deXhTVf7H8Zu0NE3bFJFNBupQKuhQLJS1CygUUZjWpanSDUbxYVBcmIdF+aEoIAoDiKLozCgDw0PpQotQKesgtlRlKcM+Iog8OiyytIWWlqRLmvz+CIZAS7hpm+30/Xr449703OQLNJ/cnHvuOR7zZnMHJpNJ5n9hCwn3nJyciooKmY09pU/G7Mknn5Q/QFCMy6qSJC1cuFBmf5TZ7NmzRZ1zJj8/f/To0XKWzDUajZmZmUOGDLl48aITCpOPcLfDqVOniouL5bRsIeEu/1JqTEyMOw9vr8+uAe/p6elizLvSr1+/N954w65Dxo8fL95STXv27NFqtZWVlfIPWbhwYceOHR1XUiMQ7nY4cOCAzJb333+/QytxBz/++GNBQYHMxu4/vL0++V81zpw5I0zAzZw5c/DgwfLb63Q6rVa7ceNGx5XkZIcOHXriiSfKysrkH6LVaidMmOC4khqHcLfDwYMHZbbs27evQytxB/L7IjQajfsPb68vIiLiwQcflNlYjMuqkiR5e3v/61//smu4l06ne+aZZ3Jzcx1XldMcOHAgNjZW5hd0s6CgoM8++8xxJTUa4W4Hmfdhdu/eXeb8JJ7LaDRmZGTIbJyQkOChw4fkn7x/+eWXJSUlDi3Gae67777FixfbdUhVVVViYqL8WSjcU05OztChQ3/99Vf5hyiVyuXLl7vnLKeEu1wHDhwoKiqS07Jfv36OLsbltm/fLn+OEc+6lGotNTXV21vWtNhVVVVZWVmOrsdpnn/++eTkZLsOqampGTNmzPTp0+vq6hxUleOYTKY5c+aMHj1a/gABs6lTp44YMcJBVTUR4S7XypUrZbYMDw93ZCFuQf6l1JCQkGHDhjm0GMfp3LlzSxvwbrFs2bKIiAh7j1q4cGFcXJxnfYm5du1aUlLS7Nmz7T0wOjp67ty5DqioeXh8uJtMJifcSaHX6+UP+RL+zP3KlSvyh7enpqZ60PD2+uR/7SgqKvK4uaVs8Pf3X7duXSPGOG3dujUqKmr37t2OqKrZFRUVDRkypBG3Gffq1Wv9+vUqlcoRVTULD37XSZJUUVGRlJQ0ZcoUR7/QggUL5J+MCH/mnp2drdPpZDb23D4Zs5Y54N2sU6dO69evb0SH8smTJx966KEpU6bYNZrQySorK6dOnRodHS1/oIRFcHDwxo0b3fzSmgeH+4kTJ8wfuUuWLJk2bZrjzt8PHTo0f/58mY0feuihu+++20GVuAn5/Q/Dhg3r3r27Q4txNLVaPXr0aJmNMzMzZU4K7Sl69eqVlZXl6+tr74EGg+HDDz8MDw/funWrIwprok2bNvXp06dxC8N26NAhLy/v97//vSMKa0aeGu4bNmyIjo62zM22ePHi1NRUR8xkVFtb+8ILL8h/x2q12mavwa0cO3bsu+++k9nY00/bzeT/LS5cuCDSiG+z4cOHL1++3K47Vy1++umnUaNGjR492n2mUfz+++9TUlLi4uKspwOTLzAwMDc3NzQ0tNkLa3aeF+5Go3HOnDnx8fGlpaXWj2dmZkZFRTXvJD41NTXPPfeczEEykiQplcqEhIRmLMANCT+8vb7IyMhevXrJbCzYZVWzlJSUrKwstVrduMNzcnL69u2bnJzs2glY9u7dO3r06LCwsEZPmeDr67tmzZrIyMjmLcxBPCzcy8rKtFrt7NmzG1wd4tChQ5GRkXPnzpXfI2yDTqdLSEiQP5pbkqTY2NguXbo0/aXdlsFgkP8PotVqPXR4e33yT943bdp0/vx5hxbjElqtdt26dY1eYsw8x1afPn2SkpK++uorJ6/l9PXXX48cOTIiIiInJ6fRLx0YGLhmzZqRI0c2b22Oo/CgSTuPHj2amJgoZwa+bt26zZw5MyUlpdHXsg8cODBp0iT5/Q9mX3311fDhwxv3ih5h06ZNcXFxMhtv3779kUcecWg9TnP27Nng4GCZ/bOLFi2aNm2ao0tyifz8fK1Wa9et+Q0KCQkZO3bs2LFju3Xr1iyFNWj//v25ubnr169v+tIiXbt2Xbt2rWcNhPOYcM/Ozp4wYYJdq9506dLlxRdfTE5OtusX6PTp07NmzVq1apW9n/D9+vX7z3/+Y9chHic5OVnmrTrdunU7efKkRw+CvEVsbOzmzZvltAwLC3OfLuZmt3fv3oSEhHPnzjX9qZRKZVRUVExMzNChQ6OiopplWGFdXV1RUVFubm5ubu6PP/7Y9CeUJGnAgAHr1q3zuC/lnhHuK1euHDduXKMP79+//x//+McBAwb07t07KCiowTZHjhzZtm3bv//978LCwsYNeNiwYcPjjz/e6CLdX2lpaVBQkMyr1m+99ZZgk31nZmampKTIbLx79+5G3AHkKc6dO5eamrpz585mfE6NRjNkyJCBAwf26NHj/vvv79Gjh8wuIL1ef/To0cNW7L3L1Lb4+PhVq1Z54pL3nhHupaWlgwYNatzV7Vu0b9/+d7/7XevWrVu3bm00GktKSoqLi8+fP9/EkTajRo2SeVrnuT755JNXX31VZuMTJ0706NHDofU4mV6vDwoKuuUy/u28/PLLn3zyiaNLcqHa2trXX399yZIljnuJkJCQe++9V6PRaDQaf3//gIAAtVqt0+nKysrKy8vLy8vLysquXLly5syZ2tpaB9UwZcqURYsWeegXUM8Id0mS9uzZ8+ijjzbvZ3JzUavV+/bt84jRUU0RERGxd+9eOS2HDh2an5/v6Hqc76WXXvr73/8up2W7du1Onz7d6OElniIjI2PixIky1570LB07djQPsHZ1IY3nMZ9IERERubm5Go3G1YU0YP78+cIn++HDh2UmuyTK8Pb65P+9SkpKxJgC17aUlJRdu3ZFR0e7upBmlpiYePjwYY9OdsmDwl2SpJiYmNzcXHcbXRcfHz9p0iRXV+Fw8odvBwQEiDG8vb6oqCj5n+JCDnivLzQ0tLCwcOnSpW3atHF1Lc2gc+fOa9euzcrKcrdllRrBk8JdkqSYmJjCwkL36czt37//ihUrFAqFqwtxrNraWvn3fcTHxwu8yqD8s7nt27efPn3aocW4CaVS+corrxw5csTTP9SfffbZw4cPC3MfooeFuyRJvXv33rVr16hRo1xdiBQaGrpx40a71qzxUJs3b5a/gsHYsWMdWoxrjRkzRuYM7waDQf7EyALo0qVLTk7O+vXre/bs6epa7DZgwIAtW7asXLmybdu2rq6l2XheuEuS1LZt27y8vEWLFrmwC75fv35btmwR4LubHPJ7GIKDg8W+jSsoKEj+4gxpaWmeMmChuTz11FNHjhxZtWqVp1yFGjx4cF5eXlFRkQfdeiqTR4a7JEleXl7Tpk07ePCgS/5L4uPjCwoKbjdkXjCXLl3Ky8uT2djTZ2+XQ/5l1ePHjxcWFjq0GDfk5eU1duzYw4cPr169Wv4itM4XExOzbdu2b775Rv5N157Fs9+HISEhW7ZsSU9Pd9o3wcDAwA8++GDt2rWeeFND42RkZMi/q0vUcTLWnnrqKflf3lvIZdX6vLy8UlNTDx06lJ2dHRsbK7MvywmUSuWoUaPy8/N37Njx6KOPurocB/KYce621dXVZWZmLliw4L///a/jXiUuLm7JkiUhISGOewk31L9///3798tp+fDDDxcUFDi4HLcwceLEf/zjH3Jatm7d+uzZsy3nVOB2zp49u3r16tWrVzd9mpfGUSqVgwcP1mq1Wq22hXznFiTczYxG4xdffJGWlrZt27bmXTMhLi5uxowZUVFRzficHmH//v39+/eX2XjZsmXjx493aD1u4rvvvhs8eLDMxitWrGjK5BmC2bVrV3Z29o4dOxx6HmYtOjo6ISEhISHh3nvvdc4rugmhwt2iuLg4JydnzZo1Tezx7NGjR2JiYlJSkicOAGgWkydPlnmLeUBAwJkzZ1rC2CGz0NDQY8eOyWkZExOzY8cOR9fjcc6dO/f1118XFBTk5+f//PPPzfjMPj4+YWFh4eHh4eHhI0eODA4ObsYn9yBihrtFSUlJUVHRvn379u3bV1RUVFxcbLu9t7d3cHDwwIEDIyMjo6Oje/fuLfwYdsDlTp06dezYsR9/c/z48QsXLsg/XKPRhIaG9unTJzw8vE+fPmFhYY1YF1A8goe7NZPJdP78+dLS0suXL1+5cuXy5ctlZWU+Pj5+fn5+fn5t2rQJDg7u2rWrj4+PqysFWrqSkpKLFy9WVFRUVlZWVlaaN3Q6XatWrdRqtUql8vX1bdeuXadOnTp16tRyvi/apQWFOwC0HJ49FBIA0CDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAF5u7oAF7uSlFTz7be3/bFSqfDzU7Zp4xUS4jNokG9srFe3bk6s7s5qdu++PGqUXYco2rbteOqUg+ppurIXXjCeO2fZDXz/fe8HHnBhPbZZ//5oZs3y+/OfXVtPfbplyyrmzGnKM7QtKPC+777mqkcmfXr61enTr+8oFHdv2tQqLEzmsdc++qhy0aLrO97e7QoLve691wE1uruWHu7GkpI6qyi5rT179Onp5X/5i+qxxwLnzWsVHu740uQxGIzl5XYdofR23/90ww8/6D7/3PoR7169Av/6V1fVc0fWvz/GykrXFtMgY2WlrN9wG2prm6kWO/g+88zVmTPrfvnFvFv53ntt1qyRc6BJr6+YP9948aJ512/cuJaZ7BLdMvYxmaq3bi0eMKBy3jxXlyImXVraLY/oMzMlk8klxcCFFD4+mrfftuzq1641/PCDnAN1n39uSfZbnqSlcd+TOOdTDRt26ym5yWS8erXu3LnaoiLj5cvXH6yru/rmmyadTvPuu84v0gaFShVg+SZro5mfnxOKaQyTSZ+RcctjdadPVxcUqIYNc0lFAvCJiLhdwOkzMw0nT5q3VSNG+ERGNthM2a6do4qzye/ZZyvff99w7JgkSZLRWDFvXpt6n/23MNXU3OiQkSS/CRO8unZ1ZI1ujXC/QfX44wGTJzf8M4NBn51dPnWq8cIF8wMV8+b5PPywasQI59V3JwpfX03Telddq3rnzrr//a/+4/q0NMK90XwiI2+X2rX791uHe8BrrzmxLhmUSs2cOVeeeca8p8/M1MyaZbv3X7d8uaUPSuHvr3nzTYcX6cbolpHH21udktJ+3z6vzp2vP2IyXf2//3NpTaLRW52XWfeT6r/4wlRV5YqK4GLqp59u1b//9Z26usr58221NhgqFy607Pm/+qrynnscWZ27I9zt4NWlS+CSJZbd2gMHag8fdmE9IjFVVVV98YVlt/XHHyvbtr3+o6tXq3JzXVQXXCxw7lzLtj4trcHvdma6lSstF2CVd93ldl9EnI5wt49aq1XefbdltyY/34XFiKQqN9cy7EfZoYNvbKz6t+/jkiTp09NdVBdcTDVypGroUPO2qba2csGChtvV1d102j51qvX7tGUi3O2kVFpfdLV0WaKJrONbnZgoeXurx4yxPFK1davx0iVX1AXX07z3nmVbt2JFgyM79RkZljejskOH2148a0kId7spWre2bJuuXXNhJcIwXrpUtXWrZdcc6z7R0TduGTMY9FlZLqkNLucTFeUbF2feNlVXW4+Huc5orLC6GUIzY4bC399p5bktwt1upitXLNvWQY9G02dlSQaDedu7Rw+fgQPN237JyTfa0DPTgmnefVdSKMzbumXLLCPZzfQ5OddHTEqSV1CQ38SJzq7PLRHudqqrqz140LLn3b27C2sRhm71asu2OiXlxrZVz0xNUZHh+HGnlgW30ap3b3VionnbpNNVfvDBjZ+ZTNajaDRvvaVQqZxcnnsi3O2jz842lpVZdhl/3XSG48dr9+2z7KpTUy3b3g88cGMknCTprT4D0NJo3nlH+m3mjGt/+5uxtNS8XfXll5ZBa97du/uNG+ea+twP4W6HuvPnr1qNr/KJjPQODXVhPWKwnnLAJzLylrtU/KyyXpeezlQELZZ1cJsqK6/9Nii5wmouEM2sWZIbT53kZPxDyFWzc+eVceNuXKlXKDRuNsOMsaLi0p0mUPT7058C3njDOfXIcvOUA9Z9MtcfSUoqnzZNqquTJKnul19qvv3WZ8gQp1YIt6F5+219Wpr5jrZrS5f6T51as2uX5Wtfq7Cw+r8/LRnhfkNtUZFuxYqbHjKZTBUVhl9+qdm5s/bQIeufBLz2mmX4rbswGg0nTthuUnfzlSiXqykstNx4omjVytKvaqG85x7VI49Ub9tm3tWlpRHuLZZXly7+EydWfvihJEnG8vJrS5dafjEkc7/NbxddIRHu1vRZWTLH2wVMnhx4u5spYA/rPhnVY48p27ev30adkmJ5D1fl5JiWLuWKWYsVMGPGtX/+01RRIUlS5bx5lnkpfCIifJ980qWluR3C3T6t+vULnDtXZef6GM6h8PFRP/ec7TY+UVFOqUUWU3V11dq1ll211cBHa+qEhPKXXjLfUmAsK6vKy1M//bSTSoSbUbZvHzB5csU770iSZD3jkLtN0eoOCHcr3t4KLy/LnslgMHf1mvlPmqROSfEZNMgVlcmiUKvv+uwzV1dhB+spBxQajW98fIPNFP7+vk88oc/MNO/q09MJ95YsYNq0a59+ahktI0mSavhw1fDhLizJPTFa5obAhQs7VVVZ/rTbufOmHysU7pzsnuimKQfi4xVq9e1aWo+PrN682fqNjZZGodEE3DwhK6ftDSLcb8snOtr64vu1Tz+tPXrUhfUIxlhcXG095YBVfNfn+9hjyg4dzNummhq9vBXXICrVww9bthUqlU9EhAuLcVt0y9gSuHBh1YYNJvPamAZD+Suv3Ho6j8bSZ2WZLItzennV7N5ds3evjfZeHTta5g7Tp6f7v/SSoysEPBrhbotX586aGTOu/raeS01hoT4tTT12rGurEsNNt5vW1VXMni3/2Jpduww//WR7UR6ghaNb5g78p069MTehJF2dPt08DAtNYThxoqaoqCnPwFQEgG2E+x0oVKrW779v2a07f75i1iwX1iMG6xX1FCqVsmNHWX+s5uBkkkjANrpl7sw3Pl41YkT19u3m3cqlS/2ef967Vy/XVuXBTCad1ZQDAdOny1zX23Ds2KXfJvMx/PRTze7dt1v6GQBn7rK0XrLkxoREBkPZK6+4tBzPVvPNN3U//2zZtZ7X1zbvnj1b9e1r2bU+/QdwC8JdFu+ePf1fftmyW7NzJ90CjXbTNJAREXbNiW/9SaDPzr4x3gbAzeiWkUsze7Y+I8NYXGzevfr6675PPKHQaFxblTVTdbV5TiXbFGq1/4svOqGeBt065YDN4e31+SUnX33tNfOdw8bS0uqNG293X6vz1e7dq1u2zEYD7z/8wWfwYKfVgxaOcJdLedddge++W/bCC+bdul9/rZg9O3DxYtdWZc1UVXV1ypQ7NlO2bevCcK/68kvLaicNTgNpm/Kee1QjRljuftJnZLhPuOvXrLF9d5XfhAmEO5yGbhk7+I0fb93nW/nxx4bvv3dhPZ7IujtLNXJkg9NA2uZnddtwVV6e0WpJWwAWhLs9lMrWH310Y9dgKH/1VddV43mMJSXVW7ZYdhu3tIJvQoIiIMC8baqursrJaZ7iALEoTKxbBgDC4cwdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACMjbxs++2bH53NlfnFUJAECung/2C+s7yEYDW+F+7VrF1bIrzV0SAKCpqvQ62w3olgEAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIIXJZLrdz3TXKmpra51ZDQBADpWv2tdXbaOBrXAHAHgoumUAQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgAh3ABAQ4Q4AAiLcAUBAhDsACIhwBwABEe4AICDCHQAERLgDgIAIdwAQEOEOAAIi3AFAQIQ7AAiIcAcAARHuACAgwh0ABES4A4CACHcAEBDhDgACItwBQECEOwAIiHAHAAER7gAgIMIdAAREuAOAgP4fngpu2O7UrdIAAAAASUVORK5CYII=" alt="JAC Realty Panama"></a>
+    <nav class="nl2">
+      <a href="#inicio">Inicio</a>
+      <a href="#propiedades">Propiedades</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nr">
+      <span class="nlic">Lic. #0931</span>
+      <a href="https://wa.me/50760000000" class="bwa" target="_blank">WhatsApp</a>
     </div>
   </div>
-  <a href="#buscar" class="hero-scroll"><div class="scroll-line"></div><span>Explorar</span></a>
-</section>
+</header>
 
-<!-- SEARCH -->
-<div class="search-wrap" id="buscar">
-  <div class="search-label">Buscar Propiedades</div>
-  <div class="stabs">
-    <button class="stab active" onclick="setTab(this)">Comprar</button>
-    <button class="stab" onclick="setTab(this)">Alquilar</button>
-    <button class="stab" onclick="setTab(this)">Comercial</button>
-    <button class="stab" onclick="setTab(this)">Pre-venta</button>
-  </div>
-  <div class="sform" id="searchForm">
-    <div class="fg"><label>Tipo de Propiedad</label>
-      <select id="sTipo"><option>Todos los tipos</option><option>Apartamento</option><option>Casa</option><option>Penthouse</option><option>Local Comercial</option><option>Oficina</option><option>Terreno</option></select></div>
-    <div class="fg"><label>Ubicación</label>
-      <select id="sZona"><option>Todas las áreas</option><option>Casco Antiguo</option><option>Costa del Este</option><option>Punta Pacífica</option><option>San Francisco</option><option>Marbella</option><option>Bella Vista</option><option>El Cangrejo</option><option>Obarrio</option><option>Coronado</option><option>Chiriquí</option></select></div>
-    <div class="fg"><label>Presupuesto Máximo</label>
-      <select id="sPrecio"><option>Sin límite</option><option>$100,000</option><option>$250,000</option><option>$500,000</option><option>$750,000</option><option>$1,000,000</option><option>$2,000,000+</option></select></div>
-    <div class="fg"><label>Habitaciones</label>
-      <select id="sHab"><option>Cualquiera</option><option>1 habitación</option><option>2 habitaciones</option><option>3 habitaciones</option><option>4+ habitaciones</option></select></div>
-    <button class="btn-search" onclick="doSearch()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Buscar
-    </button>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat"><div class="stat-n" data-target="150">0<span>+</span></div><div class="stat-l">Propiedades Listadas</div></div>
-  <div class="stat"><div class="stat-n" data-target="98">0<span>%</span></div><div class="stat-l">Clientes Satisfechos</div></div>
-  <div class="stat"><div class="stat-n" data-target="12">0<span>+</span></div><div class="stat-l">Años de Experiencia</div></div>
-  <div class="stat"><div class="stat-n" data-target="85">0<span>M</span></div><div class="stat-l">En Transacciones ($)</div></div>
-</div>
-
-<!-- PROPERTIES -->
-<section class="props" id="propiedades">
-  <div class="sh">
-    <span class="sey">Portafolio Exclusivo</span>
-    <h2 class="st">Propiedades Destacadas</h2>
-    <p class="ss">Selección curada de las mejores propiedades en las zonas más cotizadas de Panamá.</p>
-    <div class="div"></div>
-  </div>
-  <div class="pgrid" id="propGrid">
-    <!-- Property 1 -->
-    <div class="pcard" onclick="openPropertyModal('Residencia de Lujo con Vista al Mar','Apartamento · Punta Pacífica','3 Hab · 3 Baños · 185m²','$485,000 USD','https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80')">
-      <div class="pimg"><img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Residencia de Lujo" loading="lazy"><div class="pbadge">En Venta</div></div>
-      <div class="pinfo">
-        <div class="ptyp">Apartamento · Punta Pacífica</div>
-        <h3 class="ptit">Residencia de Lujo con Vista al Mar</h3>
-        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Punta Pacífica, Ciudad de Panamá</div>
-        <div class="pspecs"><div class="spec"><strong>3</strong> Hab.</div><div class="spec"><strong>3</strong> Baños</div><div class="spec"><strong>185 m²</strong></div><div class="spec"><strong>2</strong> Estac.</div></div>
-        <div class="pfoot"><div class="pprice">$485,000 <small>USD</small></div><button class="pbtn">Ver más →</button></div>
-      </div>
+<section id="inicio" class="hero">
+  <div class="hc">
+    <p class="hey">JAC Realty Panama &nbsp;|&nbsp; Licencia #0931</p>
+    <h1 class="ht">Tu Propiedad Ideal<br>en <span>Panama</span></h1>
+    <div class="hln"></div>
+    <p class="hs2">Venta y alquiler de propiedades premium en toda Panama.<br>Mas de 20 anos conectando personas con su hogar ideal.</p>
+    <div class="sb">
+      <select id="h-op"><option value="">Operacion</option><option>Venta</option><option>Alquiler</option></select>
+      <select id="h-tp"><option value="">Tipo de Inmueble</option><option>Apartamento</option><option>Casa</option><option>Penthouse</option><option>Local Comercial</option><option>Oficina</option><option>Terreno</option><option>Estudio</option></select>
+      <select id="h-zo"><option value="">Zona / Distrito</option><option>San Francisco</option><option>Costa del Este</option><option>Punta Pacifica</option><option>Marbella</option><option>El Cangrejo</option><option>Albrook</option><option>Panama Pacifico</option><option>Santa Maria</option><option>Clayton</option><option>Casco Antiguo</option><option>Bella Vista</option><option>El Carmen</option></select>
+      <input type="number" id="h-px" placeholder="Precio max (USD)" style="max-width:170px">
+      <button class="bsr" onclick="heroSearch()">Buscar Propiedades</button>
     </div>
-    <!-- Property 2 -->
-    <div class="pcard" onclick="openPropertyModal('Penthouse Colonial con Terraza Privada','Penthouse · Casco Antiguo','4 Hab · 4 Baños · 320m²','$3,800 / mes','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80')">
-      <div class="pimg"><img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Penthouse Colonial" loading="lazy"><div class="pbadge alq">Alquiler</div></div>
-      <div class="pinfo">
-        <div class="ptyp">Penthouse · Casco Antiguo</div>
-        <h3 class="ptit">Penthouse Colonial con Terraza Privada</h3>
-        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Casco Antiguo, Panamá</div>
-        <div class="pspecs"><div class="spec"><strong>4</strong> Hab.</div><div class="spec"><strong>4</strong> Baños</div><div class="spec"><strong>320 m²</strong></div><div class="spec"><strong>2</strong> Estac.</div></div>
-        <div class="pfoot"><div class="pprice">$3,800 <small>/ mes</small></div><button class="pbtn">Ver más →</button></div>
-      </div>
+    <div class="hsts">
+      <div class="hst"><div class="hst-n" id="stat-tot">—</div><div class="hst-l">Propiedades</div></div>
+      <div class="hst"><div class="hst-n">20+</div><div class="hst-l">Anos Experiencia</div></div>
+      <div class="hst"><div class="hst-n">300+</div><div class="hst-l">Clientes</div></div>
     </div>
-    <!-- Property 3 -->
-    <div class="pcard" onclick="openPropertyModal('Casa de Campo con Piscina y Jardín','Casa · Costa del Este','5 Hab · 5 Baños · 480m²','$820,000 USD','https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&q=80')">
-      <div class="pimg"><img src="https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80" alt="Casa de Campo" loading="lazy"><div class="pbadge">En Venta</div></div>
-      <div class="pinfo">
-        <div class="ptyp">Casa · Costa del Este</div>
-        <h3 class="ptit">Casa de Campo con Piscina y Jardín</h3>
-        <div class="ploc"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>Costa del Este, Panamá</div>
-        <div class="pspecs"><div class="spec"><strong>5</strong> Hab.</div><div class="spec"><strong>5</strong> Baños</div><div class="spec"><strong>480 m²</strong></div><div class="spec"><strong>3</strong> Estac.</div></div>
-        <div class="pfoot"><div class="pprice">$820,000 <small>USD</small></div><button class="pbtn">Ver más →</button></div>
-      </div>
-    </div>
-    <!-- Add more -->
-    <a href="crm.html" class="padd">
-      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-      <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:500">Agregar Propiedad</p>
-      <p style="font-size:10px;opacity:.45;letter-spacing:1px">Acceder al CRM</p>
-    </a>
-  </div>
-  <div class="props-footer"><a href="#contacto" class="btn-primary">Consultar Todas las Propiedades</a></div>
-</section>
-
-<!-- SERVICES -->
-<section id="servicios">
-  <div class="sh"><span class="sey">Lo que hacemos</span><h2 class="st">Nuestros Servicios</h2><p class="ss">Acompañamiento integral en cada etapa de su proceso inmobiliario, con el más alto estándar profesional.</p><div class="div"></div></div>
-  <div class="svgrid">
-    <div class="svcard"><div class="svn">01</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg><h3 class="svt">Compra y Venta</h3><p class="svd">Asesoramiento experto en la compra y venta de propiedades residenciales y comerciales. Valuaciones precisas y estrategias de negociación para obtener el mejor precio del mercado.</p></div>
-    <div class="svcard"><div class="svn">02</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg><h3 class="svt">Alquileres y Gestión</h3><p class="svd">Gestionamos su propiedad en renta: selección de inquilinos, contratos, mantenimiento y cobro. Maximice la rentabilidad sin preocupaciones.</p></div>
-    <div class="svcard"><div class="svn">03</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg><h3 class="svt">Inversión Inmobiliaria</h3><p class="svd">Identificamos las mejores oportunidades de inversión en el mercado panameño. Análisis de ROI, due diligence y asesoría en financiamiento con entidades locales.</p></div>
-    <div class="svcard"><div class="svn">04</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg><h3 class="svt">Proyectos en Preventa</h3><p class="svd">Acceso exclusivo a los mejores proyectos en pre-construcción con precios de lanzamiento y condiciones especiales que maximizan su capital invertido.</p></div>
-    <div class="svcard"><div class="svn">05</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg><h3 class="svt">Relocalización Corporativa</h3><p class="svd">Servicio especializado para ejecutivos y empresas internacionales que llegan a Panamá. Búsqueda personalizada, orientación legal y apoyo completo en el proceso.</p></div>
-    <div class="svcard"><div class="svn">06</div><svg class="svi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg><h3 class="svt">Avalúos y Consultoría</h3><p class="svd">Valuaciones certificadas para trámites bancarios, testamentarios o comerciales. Estudios de mercado y consultoría estratégica para desarrolladores.</p></div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<div class="about" id="nosotros">
-  <div class="about-img"></div>
-  <div class="about-body">
-    <span class="sey">Quiénes Somos</span>
-    <h2 class="st">Expertos en el<br>mercado panameño</h2>
-    <div class="div" style="margin-left:0"></div>
-    <p class="atext">JAC Realty es una agencia inmobiliaria panameña fundada con la misión de ofrecer un servicio de excelencia en la compra, venta y arrendamiento de propiedades. Nuestro equipo combina conocimiento local profundo con estándares internacionales.</p>
-    <p class="atext" style="margin-top:-10px">Somos miembros activos de ACOBIR y de la MLS Panamá, con acceso a la base de datos más completa del país. Regulados por la Junta Técnica de Bienes Raíces de la República de Panamá.</p>
-    <div class="abadges">
-      <div class="abadge lic">Lic. PN-0931</div>
-      <div class="abadge">ACOBIR</div>
-      <div class="abadge">MLS Panamá</div>
-      <div class="abadge">Junta Técnica</div>
+<section id="propiedades" style="padding-top:90px;background:var(--bl)">
+  <div class="sec" style="padding-top:28px">
+    <p class="se">Seleccion especial</p>
+    <h2 class="st">Propiedades <span>Destacadas</span></h2>
+    <div class="pg" id="dest-grid">
+      <div class="ldg"><div class="spn"></div>Cargando propiedades...</div>
     </div>
-  </div>
-</div>
-
-<!-- BLOG -->
-<section class="blog" id="blog">
-  <div class="sh"><span class="sey">Conocimiento e Información</span><h2 class="st">Blog Inmobiliario</h2><p class="ss">Artículos relevantes sobre el mercado inmobiliario de Panamá, tendencias, legislación y consejos de inversión.</p><div class="div"></div></div>
-  <div class="bgrid">
-    <div class="bcard" id="b1"><div class="bimg"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80" alt="Mercado 2025" loading="lazy"></div><div class="bbody"><div class="bcat">Mercado · Tendencias</div><h3 class="btit">El Mercado Inmobiliario en Panamá 2025: Perspectivas y Oportunidades</h3><p class="bexc">El mercado inmobiliario panameño continúa mostrando solidez y resiliencia. Con un crecimiento del PIB estimado en 4.5% para 2025, la demanda de propiedades residenciales de mediana y alta gama mantiene su tendencia positiva. Zonas como Costa del Este, San Francisco y el Casco Antiguo lideran la apreciación de valor, con incrementos de hasta el 8% anual.<br><br>La llegada de empresas multinacionales y el fortalecimiento del hub logístico del Canal siguen impulsando la demanda de oficinas y propiedades corporativas. Para inversores, los segmentos de alquiler a corto plazo en Casco Antiguo y Amador han mostrado rentabilidades del 7% al 12% anual, superando ampliamente los depósitos bancarios tradicionales.</p><div class="bmeta"><span class="bdate">15 Mayo 2025</span><button class="btog" onclick="tog('b1',this)">Leer más <span class="arr">→</span></button></div></div></div>
-    <div class="bcard" id="b2"><div class="bimg"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80" alt="Guía extranjeros" loading="lazy"></div><div class="bbody"><div class="bcat">Guías · Legal</div><h3 class="btit">Guía Completa para Comprar una Propiedad en Panamá como Extranjero</h3><p class="bexc">Panamá es uno de los destinos más atractivos del mundo para la inversión inmobiliaria internacional. Los extranjeros tienen los mismos derechos que los ciudadanos panameños para adquirir bienes raíces. El proceso incluye promesa de compraventa (5-10% depósito), due diligence legal y escritura ante notario.<br><br>Costos típicos de cierre: 2% impuesto de transferencia, 0.1-0.3% honorarios notariales, $300-600 registro público y 1-2% honorarios de abogado. Los extranjeros pueden obtener residencia permanente invirtiendo desde $300,000 USD. Siempre trabaje con un agente certificado (Junta Técnica) y abogado independiente.</p><div class="bmeta"><span class="bdate">28 Abril 2025</span><button class="btog" onclick="tog('b2',this)">Leer más <span class="arr">→</span></button></div></div></div>
-    <div class="bcard" id="b3"><div class="bimg"><img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&q=80" alt="ROI Inversión" loading="lazy"></div><div class="bbody"><div class="bcat">Inversión · Finanzas</div><h3 class="btit">¿Cómo Calcular el Retorno de tu Inversión Inmobiliaria en Panamá?</h3><p class="bexc">El ROI inmobiliario en Panamá debe contemplar varios factores. Apartamentos de 1-2 habitaciones en áreas premium generan rentas de $800 a $2,500/mes, con rendimientos brutos del 5% al 9%. Para el ROI neto, descuente: impuesto sobre la renta del alquiler (15-25%), mantenimiento (1-2% anual), honorarios de administración (8-12%) y seguros.<br><br>Zonas de alto rendimiento: Casco Antiguo (alquiler vacacional, 8-12% bruto), Vía España (corporativo, 7-9%), Santa Ana (clase media, 8-10%). La apreciación histórica es del 3-7% anual en zonas consolidadas.</p><div class="bmeta"><span class="bdate">10 Abril 2025</span><button class="btog" onclick="tog('b3',this)">Leer más <span class="arr">→</span></button></div></div></div>
-    <div class="bcard" id="b4"><div class="bimg"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Zonas Panamá" loading="lazy"></div><div class="bbody"><div class="bcat">Zonas · Lifestyle</div><h3 class="btit">Las 5 Mejores Zonas para Vivir en Ciudad de Panamá en 2025</h3><p class="bexc">1) CASCO ANTIGUO: Patrimonio Mundial UNESCO. Ideal para cultura y comunidad cosmopolita. Desde $180,000. 2) COSTA DEL ESTE: Corredor financiero moderno, malls y colegios internacionales. Desde $250,000. 3) PUNTA PACÍFICA: Mayor precio/m², rascacielos frente al mar. 4) SAN FRANCISCO: Equilibrio perfecto entre ubicación y precio accesible, alta demanda. 5) CORONADO / LAS CUMBRES: Opciones suburbanas con más espacio y calidad de vida para familias.</p><div class="bmeta"><span class="bdate">2 Abril 2025</span><button class="btog" onclick="tog('b4',this)">Leer más <span class="arr">→</span></button></div></div></div>
-    <div class="bcard" id="b5"><div class="bimg"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&q=80" alt="Ley bienes raices" loading="lazy"></div><div class="bbody"><div class="bcat">Legal · Regulación</div><h3 class="btit">Todo sobre la Ley de Bienes Raíces en Panamá — Ley 84 de 2013</h3><p class="bexc">La actividad de corretaje está regulada por la Ley 84 de 2013. Todos los agentes deben estar inscritos en la Junta Técnica de Bienes Raíces y renovar su licencia cada 3 años. La comisión estándar varía entre 3% y 5% del valor de la transacción. En arrendamientos, equivale típicamente a un mes de alquiler.<br><br>Los contratos deben registrarse en el Registro Público. El Impuesto de Transferencia es del 2%. Las propiedades nuevas disfrutan de exoneración del impuesto de inmueble por 20 años bajo la Ley de Vivienda.</p><div class="bmeta"><span class="bdate">20 Marzo 2025</span><button class="btog" onclick="tog('b5',this)">Leer más <span class="arr">→</span></button></div></div></div>
-    <div class="bcard" id="b6"><div class="bimg"><img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80" alt="Hipotecas Panama" loading="lazy"></div><div class="bbody"><div class="bcat">Financiamiento · Hipotecas</div><h3 class="btit">Opciones de Financiamiento Hipotecario en Panamá: Bancos y Tasas 2025</h3><p class="bexc">Tasas actuales: 5.5% a 7.5% anual en dólares. Principales prestamistas: Banco General (desde 5.75%), BAC Credomatic, Banistmo, Global Bank y Multibank. Requisitos: enganche del 10-20% para vivienda principal (30% para inversión), ingresos demostrables 3-4x la cuota, historial crediticio limpio.<br><br>Plazos de 15 a 30 años. Extranjeros pueden acceder con documentación migratoria en regla (enganche mayor, 20-30%). Líneas especiales FHIS para compradores primerizos disponibles.</p><div class="bmeta"><span class="bdate">5 Marzo 2025</span><button class="btog" onclick="tog('b6',this)">Leer más <span class="arr">→</span></button></div></div></div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact-wrap" id="contacto">
-  <div class="sh"><span class="sey">Estamos para Ayudarle</span><h2 class="st">Contáctenos</h2><div class="div"></div></div>
-  <div class="cgrid">
-    <div class="cinfo">
-      <h3>Hablemos sobre su próxima propiedad</h3>
-      <p>Nuestro equipo está disponible para orientarle en cada paso de su proceso inmobiliario. Sin compromiso, con la discreción y profesionalismo que usted merece.</p>
-      <div class="cdetails">
-        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg></div><div><label>Teléfono Principal (WhatsApp)</label><a href="tel:+50764627763">+507 6462-7763</a></div></div>
-        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg></div><div><label>Teléfono Secundario / Admin</label><a href="tel:+50762926010">+507 6292-6010</a></div></div>
-        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><label>Correo Electrónico</label><a href="mailto:jcastro@jacrealtypa.com">jcastro@jacrealtypa.com</a></div></div>
-        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><label>Ubicación</label><p>Ciudad de Panamá, República de Panamá</p></div></div>
-        <div class="citem"><div class="cicon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><label>Horario</label><p>Lun–Vie: 8:00am–6:00pm · Sáb: 9:00am–2:00pm</p></div></div>
-      </div>
+<section style="background:var(--gr)">
+  <div class="sec">
+    <p class="se">Catalogo completo</p>
+    <h2 class="st">Todas las <span>Propiedades</span></h2>
+    <div class="fb">
+      <select id="f-op" onchange="fAll()"><option value="">Todas las operaciones</option><option>Venta</option><option>Alquiler</option><option>Permuta</option></select>
+      <select id="f-tp" onchange="fAll()"><option value="">Todos los tipos</option><option>Apartamento</option><option>Casa</option><option>Penthouse</option><option>Local Comercial</option><option>Oficina</option><option>Terreno</option><option>Estudio</option></select>
+      <input id="f-zo" placeholder="Zona / Buscar..." oninput="fAll()">
+      <input type="number" id="f-pn" placeholder="Precio min" oninput="fAll()">
+      <input type="number" id="f-px" placeholder="Precio max" oninput="fAll()">
+      <span class="fc" id="fcount"></span>
     </div>
+    <div class="pg" id="cat-grid">
+      <div class="ldg"><div class="spn"></div>Cargando...</div>
+    </div>
+    <div class="pag" id="pag"></div>
+  </div>
+</section>
+
+<section id="nosotros" class="abt">
+  <div class="abi">
     <div>
-      <form class="cform" id="contactForm" novalidate>
-        <div class="frow">
-          <div class="fg"><label>Nombre Completo *</label><input type="text" id="fNombre" placeholder="Su nombre" required></div>
-          <div class="fg"><label>Teléfono / WhatsApp *</label><input type="tel" id="fTelefono" placeholder="+507 0000-0000" required></div>
-        </div>
-        <div class="fg"><label>Correo Electrónico *</label><input type="email" id="fEmail" placeholder="su@correo.com" required></div>
-        <div class="frow">
-          <div class="fg"><label>Tipo de Consulta</label>
-            <select id="fTipo"><option>Comprar propiedad</option><option>Vender propiedad</option><option>Alquilar propiedad</option><option>Inversión</option><option>Avalúo</option><option>Otra consulta</option></select></div>
-          <div class="fg"><label>Presupuesto</label>
-            <select id="fPresupuesto"><option>Menos de $100K</option><option>$100K–$300K</option><option>$300K–$600K</option><option>$600K–$1M</option><option>Más de $1M</option></select></div>
-        </div>
-        <div class="fg"><label>Mensaje</label><textarea id="fMensaje" placeholder="Cuéntenos sobre la propiedad que busca, zona de interés, características importantes…"></textarea></div>
-        <div id="formStatus" class="form-status"></div>
-        <div class="fsub">
-          <button type="submit" class="btn-primary" id="submitBtn" style="justify-content:center;padding:14px">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg>
-            Enviar Consulta
-          </button>
-          <a href="https://wa.me/50764627763?text=Hola%20JAC%20Realty%2C%20quisiera%20informaci%C3%B3n%20sobre%20propiedades%20en%20Panam%C3%A1" target="_blank" rel="noopener" class="wa-btn">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-            WhatsApp Directo
-          </a>
-        </div>
-      </form>
+      <div class="ab-ln1"></div><div class="ab-ln2"></div>
+      <h2>Especialistas en<br>Bienes Raices <span>Panama</span></h2>
+      <p>Jely An Castro Perez lidera JAC Realty con mas de 20 anos de experiencia en el mercado inmobiliario panameno. Somos una empresa 100% panamena especializada en venta y alquiler de propiedades premium.</p>
+      <p>Operamos en todas las zonas de Ciudad de Panama y el interior del pais, con profundo conocimiento del mercado local y una solida red de contactos que garantiza las mejores oportunidades para nuestros clientes.</p>
+      <div class="ast">
+        <div class="as"><div class="as-n">20+</div><div class="as-l">Anos Experiencia</div></div>
+        <div class="as"><div class="as-n">300+</div><div class="as-l">Clientes</div></div>
+        <div class="as"><div class="as-n">#0931</div><div class="as-l">Licencia MICI</div></div>
+        <div class="as"><div class="as-n">🇵🇦</div><div class="as-l">Panamena</div></div>
+      </div>
+    </div>
+    <div class="abr">
+      <h3>Por que elegir JAC Realty?</h3>
+      <div class="abi2"><em>—</em>Asesoria personalizada en cada etapa: compra, venta y alquiler.</div>
+      <div class="abi2"><em>—</em>Conocimiento profundo del mercado inmobiliario desde 2006.</div>
+      <div class="abi2"><em>—</em>Red de co-brokers que amplia el alcance de tu propiedad.</div>
+      <div class="abi2"><em>—</em>Negociacion profesional para el mejor precio posible.</div>
+      <div class="abi2"><em>—</em>Acompanamiento legal y documental hasta el cierre.</div>
+      <div class="abi2"><em>—</em>Acceso a propiedades exclusivas no publicadas en portales.</div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="fgrid">
-    <div class="fbrand">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
-        <span style="font-family:var(--serif);font-size:36px;font-weight:300;letter-spacing:4px;color:white;line-height:1">JAC</span>
-        <div style="width:1px;height:32px;background:rgba(155,142,133,.3)"></div>
-        <div><p style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--red);font-weight:600">REALTY</p><p style="font-size:8px;letter-spacing:1.5px;color:rgba(155,142,133,.5);text-transform:uppercase">Panamá</p></div>
-      </div>
-      <div style="width:100%;height:1px;background:rgba(255,255,255,.07);margin-bottom:14px"></div>
-      <p>Especialistas en bienes raíces residenciales y comerciales en Panamá. Compromiso, transparencia y resultados superiores para nuestros clientes.</p>
-      <div class="fsoc">
-        <a href="https://instagram.com/jacrealtypa" target="_blank" rel="noopener" class="fsl" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
-        <a href="https://facebook.com/jacrealtypa" target="_blank" rel="noopener" class="fsl" title="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-        <a href="https://wa.me/50764627763" target="_blank" rel="noopener" class="fsl" title="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
-        <a href="mailto:jcastro@jacrealtypa.com" class="fsl" title="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+<section id="contacto" class="csc">
+  <div class="csi">
+    <div class="csl">
+      <p class="se">Hablemos</p>
+      <h2>Encontremos tu propiedad ideal</h2>
+      <p>Contactanos hoy y un asesor te orientara en cada paso del proceso. Sin compromiso. Con toda la experiencia del mercado panameno.</p>
+      <div class="cin">
+        <div class="cit"><div class="cic">📧</div><span>jcastro@jacrealtypa.com</span></div>
+        <div class="cit"><div class="cic">💬</div><span>WhatsApp disponible</span></div>
+        <div class="cit"><div class="cic">📍</div><span>Ciudad de Panama, Panama</span></div>
+        <div class="cit"><div class="cic">🏛</div><span>Licencia MICI #0931</span></div>
       </div>
     </div>
-    <div class="fcol"><h4>Propiedades</h4><ul><li><a href="#propiedades">Apartamentos</a></li><li><a href="#propiedades">Casas</a></li><li><a href="#propiedades">Penthouses</a></li><li><a href="#propiedades">Comerciales</a></li><li><a href="#propiedades">Terrenos</a></li><li><a href="#propiedades">Pre-venta</a></li></ul></div>
-    <div class="fcol"><h4>Servicios</h4><ul><li><a href="#servicios">Compra y Venta</a></li><li><a href="#servicios">Alquiler</a></li><li><a href="#servicios">Gestión de Activos</a></li><li><a href="#servicios">Inversiones</a></li><li><a href="#servicios">Avalúos</a></li><li><a href="#servicios">Relocalización</a></li></ul></div>
-    <div class="fcol"><h4>Contacto</h4><ul><li><a href="tel:+50764627763">+507 6462-7763</a></li><li><a href="tel:+50762926010">+507 6292-6010</a></li><li><a href="mailto:jcastro@jacrealtypa.com">jcastro@jacrealtypa.com</a></li><li><a href="mailto:jelyanrealestate@gmail.com">jelyanrealestate@gmail.com</a></li><li><a href="https://wa.me/50764627763" target="_blank">WhatsApp Directo</a></li><li><a href="crm.html">Portal Agentes</a></li></ul></div>
+    <div class="csr2">
+      <h3>Enviar Mensaje</h3>
+      <div class="fc2">
+        <input id="ct-nm" placeholder="Nombre completo">
+        <input id="ct-ph" type="tel" placeholder="Telefono / WhatsApp">
+        <input id="ct-em" type="email" placeholder="Correo electronico">
+        <select id="ct-it">
+          <option value="">Que le interesa?</option>
+          <option>Comprar propiedad</option>
+          <option>Alquilar propiedad</option>
+          <option>Vender / Alquilar mi propiedad</option>
+          <option>Informacion general</option>
+        </select>
+        <textarea id="ct-ms" placeholder="Su mensaje..."></textarea>
+        <button class="bsend" onclick="sendContact()">Enviar Mensaje</button>
+        <div class="fok" id="fok">Mensaje enviado. Te contactaremos pronto.</div>
+      </div>
+    </div>
   </div>
-  <div class="fbot">
-    <div><p>© 2025 JAC Realty · jacrealtypa.com · Todos los derechos reservados.</p><p>Licencia PN-0931 · Miembro de ACOBIR · MLS Panamá · Regulado por la Junta Técnica de Bienes Raíces de la República de Panamá</p></div>
-    <div class="fleg"><a href="#">Privacidad</a><a href="#">Términos</a><a href="#">Aviso Legal</a><a href="crm.html">Admin</a></div>
+</section>
+
+<footer>
+  <div class="fi">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAfQAAAH0CAIAAABEtEjdAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAFY2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSfvu78nIGlkPSdXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQnPz4KPHg6eG1wbWV0YSB4bWxuczp4PSdhZG9iZTpuczptZXRhLyc+CjxyZGY6UkRGIHhtbG5zOnJkZj0naHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyc+CgogPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9JycKICB4bWxuczpBdHRyaWI9J2h0dHA6Ly9ucy5hdHRyaWJ1dGlvbi5jb20vYWRzLzEuMC8nPgogIDxBdHRyaWI6QWRzPgogICA8cmRmOlNlcT4KICAgIDxyZGY6bGkgcmRmOnBhcnNlVHlwZT0nUmVzb3VyY2UnPgogICAgIDxBdHRyaWI6Q3JlYXRlZD4yMDI2LTA0LTE1PC9BdHRyaWI6Q3JlYXRlZD4KICAgICA8QXR0cmliOkRhdGE+eyZxdW90O2RvYyZxdW90OzomcXVvdDtEQUdKVmhEM0YycyZxdW90OywmcXVvdDt1c2VyJnF1b3Q7OiZxdW90O1VBRHBUdmZaTVY4JnF1b3Q7LCZxdW90O2JyYW5kJnF1b3Q7OiZxdW90O3BhdGltYXlzJiMzOTtzIHRlYW0mcXVvdDt9PC9BdHRyaWI6RGF0YT4KICAgICA8QXR0cmliOkV4dElkPjc4OTU5ZDBiLTA4MWEtNDNiYy05N2JmLWU2ZGViYjEwZGY4MzwvQXR0cmliOkV4dElkPgogICAgIDxBdHRyaWI6RmJJZD41MjUyNjU5MTQxNzk1ODA8L0F0dHJpYjpGYklkPgogICAgIDxBdHRyaWI6VG91Y2hUeXBlPjI8L0F0dHJpYjpUb3VjaFR5cGU+CiAgICA8L3JkZjpsaT4KICAgPC9yZGY6U2VxPgogIDwvQXR0cmliOkFkcz4KIDwvcmRmOkRlc2NyaXB0aW9uPgoKIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PScnCiAgeG1sbnM6ZGM9J2h0dHA6Ly9wdXJsLm9yZy9kYy9lbGVt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" alt="JAC Realty">
+    <nav class="fl">
+      <a href="#inicio">Inicio</a>
+      <a href="#propiedades">Propiedades</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p class="fc3">© 2025 JAC Realty Panama &nbsp;|&nbsp; Lic. MICI #0931</p>
   </div>
 </footer>
 
-<!-- WA FLOAT -->
-<a href="https://wa.me/50764627763?text=Hola%20JAC%20Realty%2C%20quisiera%20informaci%C3%B3n%20sobre%20propiedades%20en%20Panam%C3%A1" target="_blank" rel="noopener" class="waf" title="WhatsApp JAC Realty">
-  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+<a href="https://wa.me/50760000000" class="waf" target="_blank" title="WhatsApp">💬</a>
 
-<!-- PROPERTY MODAL -->
-<div id="propModal" style="position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)" onclick="if(event.target===this)closePropModal()">
-  <div style="background:white;max-width:780px;width:95%;max-height:90vh;overflow-y:auto;position:relative">
-    <button onclick="closePropModal()" style="position:absolute;top:16px;right:16px;z-index:1;background:rgba(0,0,0,.5);color:white;border:none;width:36px;height:36px;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>
-    <img id="pmImg" style="width:100%;height:320px;object-fit:cover" alt="">
-    <div style="padding:32px">
-      <p id="pmType" style="font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px"></p>
-      <h2 id="pmTitle" style="font-family:var(--serif);font-size:32px;font-weight:300;color:var(--black);margin-bottom:10px"></h2>
-      <p id="pmSpecs" style="font-size:13px;color:var(--taupe);margin-bottom:20px"></p>
-      <p id="pmPrice" style="font-family:var(--serif);font-size:36px;font-weight:300;color:var(--black);margin-bottom:24px"></p>
-      <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a id="pmWA" href="#" target="_blank" class="wa-btn" style="flex:1;min-width:200px">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Consultar por WhatsApp
-        </a>
-        <a href="#contacto" onclick="closePropModal()" class="btn-primary" style="flex:1;min-width:200px;justify-content:center">Solicitar Información →</a>
-      </div>
-    </div>
+<div class="mov" id="mov">
+  <div class="mbox">
+    <button class="mcl" onclick="closeMod()">✕</button>
+    <div id="mod-cnt"></div>
   </div>
 </div>
 
+<div class="tst" id="tst"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-// ─── CONFIG EmailJS ───
-// INSTRUCCIÓN: Regístrese en emailjs.com con jcastro@jacrealtypa.com
-// Service ID: service_jacrealtypa | Template ID: template_contacto
-// Reemplace 'YOUR_PUBLIC_KEY' con su clave pública de EmailJS
-const EMAILJS_KEY = 'YOUR_PUBLIC_KEY';
-const EMAILJS_SERVICE = 'service_jacrealtypa';
-const EMAILJS_TEMPLATE = 'template_contacto';
-const WA_PRIMARY = '50764627763';
-const AGENT_EMAIL = 'jcastro@jacrealtypa.com';
+const sb=supabase.createClient('https://gzjeuauwpsbzqknmifki.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd6amV1YXV3cHNienFrbm1pZmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg5MDc1NDYsImV4cCI6MjA5NDQ4MzU0Nn0.HtVsjtfCIEfULL3GH5rRaF0zUS5y6D37CGaBoipbM5s');
+let all=[],filt=[],pg=0;
+const PER=12;
+const f$=n=>n?'$'+Number(n).toLocaleString('en-US'):'Consultar';
 
-// Init EmailJS
-(function(){
-  try { emailjs.init({publicKey: EMAILJS_KEY}); } catch(e){}
-})();
-
-// ─── NAV ───
-const navEl = document.getElementById('nav');
-window.addEventListener('scroll', () => navEl.classList.toggle('scrolled', scrollY > 60));
-const hbg = document.getElementById('hbg');
-const navl = document.getElementById('navl');
-hbg.addEventListener('click', () => {
-  const open = navl.classList.toggle('open');
-  const s = hbg.querySelectorAll('span');
-  if (open) { s[0].style.transform='rotate(45deg) translate(5px,5px)'; s[1].style.opacity='0'; s[2].style.transform='rotate(-45deg) translate(5px,-5px)'; }
-  else { s.forEach(x=>{x.style.transform='';x.style.opacity='';}); }
-});
-function closeNav(){ navl.classList.remove('open'); hbg.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';}); }
-
-// ─── SMOOTH SCROLL ───
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const t = document.querySelector(a.getAttribute('href'));
-    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth',block:'start'}); }
-  });
-});
-
-// ─── SEARCH TABS ───
-function setTab(el){ document.querySelectorAll('.stab').forEach(t=>t.classList.remove('active')); el.classList.add('active'); }
-
-// ─── SEARCH ───
-function doSearch(){
-  const tipo = document.getElementById('sTipo').value;
-  const zona = document.getElementById('sZona').value;
-  const precio = document.getElementById('sPrecio').value;
-  const hab = document.getElementById('sHab').value;
-  const msg = `Hola JAC Realty 👋 Estoy buscando:\n- Tipo: ${tipo}\n- Zona: ${zona}\n- Presupuesto: ${precio}\n- Habitaciones: ${hab}\n\n¿Pueden ayudarme?`;
-  window.open(`https://wa.me/${WA_PRIMARY}?text=${encodeURIComponent(msg)}`,'_blank');
+async function init(){
+  const {data,error}=await sb.from('propiedades_realty')
+    .select('*')
+    .eq('publicar_web',true)
+    .in('estado',['Disponible','Reservado'])
+    .order('destacado',{ascending:false})
+    .order('created_at',{ascending:false});
+  if(error){console.warn('Error Supabase:',error.message);all=[];}
+  else all=data||[];
+  document.getElementById('stat-tot').textContent=all.length;
+  renderDest();filt=[...all];renderCat();
 }
 
-// ─── COUNTER ANIMATION ───
-const counter = (el, target, suffix) => {
-  let current = 0; const step = Math.ceil(target / 60);
-  const t = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.innerHTML = `${current}<span>${suffix}</span>`;
-    if(current >= target) clearInterval(t);
-  }, 25);
-};
-const statsObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){
-      const els = document.querySelectorAll('.stat-n[data-target]');
-      els.forEach(el => {
-        const target = +el.dataset.target;
-        const suffix = el.querySelector('span').textContent;
-        counter(el, target, suffix);
-        el.removeAttribute('data-target');
-      });
-      statsObs.disconnect();
-    }
-  });
-}, {threshold:.3});
-const statsEl = document.querySelector('.stats');
-if(statsEl) statsObs.observe(statsEl);
-
-// ─── PROPERTY MODAL ───
-function openPropertyModal(title, type, specs, price, img){
-  document.getElementById('pmTitle').textContent = title;
-  document.getElementById('pmType').textContent = type;
-  document.getElementById('pmSpecs').textContent = specs;
-  document.getElementById('pmPrice').textContent = price;
-  document.getElementById('pmImg').src = img;
-  document.getElementById('pmImg').alt = title;
-  const waMsg = encodeURIComponent(`Hola JAC Realty 🏠 Estoy interesado/a en la propiedad: *${title}* (${price}). ¿Podría darme más información y agendar una visita?`);
-  document.getElementById('pmWA').href = `https://wa.me/${WA_PRIMARY}?text=${waMsg}`;
-  document.getElementById('propModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
-function closePropModal(){
-  document.getElementById('propModal').style.display = 'none';
-  document.body.style.overflow = '';
+function pCard(p){
+  const img=(p.imagenes&&p.imagenes[0])
+    ?`<img src="${p.imagenes[0]}" alt="${p.titulo}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=pni>🏠</div>'">`
+    :'<div class="pni">🏠</div>';
+  const opCls={Venta:'pbv',Alquiler:'pba',Permuta:'pbr'};
+  const loc=[p.corregimiento,p.distrito,p.provincia].filter(Boolean).join(', ')||'Panama';
+  return `<div class="pc" onclick="openP('${p.id}')">
+    <div class="pi">
+      ${img}
+      <div class="pbs">
+        <span class="pb ${opCls[p.tipo_operacion]||'pbv'}">${p.tipo_operacion||'—'}</span>
+        ${p.destacado?'<span class="pb pbd">&#9733; Destacado</span>':''}
+      </div>
+      ${p.estado==='Reservado'?'<div class="pby">Reservado</div>':''}
+    </div>
+    <div class="pbo">
+      <div class="pcd">${p.codigo||''}</div>
+      <div class="pti">${p.titulo}</div>
+      <div class="plo">&#128205; ${loc}</div>
+      <div class="psp">
+        ${p.habitaciones?`<span>&#127968; ${p.habitaciones} hab</span>`:''}
+        ${p.banos?`<span>&#128700; ${p.banos} ba&ntilde;os</span>`:''}
+        ${p.area_m2?`<span>&#128207; ${p.area_m2} m&sup2;</span>`:''}
+        ${p.parqueos?`<span>&#128663; ${p.parqueos} park</span>`:''}
+      </div>
+      <div class="ppr">
+        <span class="ppv">${f$(p.precio)}</span>
+        <span class="ppt">${p.tipo_inmueble||''}</span>
+      </div>
+    </div>
+  </div>`;
 }
 
-// ─── BLOG TOGGLE ───
-function tog(id, btn){
-  const card = document.getElementById(id);
-  card.classList.toggle('open');
-  const open = card.classList.contains('open');
-  btn.innerHTML = (open?'Leer menos':'Leer más') + ' <span class="arr">→</span>';
-  if(open) btn.querySelector('.arr').style.transform = 'rotate(90deg)';
-}
-
-// ─── CONTACT FORM ───
-document.getElementById('contactForm').addEventListener('submit', async function(e){
-  e.preventDefault();
-  const nombre = document.getElementById('fNombre').value.trim();
-  const telefono = document.getElementById('fTelefono').value.trim();
-  const email = document.getElementById('fEmail').value.trim();
-  const tipo = document.getElementById('fTipo').value;
-  const presupuesto = document.getElementById('fPresupuesto').value;
-  const mensaje = document.getElementById('fMensaje').value.trim();
-  const status = document.getElementById('formStatus');
-  const btn = document.getElementById('submitBtn');
-
-  // Validation
-  if(!nombre || !telefono || !email){ showStatus('Por favor complete los campos obligatorios (*)','err'); return; }
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showStatus('Por favor ingrese un correo electrónico válido.','err'); return; }
-
-  // Loading
-  btn.disabled = true;
-  btn.innerHTML = '<div style="width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:white;border-radius:50%;animation:spin .8s linear infinite"></div> Enviando…';
-
-  const params = {
-    from_name: nombre,
-    from_email: email,
-    phone: telefono,
-    tipo_consulta: tipo,
-    presupuesto,
-    message: mensaje || 'Sin mensaje adicional.',
-    to_email: AGENT_EMAIL,
-    reply_to: email,
-    date: new Date().toLocaleDateString('es-PA', {weekday:'long',year:'numeric',month:'long',day:'numeric'}),
-  };
-
-  let sent = false;
-
-  // Try EmailJS
-  if(EMAILJS_KEY !== 'YOUR_PUBLIC_KEY'){
-    try {
-      await emailjs.send(EMAILJS_SERVICE, EMAILJS_TEMPLATE, params);
-      sent = true;
-    } catch(err){ console.warn('EmailJS error:', err); }
+function renderDest(){
+  const dest=all.filter(p=>p.destacado).slice(0,3);
+  const g=document.getElementById('dest-grid');
+  if(!dest.length){
+    g.innerHTML='<div class="emp" style="grid-column:1/-1"><div class="emp-i">&#127968;</div><h3>Proximas propiedades destacadas</h3><p>Consulta nuestro catalogo completo abajo.</p></div>';
+    return;
   }
+  g.innerHTML=dest.map(p=>pCard(p)).join('');
+}
 
-  // Always send WhatsApp notification to agent
-  const waAgent = encodeURIComponent(
-    `🏠 *NUEVA CONSULTA - JAC Realty*\n\n👤 *Nombre:* ${nombre}\n📱 *Teléfono:* ${telefono}\n📧 *Email:* ${email}\n🔍 *Consulta:* ${tipo}\n💰 *Presupuesto:* ${presupuesto}\n💬 *Mensaje:* ${mensaje||'Sin mensaje'}\n\n_Enviado desde jacrealtypa.com_`
+function fAll(){
+  const op=document.getElementById('f-op').value;
+  const tp=document.getElementById('f-tp').value;
+  const zo=document.getElementById('f-zo').value.toLowerCase();
+  const pn=Number(document.getElementById('f-pn').value)||0;
+  const px=Number(document.getElementById('f-px').value)||Infinity;
+  filt=all.filter(p=>
+    (!op||p.tipo_operacion===op)&&
+    (!tp||p.tipo_inmueble===tp)&&
+    (!zo||(p.titulo+p.distrito+p.corregimiento+p.direccion+'').toLowerCase().includes(zo))&&
+    (!pn||p.precio>=pn)&&
+    (px===Infinity||!p.precio||p.precio<=px)
   );
-
-  // Also save to CRM localStorage
-  saveToCRM({nombre, telefono, email, tipo, presupuesto, mensaje, fecha: new Date().toISOString(), fuente:'Sitio Web'});
-
-  // Auto WhatsApp to client
-  const waClient = encodeURIComponent(
-    `Hola ${nombre} 👋 Gracias por contactar a *JAC Realty*. Su consulta ha sido recibida y le responderemos dentro de las próximas 2 horas hábiles.\n\nSi prefiere atención inmediata, puede responder a este mensaje. ¡Estamos para ayudarle! 🏠\n\n_JAC Realty · Lic. PN-0931_`
-  );
-
-  // Notify agent via WhatsApp
-  window.open(`https://wa.me/${WA_PRIMARY}?text=${waAgent}`, '_blank');
-
-  btn.disabled = false;
-  btn.innerHTML = '✓ Mensaje Enviado';
-  btn.style.background = '#1a1a1a';
-  showStatus(`¡Gracias ${nombre}! Su consulta fue recibida. Le responderemos pronto.${!sent?' (Consejo: configure EmailJS para recibir el correo también.)':''}`, 'ok');
-  showToastMsg(`✅ Consulta recibida de ${nombre}. WhatsApp de notificación enviado.`);
-  this.reset();
-  setTimeout(() => { btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9 22,2"/></svg> Enviar Consulta'; btn.style.background=''; }, 4000);
-});
-
-function showStatus(msg, type){
-  const s = document.getElementById('formStatus');
-  s.textContent = msg; s.className = 'form-status ' + type; s.style.display = 'block';
-  setTimeout(()=>{ s.style.display='none'; }, 6000);
+  pg=0;renderCat();
 }
 
-// ─── SAVE LEAD TO CRM localStorage ───
-function saveToCRM(lead){
-  try {
-    const leads = JSON.parse(localStorage.getItem('jac_leads') || '[]');
-    lead.id = Date.now();
-    lead.status = 'lead_nuevo';
-    leads.unshift(lead);
-    localStorage.setItem('jac_leads', JSON.stringify(leads));
-  } catch(e){}
+function renderCat(){
+  const g=document.getElementById('cat-grid');
+  document.getElementById('fcount').textContent=filt.length+' propiedades';
+  if(!filt.length){
+    g.innerHTML='<div class="emp"><div class="emp-i">&#128269;</div><h3>Sin resultados</h3><p>Prueba con otros filtros o <a href="#contacto" onclick="closeMod()">contactanos</a> directamente.</p></div>';
+    document.getElementById('pag').innerHTML='';return;
+  }
+  g.innerHTML=filt.slice(pg*PER,(pg+1)*PER).map(p=>pCard(p)).join('');
+  renderPag();
 }
 
-// ─── TOAST ───
-function showToastMsg(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(window._tt);
-  window._tt = setTimeout(() => t.classList.remove('show'), 5500);
+function renderPag(){
+  const tot=Math.ceil(filt.length/PER);
+  if(tot<=1){document.getElementById('pag').innerHTML='';return;}
+  let h='';
+  if(pg>0)h+=`<button class="pg-b" onclick="gPg(${pg-1})">&#8592; Anterior</button>`;
+  for(let i=0;i<tot;i++)h+=`<button class="pg-b ${i===pg?'on':''}" onclick="gPg(${i})">${i+1}</button>`;
+  if(pg<tot-1)h+=`<button class="pg-b" onclick="gPg(${pg+1})">Siguiente &#8594;</button>`;
+  document.getElementById('pag').innerHTML=h;
 }
 
-// ─── FADE IN OBSERVER ───
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if(e.isIntersecting){ e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; io.unobserve(e.target); }
-  });
-}, {threshold:.08});
-document.querySelectorAll('.pcard,.svcard,.bcard,.stat,.citem').forEach(el => {
-  el.style.opacity='0'; el.style.transform='translateY(20px)';
-  el.style.transition='opacity .6s ease, transform .6s ease';
-  io.observe(el);
-});
+function gPg(n){pg=n;renderCat();window.scrollTo({top:document.getElementById('propiedades').offsetTop-80,behavior:'smooth'});}
+
+function heroSearch(){
+  const op=document.getElementById('h-op').value;
+  const tp=document.getElementById('h-tp').value;
+  const zo=document.getElementById('h-zo').value;
+  const px=document.getElementById('h-px').value;
+  if(op)document.getElementById('f-op').value=op;
+  if(tp)document.getElementById('f-tp').value=tp;
+  if(zo)document.getElementById('f-zo').value=zo;
+  if(px)document.getElementById('f-px').value=px;
+  document.getElementById('propiedades').scrollIntoView({behavior:'smooth'});
+  setTimeout(fAll,400);
+}
+
+// GALLERY
+let gIdx=0,gImgs=[];
+function openP(id){
+  const p=all.find(x=>x.id===id);if(!p)return;
+  gImgs=p.imagenes&&p.imagenes.length?p.imagenes:[];
+  gIdx=0;
+  const loc=[p.corregimiento,p.distrito,p.provincia].filter(Boolean).join(', ')||'Panama';
+  const waMsg=encodeURIComponent(`Hola! Me interesa la propiedad ${p.codigo||''} - ${p.titulo} | ${p.tipo_operacion} | ${f$(p.precio)} | ${p.distrito||'Panama'}`);
+  document.getElementById('mod-cnt').innerHTML=`
+    <div class="mgal" id="mgal">
+      ${gImgs.length
+        ?`<img id="gimg" src="${gImgs[0]}" alt="${p.titulo}">
+         ${gImgs.length>1?`<div class="gn"><button class="gnb" onclick="gNav(-1)">&#8592;</button><button class="gnb" onclick="gNav(1)">&#8594;</button></div>`:''}`
+        :'<div class="mgal-no">&#127968;</div>'}
+    </div>
+    <div class="mbd">
+      <div class="mgrid">
+        <div class="ml">
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+            <span style="background:${p.tipo_operacion==='Alquiler'?'var(--rj)':'var(--ng)'};color:#fff;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px">${p.tipo_operacion||'—'}</span>
+            ${p.estado==='Reservado'?'<span style="background:var(--tp);color:#fff;padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px">Reservado</span>':''}
+            ${p.destacado?'<span style="background:var(--gr);color:var(--ng);padding:4px 10px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:2px">&#9733; Destacado</span>':''}
+          </div>
+          <h2>${p.titulo}</h2>
+          <p class="ml-loc">&#128205; ${loc}</p>
+          <div class="msp">
+            ${p.area_m2?`<div class="ms2"><div class="ms2-v">${p.area_m2}</div><div class="ms2-l">m&sup2;</div></div>`:''}
+            ${p.habitaciones?`<div class="ms2"><div class="ms2-v">${p.habitaciones}</div><div class="ms2-l">Hab.</div></div>`:''}
+            ${p.banos?`<div class="ms2"><div class="ms2-v">${p.banos}</div><div class="ms2-l">Ba&ntilde;os</div></div>`:''}
+            ${p.parqueos?`<div class="ms2"><div class="ms2-v">${p.parqueos}</div><div class="ms2-l">Park.</div></div>`:''}
+            ${p.piso?`<div class="ms2"><div class="ms2-v">${p.piso}</div><div class="ms2-l">Piso</div></div>`:''}
+            ${p.amoblado?'<div class="ms2"><div class="ms2-v">Si</div><div class="ms2-l">Amoblado</div></div>':''}
+          </div>
+          ${p.descripcion?`<p class="mdesc">${p.descripcion}</p>`:''}
+          ${p.caracteristicas&&p.caracteristicas.length?`<div class="mcar"><h4>Caracteristicas</h4><div class="clist">${p.caracteristicas.map(c=>`<span class="ctag">${c}</span>`).join('')}</div></div>`:''}
+          ${gImgs.length>1?`<div style="margin-top:16px"><p style="font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--tp);margin-bottom:8px">Galeria</p><div style="display:flex;gap:6px;flex-wrap:wrap">${gImgs.map((img,i)=>`<img src="${img}" style="width:60px;height:45px;object-fit:cover;border-radius:2px;cursor:pointer;opacity:${i===0?1:.6};transition:.2s" onclick="gNav2(${i})" id="gt${i}">`).join('')}</div></div>`:''}
+        </div>
+        <div class="mr">
+          <div class="cbox">
+            <p class="cbox-h3" style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gt);margin-bottom:4px">${p.codigo||'Propiedad'}</p>
+            <div class="cbox-pr">${f$(p.precio)}</div>
+            <div class="cbox-ln"></div>
+            <p style="font-size:12px;color:var(--gt);margin-bottom:16px">Contacta a un asesor para mas informacion sobre esta propiedad.</p>
+            <div class="cf">
+              <input id="mc-nm" placeholder="Tu nombre">
+              <input id="mc-ph" type="tel" placeholder="WhatsApp / Telefono">
+              <input id="mc-em" type="email" placeholder="Email">
+              <button class="bc" onclick="sendProp('${p.id}','${p.titulo.replace(/'/g,"\'")}','${p.codigo||''}')">Solicitar Informacion</button>
+              <a href="https://wa.me/50760000000?text=${waMsg}" target="_blank" style="display:block"><button class="bw2">&#128172; WhatsApp Directo</button></a>
+            </div>
+            <p style="font-size:10px;color:var(--tp);text-align:center;margin-top:12px">Codigo: ${p.codigo||'—'} &nbsp;|&nbsp; Lic. #0931</p>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  document.getElementById('mov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+
+function gNav(dir){
+  if(!gImgs.length)return;
+  gIdx=(gIdx+dir+gImgs.length)%gImgs.length;
+  document.getElementById('gimg').src=gImgs[gIdx];
+  document.querySelectorAll('[id^="gt"]').forEach((el,i)=>el.style.opacity=i===gIdx?1:.6);
+}
+
+function gNav2(i){gIdx=i;document.getElementById('gimg').src=gImgs[i];document.querySelectorAll('[id^="gt"]').forEach((el,j)=>el.style.opacity=j===i?1:.6);}
+
+function closeMod(){
+  document.getElementById('mov').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.getElementById('mov').addEventListener('click',e=>{if(e.target===document.getElementById('mov'))closeMod();});
+
+function showToast(msg){
+  const t=document.getElementById('tst');t.textContent=msg;t.style.display='block';
+  setTimeout(()=>t.style.display='none',3000);
+}
+
+async function sendProp(pid,ptit,pcod){
+  const nm=document.getElementById('mc-nm').value.trim();
+  const ph=document.getElementById('mc-ph').value.trim();
+  const em=document.getElementById('mc-em').value.trim();
+  if(!nm||!ph){showToast('Completa tu nombre y telefono');return;}
+  try{
+    await sb.from('actividades_realty').insert({tipo:'Llamada',descripcion:`Consulta web: ${nm} (${ph}${em?' / '+em:''}) — Propiedad: ${pcod} ${ptit}`,fecha:new Date().toISOString()});
+  }catch(e){}
+  showToast('Mensaje enviado! Te contactamos pronto.');
+  document.getElementById('mc-nm').value='';document.getElementById('mc-ph').value='';document.getElementById('mc-em').value='';
+}
+
+async function sendContact(){
+  const nm=document.getElementById('ct-nm').value.trim();
+  const ph=document.getElementById('ct-ph').value.trim();
+  const em=document.getElementById('ct-em').value.trim();
+  const ms=document.getElementById('ct-ms').value.trim();
+  if(!nm||!ph){showToast('Completa tu nombre y telefono');return;}
+  try{
+    const it=document.getElementById('ct-it').value;
+    await sb.from('actividades_realty').insert({tipo:'Email',descripcion:`Contacto web: ${nm} | Tel: ${ph} | Email: ${em} | Interes: ${it} | Mensaje: ${ms}`,fecha:new Date().toISOString()});
+  }catch(e){}
+  document.getElementById('fok').style.display='block';
+  document.getElementById('ct-nm').value='';document.getElementById('ct-ph').value='';
+  document.getElementById('ct-em').value='';document.getElementById('ct-ms').value='';
+}
+
+init();
 </script>
 </body>
 </html>
