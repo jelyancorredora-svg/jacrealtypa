@@ -966,8 +966,8 @@ input:checked+.toggle-slider:before{transform:translateX(16px);background:var(--
         </div>
         <div class="kpi-card">
           <div class="kpi-label">Tasa de Cierre</div>
-          <div class="kpi-value" style="color:var(--green)">24%</div>
-          <div class="kpi-delta up">↑ 4% vs trimestre</div>
+          <div class="kpi-value" style="color:var(--green)" id="kpi-tasa-cierre">—</div>
+          <div class="kpi-delta" id="kpi-tasa-cierre-delta" style="color:var(--text2)">Sin datos suficientes</div>
         </div>
         <div class="kpi-card" style="cursor:pointer" onclick="showPanel('contactos')">
           <div class="kpi-label">Empresas</div>
@@ -3779,6 +3779,22 @@ function renderDashboard(){
   document.getElementById('kpi-leads').textContent=leads.filter(l=>!['Cerrado ✅','Perdido ❌','Cerrado','Perdido'].includes(l.status)).length;
   document.getElementById('kpi-citas').textContent=citas.length;
   document.getElementById('kpi-empresas-dash').textContent=empresas.length+(contacts.filter(c=>c.categoria==='Empresa'||c.esEmpresa==='si').length);
+  // Tasa de cierre — sólo calcula si hay datos reales suficientes
+  (function(){
+    const totalLeads=leads.length;
+    const cerrados=leads.filter(l=>['Cerrado ✅','Cerrado'].includes(l.status)).length;
+    const el=document.getElementById('kpi-tasa-cierre');
+    const delta=document.getElementById('kpi-tasa-cierre-delta');
+    if(!el) return;
+    if(totalLeads<5){
+      el.textContent='—';
+      if(delta){ delta.textContent='Sin datos suficientes'; delta.className='kpi-delta'; delta.style.color='var(--text2)'; }
+    } else {
+      const pct=Math.round((cerrados/totalLeads)*100);
+      el.textContent=pct+'%';
+      if(delta){ delta.textContent=cerrados+' de '+totalLeads+' leads cerrados'; delta.className='kpi-delta up'; delta.style.color=''; }
+    }
+  })();
   updateBadges();
   // Hot leads
   const hot=leads.filter(l=>['Visita programada','En negociación','Oferta presentada','Visita','Oferta'].includes(l.status)).slice(0,5);
