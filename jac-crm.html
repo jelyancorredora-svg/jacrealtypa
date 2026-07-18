@@ -1602,7 +1602,19 @@ input:checked+.toggle-slider:before{transform:translateX(16px);background:var(--
               <option>Disponible</option><option>En Negociación</option><option>Vendido</option>
             </select>
           </div>
-          <button class="btn btn-primary btn-sm" onclick="recargarMLS(this)">🔄 Recargar MLS</button>
+          <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+            <select id="mls-filter-zona" onchange="renderMLS()" style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;outline:none;max-width:150px">
+              <option value="">📍 Zona</option>
+            </select>
+            <input type="number" id="mls-precio-min" placeholder="$ Mín" oninput="renderMLS()" style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:7px 8px;color:var(--text);font-size:12px;outline:none;width:82px">
+            <span style="color:var(--text2);font-size:12px">–</span>
+            <input type="number" id="mls-precio-max" placeholder="$ Máx" oninput="renderMLS()" style="background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:7px 8px;color:var(--text);font-size:12px;outline:none;width:82px">
+            <button class="btn btn-outline btn-sm" onclick="mlsLimpiarFiltros()" title="Limpiar filtros">✕</button>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span id="mls-count-label" style="font-size:11px;color:var(--text2)"></span>
+            <button class="btn btn-primary btn-sm" onclick="recargarMLS(this)">🔄 Recargar MLS</button>
+          </div>
         </div>
         <div class="table-wrap">
           <table>
@@ -1613,7 +1625,7 @@ input:checked+.toggle-slider:before{transform:translateX(16px);background:var(--
         <div id="mls-empty" style="display:none;text-align:center;padding:40px;color:var(--text2)">
           <div style="font-size:36px;margin-bottom:8px">📡</div>
           <div style="font-weight:600;margin-bottom:4px">Cargando listados MLS...</div>
-          <div style="font-size:13px">Los 1305 listados del MLS ACOBIR se cargan desde Supabase</div>
+          <div style="font-size:13px">Los listados del MLS ACOBIR se cargan desde Supabase</div>
         </div>
         <div id="mls-pag-info" style="display:none;padding:12px 0;align-items:center;justify-content:space-between;gap:12px"></div>
       </div>
@@ -4278,6 +4290,36 @@ function toggleAuto(btn,name){
 // MLS ACOBIR — listados importados (persistidos en Supabase tabla propiedades_red tipo='mls')
 let mlsListados = [];
 let mlsGuardadas = []; // Propiedades MLS en seguimiento activo
+// ── MLS localStorage blindaje — datos NUNCA se pierden ───────────
+const _LS_GUARD    = 'jac_mls_guard_v2';
+const _LS_MLS_CACHE= 'jac_mls_cache_v2';
+const _LS_MLS_TS   = 'jac_mls_cache_ts';
+(function _initMlsLS(){
+  // Cargar guardadas inmediatamente desde LS (antes de que Supabase responda)
+  try{ const r=localStorage.getItem(_LS_GUARD); if(r) mlsGuardadas=JSON.parse(r)||[]; }catch(e){ mlsGuardadas=[]; }
+  // Cargar caché de listados MLS (válida por 6 h)
+  try{
+    const cRaw=localStorage.getItem(_LS_MLS_CACHE);
+    const cTs=parseInt(localStorage.getItem(_LS_MLS_TS)||'0');
+    if(cRaw && (Date.now()-cTs)<6*3600*1000) mlsListados=JSON.parse(cRaw)||[];
+  }catch(e){ mlsListados=[]; }
+})();
+function _saveMlsGuardadasLS(){ try{localStorage.setItem(_LS_GUARD,JSON.stringify(mlsGuardadas));}catch(e){} }
+function _saveMlsListadosLS(){
+  try{
+    // Guardar sólo los campos esenciales para ahorrar espacio (~500 props)
+    const slim=mlsListados.slice(0,800).map(m=>({
+      id:m.id,titulo:m.titulo,tipo_prop:m.tipo_prop,tipo:m.tipo,operacion:m.operacion,
+      zona:m.zona,precio:m.precio,area_total:m.area_total,habitaciones:m.habitaciones,
+      banos:m.banos,estado:m.estado,fotos:Array.isArray(m.fotos)?m.fotos.slice(0,2):m.fotos,
+      mls_code:m.mls_code,descripcion:(m.descripcion||'').slice(0,200),
+      agente:m.agente,agencia:m.agencia,tel_corredor_wa:m.tel_corredor_wa,
+      provincia:m.provincia,distrito:m.distrito,barrio:m.barrio,created_at:m.created_at
+    }));
+    localStorage.setItem(_LS_MLS_CACHE,JSON.stringify(slim));
+    localStorage.setItem(_LS_MLS_TS,String(Date.now()));
+  }catch(e){ console.warn('MLS cache LS error:',e); }
+}
 
 function mlsTab(btn, id){
   document.querySelectorAll('.mls-section').forEach(s=>s.style.display='none');
@@ -4330,6 +4372,7 @@ async function loadMlsListados(){
     from+=batch;
   }
   mlsListados=all;
+  _saveMlsListadosLS(); // ← cache blindado
   _mlsPage=0;
   updateMlsKpis();
   // Auto-render if MLS panel is visible
@@ -4357,6 +4400,9 @@ function renderMLS(){
   const est=(document.getElementById('mls-filter-estado')||{}).value||'';
   const op=(document.getElementById('mls-filter-op')||{}).value||'';
   const tipo=(document.getElementById('mls-filter-tipo')||{}).value||'';
+  const zona=(document.getElementById('mls-filter-zona')||{}).value||'';
+  const pMin=parseFloat((document.getElementById('mls-precio-min')||{}).value)||0;
+  const pMax=parseFloat((document.getElementById('mls-precio-max')||{}).value)||Infinity;
   _mlsPage=0;
   if(!mlsListados.length){
     const tbody=document.getElementById('mls-tbody');
@@ -4367,14 +4413,32 @@ function renderMLS(){
     if(pagInfo) pagInfo.style.display='none';
     return;
   }
+  // Poblar dropdown de zonas con valores únicos de los datos reales
+  const zonaEl=document.getElementById('mls-filter-zona');
+  if(zonaEl&&zonaEl.options.length<=1){
+    const zonas=[...new Set(mlsListados.map(m=>m.zona||'').filter(Boolean))].sort();
+    zonas.forEach(z=>{ const o=document.createElement('option'); o.value=z; o.textContent=z; zonaEl.appendChild(o); });
+    if(zona) zonaEl.value=zona; // restaurar selección actual
+  }
   _mlsFiltered=mlsListados.filter(m=>{
-    if(q&&!(m.titulo+' '+m.zona+' '+(m.agente||'')+' '+(m.mls_code||'')+' '+(m.agencia||'')).toLowerCase().includes(q.toLowerCase())) return false;
+    if(q&&!(m.titulo+' '+m.zona+' '+(m.agente||'')+' '+(m.mls_code||'')+' '+(m.agencia||'')+' '+(m.barrio||'')+' '+(m.distrito||'')).toLowerCase().includes(q.toLowerCase())) return false;
     if(est&&m.estado!==est) return false;
     if(op&&m.operacion!==op) return false;
     if(tipo&&(m.tipo_prop||m.tipo||'')!==tipo) return false;
+    if(zona&&m.zona!==zona) return false;
+    if(pMin>0&&(m.precio||0)<pMin) return false;
+    if(pMax<Infinity&&(m.precio||0)>pMax) return false;
     return true;
   });
+  // Actualizar contador
+  const cnt=document.getElementById('mls-count-label');
+  if(cnt) cnt.textContent=_mlsFiltered.length.toLocaleString()+' / '+mlsListados.length.toLocaleString()+' listados';
   _mlsRenderPage();
+}
+function mlsLimpiarFiltros(){
+  ['mls-search','mls-precio-min','mls-precio-max'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['mls-filter-op','mls-filter-tipo','mls-filter-estado','mls-filter-zona'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  renderMLS();
 }
 function _mlsRenderPage(){
   const tbody=document.getElementById('mls-tbody');
@@ -5103,8 +5167,11 @@ function updateGuardadaStage(id, newStage){
     // Also create post-venta follow-up sequence
     createPostVentaSequence(g);
   }
-  // Persist
-  if(sb){
+  // Persist — LS blindado + Supabase con cola offline
+  _saveMlsGuardadasLS();
+  if(typeof _sbSave==='function'){
+    _sbSave('mls_seguimiento',{id:g.id,mls_code:g.mls_code,payload:g},{upsert:true,onConflict:'mls_code'}).catch(()=>{});
+  } else if(sb){
     sb.from('mls_seguimiento').upsert({id:g.id,mls_code:g.mls_code,payload:g},{onConflict:'mls_code',ignoreDuplicates:false})
       .then(({error})=>{if(error&&error.code!=='42P01')console.warn('MLS stage update SB:',error);});
   }
@@ -5146,7 +5213,10 @@ function removeGuardada(id){
   if(!g) return;
   if(!confirm('¿Eliminar "'+g.titulo+'" del seguimiento? Las tareas auto-creadas permanecerán en Tareas.')) return;
   mlsGuardadas = mlsGuardadas.filter(x=>x.id!==id);
-  if(sb){
+  _saveMlsGuardadasLS(); // LS inmediato
+  if(typeof _sbDelete==='function'){
+    _sbDelete('mls_seguimiento',id).catch(()=>{});
+  } else if(sb){
     sb.from('mls_seguimiento').delete().eq('id',id).then(()=>{});
   }
   renderMlsGuardadas();
@@ -5226,22 +5296,40 @@ function exportMlsGuardadaPDF(id){
   }
 }
 
-// Load mlsGuardadas from Supabase
+// Load mlsGuardadas — LS primero (instant), luego Supabase sincroniza
 async function loadMlsGuardadas(){
+  // LS ya fue cargado en _initMlsLS → actualizar badge de inmediato
+  const badge=document.getElementById('badge-guardadas');
+  if(badge) badge.textContent=mlsGuardadas.length||0;
   if(!sb) return;
   try {
-    const {data,error} = await sb.from('mls_seguimiento').select('*').order('created_at',{ascending:false}).limit(500);
+    const {data,error}=await sb.from('mls_seguimiento').select('*').order('created_at',{ascending:false}).limit(500);
     if(error){
-      if(error.code==='42P01'){
-        // Table doesn't exist yet — create it
-        console.log('mls_seguimiento table not found, will be created on first save');
-      }
-      return;
+      if(error.code==='42P01') console.log('mls_seguimiento table not found, will be created on first save');
+      return; // mantener versión de LS
     }
     if(data&&data.length){
-      mlsGuardadas = data.map(r=>r.payload||r).filter(Boolean);
-      const badge = document.getElementById('badge-guardadas');
-      if(badge) badge.textContent = mlsGuardadas.length;
+      // Supabase es la fuente de verdad si tiene más registros que LS
+      const sbGuard=data.map(r=>r.payload||r).filter(Boolean);
+      if(sbGuard.length>=mlsGuardadas.length){
+        mlsGuardadas=sbGuard;
+      } else {
+        // LS tiene registros nuevos offline → hacer upsert de los que faltan
+        const sbIds=new Set(sbGuard.map(g=>g.id));
+        const pending=mlsGuardadas.filter(g=>!sbIds.has(g.id));
+        if(pending.length&&sb){
+          pending.forEach(g=>{
+            sb.from('mls_seguimiento').upsert({id:g.id,mls_code:g.mls_code,payload:g},{onConflict:'mls_code',ignoreDuplicates:false}).then(()=>{});
+          });
+        }
+        // Merge: usar sbGuard + offline-only
+        mlsGuardadas=[...sbGuard,...pending];
+      }
+      _saveMlsGuardadasLS();
+      if(badge) badge.textContent=mlsGuardadas.length;
+      // Re-render si la tab está visible
+      const gTab=document.getElementById('mls-tab-guardadas');
+      if(gTab&&gTab.style.display!=='none') renderMlsGuardadas();
     }
   } catch(e){ console.warn('loadMlsGuardadas:',e); }
 }
@@ -5328,8 +5416,11 @@ async function saveMlsGuardada(){
   if(badge) badge.textContent=mlsGuardadas.length;
   // Create auto follow-up tasks
   if(autoSeq) createAutoFollowUpTasks(gEntry);
-  // Persist guardadas to Supabase
-  if(sb){
+  // Persist guardadas — LS inmediato (nunca se pierden) + Supabase con cola offline
+  _saveMlsGuardadasLS();
+  if(typeof _sbSave==='function'){
+    _sbSave('mls_seguimiento',{id:gEntry.id,mls_code:gEntry.mls_code,payload:gEntry},{upsert:true,onConflict:'mls_code'}).catch(()=>{});
+  } else if(sb){
     sb.from('mls_seguimiento').upsert({id:gEntry.id,mls_code:gEntry.mls_code,payload:gEntry},{onConflict:'mls_code',ignoreDuplicates:false})
       .then(({error})=>{if(error&&error.code!=='42P01')console.warn('MLS seguimiento SB:',error);});
   }
@@ -10801,8 +10892,10 @@ function openMiPerfil(){
     const prev=_sbAlive;
     _sbAlive=alive;
     if(!prev && alive){
-      // Reconexión detectada
+      // Reconexión detectada — vaciar cola + resync MLS
       setTimeout(window._flushQueue, 500);
+      setTimeout(()=>{ if(typeof loadMlsGuardadas==='function') loadMlsGuardadas(); }, 1200);
+      setTimeout(()=>{ if(typeof loadMlsListados==='function') loadMlsListados(); }, 2500);
     }
     _refreshSyncBar();
   }
