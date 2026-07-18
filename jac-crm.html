@@ -161,6 +161,38 @@ tr:hover td{background:rgba(255,255,255,.02)}
 .upcoming{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px}
 .upcoming-title{font-size:13px;font-weight:600;margin-bottom:10px}
 .event-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+/* ── NUEVA AGENDA (estilo JAC Seguros) ── */
+.jac-atab{padding:10px 18px;background:none;border:none;border-bottom:3px solid transparent;color:var(--muted);font-size:13px;font-weight:500;cursor:pointer;transition:.15s;margin-bottom:-2px;white-space:nowrap}
+.jac-atab:hover{color:var(--text)}
+.jac-atab.jac-atab-active{color:var(--accent);border-bottom-color:var(--accent);font-weight:700}
+.jac-mini-cal{width:100%}
+.jac-mini-cal-title{font-size:10px;font-weight:700;color:#3a5a8a;text-align:center;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.jac-mini-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0}
+.jac-mini-cal-dh{font-size:8px;font-weight:600;color:#8899bb;text-align:center;padding:2px 0}
+.jac-mini-cal-day{font-size:10px;text-align:center;padding:3px 1px;border-radius:4px;cursor:pointer;color:#3a4a6a;line-height:1.6}
+.jac-mini-cal-day:hover{background:#f0e8d0}
+.jac-mini-cal-day.jac-mc-today{background:#2563eb;color:#fff;font-weight:700;border-radius:50%}
+.jac-mini-cal-day.jac-mc-has-ev{font-weight:700;color:#1a2a4a;text-decoration:underline;text-underline-offset:2px}
+.jac-mini-cal-day.jac-mc-other{color:#bbc8d8;cursor:default}
+.jac-sidebar-card{background:#fff;border-radius:8px;padding:8px 10px;border-left:3px solid #e8a020;box-shadow:0 1px 4px rgba(0,0,0,.07);margin-bottom:6px}
+.jac-sidebar-card.jac-sc-cita{border-left-color:#f97316}
+.jac-sidebar-card.jac-sc-tarea{border-left-color:#818cf8}
+.jac-sidebar-card.jac-sc-mls{border-left-color:#22c55e}
+.jac-sidebar-card-label{font-size:8px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#8899bb;margin-bottom:2px}
+.jac-sidebar-card-title{font-size:11px;font-weight:600;color:#1a2a4a;line-height:1.3}
+.jac-cal-day{min-height:86px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);padding:7px 6px;cursor:pointer;transition:background .1s}
+.jac-cal-day:hover{background:rgba(232,160,32,.04)}
+.jac-cal-day.jac-other{opacity:.3;pointer-events:none}
+.jac-cal-day.jac-selected{background:rgba(37,99,235,.06)}
+.jac-day-num{width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:var(--text);border-radius:6px;margin-bottom:4px}
+.jac-cal-day.jac-today .jac-day-num{background:#2563eb;color:#fff;font-weight:700}
+.jac-cal-day.jac-selected:not(.jac-today) .jac-day-num{color:#2563eb;font-weight:700}
+.jac-cal-dots{display:flex;flex-wrap:wrap;gap:3px;margin-top:2px}
+.jac-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.jac-evento-card{border-radius:8px;border:1px solid var(--border);padding:10px 14px;display:flex;align-items:flex-start;gap:10px;background:var(--card);margin-bottom:8px}
+.jac-evento-card.jac-ec-cita{border-left:3px solid #f97316}
+.jac-evento-card.jac-ec-tarea{border-left:3px solid #818cf8}
+.jac-evento-card.jac-ec-mls{border-left:3px solid #22c55e}
 .event-item:last-child{border-bottom:none}
 .event-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0}
 .event-desc{font-size:12px}
@@ -1146,27 +1178,112 @@ input:checked+.toggle-slider:before{transform:translateX(16px);background:var(--
     </div>
 
     <!-- ========== AGENDA ========== -->
-    <div class="panel" id="panel-agenda">
-      <div class="cal-grid">
-        <div class="cal-main">
-          <div class="cal-header">
-            <button class="btn btn-ghost" onclick="calPrev()">‹</button>
-            <span class="cal-month" id="cal-month-label"></span>
-            <button class="btn btn-ghost" onclick="calNext()">›</button>
+    <div class="panel" id="panel-agenda" style="padding:0;overflow:hidden;border-radius:12px;border:1px solid var(--border)">
+      <div style="display:flex;height:calc(100vh - 140px);min-height:560px">
+
+        <!-- ═══ SIDEBAR IZQUIERDO ═══ -->
+        <div style="width:252px;min-width:252px;background:linear-gradient(160deg,#fffdf7 0%,#fef8ec 100%);border-right:1px solid #e8d8b0;display:flex;flex-direction:column;overflow-y:auto">
+          <!-- Fecha grande -->
+          <div style="padding:18px 16px 12px;border-bottom:1px solid #e8d8b0">
+            <div id="jac-agenda-dia-num" style="font-size:60px;font-weight:900;color:#1a2a4a;line-height:1">18</div>
+            <div style="display:flex;align-items:baseline;gap:6px;margin-top:2px">
+              <div id="jac-agenda-dia-nombre" style="font-size:14px;font-weight:600;color:#5a6a8a">/&nbsp;sábado</div>
+            </div>
+            <div id="jac-agenda-mes-anio" style="font-size:12px;color:#8a9abb;margin-top:1px">Julio 2026</div>
+            <!-- Botones -->
+            <div style="display:flex;gap:6px;margin-top:11px;align-items:center">
+              <button onclick="jacAgendaAgregarCita()" style="flex:1;background:#1a3a6a;color:#fff;border:none;border-radius:7px;padding:7px 0;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.03em">AGREGAR CITA</button>
+              <button onclick="openModal('modalTarea')" style="background:#22c55e;color:#fff;border:none;border-radius:50%;width:30px;height:30px;font-size:20px;font-weight:700;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0">+</button>
+            </div>
           </div>
-          <div class="cal-days-header">
-            <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+          <!-- Eventos del sidebar (hoy) -->
+          <div style="padding:10px 12px;flex:1;min-height:80px">
+            <div id="jac-sidebar-eventos"></div>
           </div>
-          <div class="cal-days" id="cal-days"></div>
+          <!-- Mini calendarios -->
+          <div style="padding:10px 12px;border-top:1px solid #e8d8b0">
+            <div id="jac-mini-cal-1" style="margin-bottom:10px"></div>
+            <div id="jac-mini-cal-2"></div>
+          </div>
         </div>
-        <div class="cal-sidebar">
-          <div style="display:flex;gap:8px">
-            <button class="btn btn-primary btn-sm" style="flex:1" onclick="openModal('modalCita')">+ Cita</button>
-            <button class="btn btn-outline btn-sm" style="flex:1" onclick="openModal('modalCita')">+ Recordatorio</button>
+
+        <!-- ═══ CONTENIDO PRINCIPAL ═══ -->
+        <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;background:var(--bg)">
+          <!-- Tabs -->
+          <div style="display:flex;border-bottom:2px solid var(--border);background:var(--card2);flex-shrink:0;overflow-x:auto">
+            <button id="jac-atab-agenda"    class="jac-atab jac-atab-active" onclick="jacSwitchTab('agenda')">Agenda</button>
+            <button id="jac-atab-semana"    class="jac-atab" onclick="jacSwitchTab('semana')">Semana</button>
+            <button id="jac-atab-tareas"    class="jac-atab" onclick="jacSwitchTab('tareas')">Tareas</button>
+            <button id="jac-atab-metas"     class="jac-atab" onclick="jacSwitchTab('metas')">Metas</button>
+            <button id="jac-atab-diario"    class="jac-atab" onclick="jacSwitchTab('diario')">Diario</button>
+            <button id="jac-atab-reuniones" class="jac-atab" onclick="jacSwitchTab('reuniones')">Reuniones</button>
+            <button id="jac-atab-notas2"    class="jac-atab" onclick="jacSwitchTab('notas2')">Notas</button>
           </div>
-          <div class="upcoming">
-            <div class="upcoming-title">📅 Esta Semana</div>
-            <div id="upcoming-list"></div>
+
+          <!-- ── TAB: AGENDA (calendario mensual) ── -->
+          <div id="jac-atab-content-agenda" style="flex:1;overflow-y:auto;padding:18px 20px">
+            <!-- Navegación de mes -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <button onclick="calPrev()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--text);font-size:16px;display:flex;align-items:center;justify-content:center">◀</button>
+              <span id="cal-month-label" style="font-size:16px;font-weight:700;color:var(--text)"></span>
+              <button onclick="calNext()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;width:34px;height:34px;cursor:pointer;color:var(--text);font-size:16px;display:flex;align-items:center;justify-content:center">▶</button>
+            </div>
+            <!-- Grid calendario -->
+            <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden">
+              <div style="display:grid;grid-template-columns:repeat(7,1fr);background:var(--card2);border-bottom:1px solid var(--border)">
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Dom</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Lun</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Mar</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Mié</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Jue</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Vie</div>
+                <div style="text-align:center;padding:9px 0;font-size:11px;font-weight:600;color:var(--muted)">Sáb</div>
+              </div>
+              <div id="cal-days" style="display:grid;grid-template-columns:repeat(7,1fr)"></div>
+            </div>
+            <!-- Leyenda -->
+            <div style="display:flex;gap:18px;margin-top:10px;align-items:center;font-size:11px;color:var(--muted)">
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#f97316;display:inline-block"></span>Cita / Visita</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#818cf8;display:inline-block"></span>Tarea</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:50%;background:#22c55e;display:inline-block"></span>Seguimiento MLS</span>
+            </div>
+            <!-- EVENTOS DEL DÍA -->
+            <div style="margin-top:18px">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:10px">Eventos del Día</div>
+              <div id="jac-eventos-dia">
+                <div style="color:var(--muted);font-size:13px;padding:16px 0">Haz clic en un día para ver sus eventos</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── TAB: SEMANA ── -->
+          <div id="jac-atab-content-semana" style="flex:1;overflow-y:auto;padding:18px 20px;display:none">
+            <div id="jac-semana-grid"></div>
+          </div>
+
+          <!-- ── TAB: TAREAS ── -->
+          <div id="jac-atab-content-tareas" style="flex:1;overflow-y:auto;padding:18px 20px;display:none">
+            <div id="jac-atab-tareas-list"></div>
+          </div>
+
+          <!-- ── TAB: METAS ── -->
+          <div id="jac-atab-content-metas" style="flex:1;overflow-y:auto;padding:18px 20px;display:none;text-align:center;color:var(--muted)">
+            <div style="padding:60px 0;font-size:14px">🎯 Próximamente: Metas y objetivos de ventas</div>
+          </div>
+
+          <!-- ── TAB: DIARIO ── -->
+          <div id="jac-atab-content-diario" style="flex:1;overflow-y:auto;padding:18px 20px;display:none;text-align:center;color:var(--muted)">
+            <div style="padding:60px 0;font-size:14px">📔 Próximamente: Diario de actividades</div>
+          </div>
+
+          <!-- ── TAB: REUNIONES ── -->
+          <div id="jac-atab-content-reuniones" style="flex:1;overflow-y:auto;padding:18px 20px;display:none">
+            <div id="jac-reuniones-list"></div>
+          </div>
+
+          <!-- ── TAB: NOTAS (vista interna) ── -->
+          <div id="jac-atab-content-notas2" style="flex:1;overflow-y:auto;padding:18px 20px;display:none;text-align:center;color:var(--muted)">
+            <div style="padding:60px 0;font-size:14px">📝 Usa el módulo <strong>Notas</strong> en el menú lateral para gestionar notas</div>
           </div>
         </div>
       </div>
@@ -4095,39 +4212,268 @@ function dropLead(e,stage){
 // ============================================================
 // CALENDAR
 // ============================================================
+// ═══════════════════════════════════════════════════════════════
+// AGENDA NUEVA — Estilo JAC Seguros
+// ═══════════════════════════════════════════════════════════════
+let _jacSelDate = null; // YYYY-MM-DD fecha seleccionada en el calendario
+
+function jacAgendaAgregarCita(){
+  const fd=document.getElementById('cita-fecha');
+  if(fd) fd.value=(_jacSelDate||new Date().toISOString().slice(0,10));
+  openModal('modalCita');
+}
+
+function jacUpdateSidebarDate(){
+  const now=new Date();
+  const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const el1=document.getElementById('jac-agenda-dia-num');
+  const el2=document.getElementById('jac-agenda-dia-nombre');
+  const el3=document.getElementById('jac-agenda-mes-anio');
+  if(el1) el1.textContent=now.getDate();
+  if(el2) el2.textContent='/ '+dias[now.getDay()];
+  if(el3) el3.textContent=meses[now.getMonth()]+' '+now.getFullYear();
+}
+
+function jacRenderMiniCal(containerId, year, month){
+  const el=document.getElementById(containerId); if(!el) return;
+  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const today=new Date();
+  const firstDay=new Date(year,month,1).getDay();
+  const daysInM=new Date(year,month+1,0).getDate();
+  const evDates=new Set();
+  citas.forEach(c=>{ if(c.fecha){ const p=c.fecha.split('-'); if(parseInt(p[0])===year&&parseInt(p[1])-1===month) evDates.add(parseInt(p[2])); }});
+  tasks.forEach(t=>{ if(t.due){ const p=t.due.split('-'); if(parseInt(p[0])===year&&parseInt(p[1])-1===month) evDates.add(parseInt(p[2])); }});
+  let h=`<div class="jac-mini-cal"><div class="jac-mini-cal-title">${meses[month]} ${year}</div><div class="jac-mini-cal-grid">
+    <div class="jac-mini-cal-dh">D</div><div class="jac-mini-cal-dh">L</div><div class="jac-mini-cal-dh">M</div><div class="jac-mini-cal-dh">X</div><div class="jac-mini-cal-dh">J</div><div class="jac-mini-cal-dh">V</div><div class="jac-mini-cal-dh">S</div>`;
+  for(let i=0;i<firstDay;i++) h+=`<div class="jac-mini-cal-day jac-mc-other"></div>`;
+  for(let d=1;d<=daysInM;d++){
+    const isT=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===d;
+    const hasE=evDates.has(d)&&!isT;
+    const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    h+=`<div class="jac-mini-cal-day${isT?' jac-mc-today':''}${hasE?' jac-mc-has-ev':''}" onclick="jacSelectDay('${ds}')">${d}</div>`;
+  }
+  h+=`</div></div>`;
+  el.innerHTML=h;
+}
+
+function jacRenderSidebarEvents(){
+  const el=document.getElementById('jac-sidebar-eventos'); if(!el) return;
+  const today=new Date().toISOString().slice(0,10);
+  const tc=citas.filter(c=>c.fecha===today);
+  const tt=tasks.filter(t=>t.due===today&&t.status!=='Completada');
+  let h='';
+  tc.slice(0,4).forEach(c=>{
+    h+=`<div class="jac-sidebar-card jac-sc-cita">
+      <div class="jac-sidebar-card-label">Cita</div>
+      <div class="jac-sidebar-card-title">${c.cliente||'Sin cliente'}</div>
+      <div style="font-size:9px;color:#8899bb;margin-top:1px">⏰ ${c.hora||'—'} · ${c.tipo||''}</div>
+    </div>`;
+  });
+  tt.slice(0,4).forEach(t=>{
+    h+=`<div class="jac-sidebar-card jac-sc-tarea">
+      <div class="jac-sidebar-card-label">Tarea</div>
+      <div class="jac-sidebar-card-title">${t.title||t.desc||'Sin desc.'}</div>
+      <div style="font-size:9px;color:#8899bb;margin-top:1px">📌 ${t.priority||'Normal'}</div>
+    </div>`;
+  });
+  if(!h) h=`<div style="font-size:10px;color:#8899bb;text-align:center;padding:16px 0;line-height:1.5">Sin eventos hoy</div>`;
+  el.innerHTML=h;
+}
+
 function renderCalendar(){
   const months=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
-  document.getElementById('cal-month-label').textContent=`${months[calMonth]} ${calYear}`;
+  const el=document.getElementById('cal-month-label');
+  if(el) el.textContent=`${months[calMonth]} ${calYear}`;
   const firstDay=new Date(calYear,calMonth,1).getDay();
   const daysInMonth=new Date(calYear,calMonth+1,0).getDate();
   const today=new Date();
+  const todayStr=today.toISOString().slice(0,10);
+  if(!_jacSelDate) _jacSelDate=todayStr;
   let html='';
-  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day other-month"><div class="cal-day-num">${new Date(calYear,calMonth,1-firstDay+i).getDate()}</div></div>`;
+  // Días previos (mes anterior)
+  for(let i=0;i<firstDay;i++){
+    const prevD=new Date(calYear,calMonth,1-firstDay+i);
+    html+=`<div class="jac-cal-day jac-other"><div class="jac-day-num">${prevD.getDate()}</div></div>`;
+  }
+  // Días del mes
   for(let d=1;d<=daysInMonth;d++){
-    const isToday=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
-    const dateStr=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const dayCitas=citas.filter(c=>c.fecha===dateStr);
-    html+=`<div class="cal-day${isToday?' today':''}" onclick="openModal('modalCita')">
-      <div class="cal-day-num">${d}</div>
-      ${dayCitas.map(c=>`<div class="cal-event ${c.tipo.includes('Visita')?'visita':'reunion'}">${c.hora} ${c.cliente}</div>`).join('')}
+    const ds=`${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const isT=today.getFullYear()===calYear&&today.getMonth()===calMonth&&today.getDate()===d;
+    const isSel=_jacSelDate===ds;
+    const dc=citas.filter(c=>c.fecha===ds);
+    const dt=tasks.filter(t=>t.due===ds);
+    const dm=(typeof mlsGuardadas!=='undefined'?mlsGuardadas:[]).filter(m=>m.fecha_seguimiento===ds||m.next_follow_up===ds);
+    let dots='';
+    if(dc.length) dots+=`<div class="jac-dot" style="background:#f97316" title="${dc.length} cita(s)"></div>`;
+    if(dt.length) dots+=`<div class="jac-dot" style="background:#818cf8" title="${dt.length} tarea(s)"></div>`;
+    if(dm.length) dots+=`<div class="jac-dot" style="background:#22c55e" title="${dm.length} MLS"></div>`;
+    html+=`<div class="jac-cal-day${isT?' jac-today':''}${isSel&&!isT?' jac-selected':''}" onclick="jacSelectDay('${ds}')" data-date="${ds}">
+      <div class="jac-day-num">${d}</div>
+      <div class="jac-cal-dots">${dots}</div>
     </div>`;
   }
-  document.getElementById('cal-days').innerHTML=html;
-  // Upcoming
-  const upcoming=citas.sort((a,b)=>a.fecha.localeCompare(b.fecha)).slice(0,5);
-  const typeColors={Visita:'var(--purple)','Reunión':'var(--accent)',Llamada:'var(--blue)',Firma:'var(--green)'};
-  document.getElementById('upcoming-list').innerHTML=upcoming.map(c=>{
-    const color=Object.entries(typeColors).find(([k])=>c.tipo.includes(k))?.[1]||'var(--muted)';
-    return `<div class="event-item">
-      <div class="event-dot" style="background:${color}"></div>
-      <div>
-        <div class="event-desc"><strong>${c.tipo}</strong> · ${c.cliente}</div>
-        <div class="event-time">📅 ${c.fecha} ⏰ ${c.hora}</div>
-      </div>
-    </div>`;}).join('');
+  // Días siguientes (relleno)
+  const total=firstDay+daysInMonth;
+  const rem=total%7===0?0:7-(total%7);
+  for(let i=1;i<=rem;i++){
+    const nd=new Date(calYear,calMonth+1,i);
+    html+=`<div class="jac-cal-day jac-other"><div class="jac-day-num">${nd.getDate()}</div></div>`;
+  }
+  const cdEl=document.getElementById('cal-days');
+  if(cdEl) cdEl.innerHTML=html;
+  // Sidebar
+  jacUpdateSidebarDate();
+  jacRenderSidebarEvents();
+  // Mini calendarios
+  jacRenderMiniCal('jac-mini-cal-1',calYear,calMonth);
+  const nm=calMonth===11?0:calMonth+1, ny=calMonth===11?calYear+1:calYear;
+  jacRenderMiniCal('jac-mini-cal-2',ny,nm);
+  // Eventos del día seleccionado
+  jacShowEventosDelDia(_jacSelDate);
 }
+
 function calPrev(){calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCalendar();}
 function calNext(){calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
+
+function jacSelectDay(ds){
+  _jacSelDate=ds;
+  // Navegar al mes del día si hace falta
+  const [y,m]=ds.split('-');
+  calYear=parseInt(y); calMonth=parseInt(m)-1;
+  renderCalendar();
+}
+
+function jacShowEventosDelDia(ds){
+  const el=document.getElementById('jac-eventos-dia'); if(!el) return;
+  if(!ds){ el.innerHTML='<div style="color:var(--muted);font-size:13px;padding:16px 0">Haz clic en un día para ver sus eventos</div>'; return; }
+  const [y,m,d]=ds.split('-');
+  const meses=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const label=`${parseInt(d)} de ${meses[parseInt(m)-1]} ${y}`;
+  const dc=citas.filter(c=>c.fecha===ds);
+  const dt=tasks.filter(t=>t.due===ds);
+  const dm=(typeof mlsGuardadas!=='undefined'?mlsGuardadas:[]).filter(x=>x.fecha_seguimiento===ds||x.next_follow_up===ds);
+  let h='';
+  dc.forEach(c=>{
+    h+=`<div class="jac-evento-card jac-ec-cita">
+      <div style="color:#f97316;font-size:20px;line-height:1;flex-shrink:0">📅</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--text)">${c.cliente||'Sin cliente'}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${c.tipo||'Cita'} · ⏰ ${c.hora||'Sin hora'}${c.ubicacion?' · '+c.ubicacion:''}</div>
+        ${c.notas?`<div style="font-size:11px;color:var(--muted);margin-top:3px">${c.notas}</div>`:''}
+      </div>
+      <span style="font-size:9px;background:#f9731622;color:#f97316;padding:2px 8px;border-radius:10px;font-weight:700;flex-shrink:0">${c.status||'Pendiente'}</span>
+    </div>`;
+  });
+  dt.forEach(t=>{
+    const done=t.status==='Completada';
+    h+=`<div class="jac-evento-card jac-ec-tarea">
+      <div onclick="(function(){if(typeof toggleTaskStatusById==='function')toggleTaskStatusById('${t.id}');})()" style="width:20px;height:20px;border-radius:50%;background:${done?'#818cf8':'transparent'};border:2px solid #818cf8;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;cursor:pointer;flex-shrink:0">${done?'✓':''}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--text);${done?'text-decoration:line-through;opacity:.6':''}">🔔 ${t.title||t.desc||'Sin descripción'}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">📌 ${t.priority||'Normal'}</div>
+      </div>
+      <span style="font-size:9px;background:#818cf822;color:#818cf8;padding:2px 8px;border-radius:10px;font-weight:700;flex-shrink:0">${t.status||'Pendiente'}</span>
+    </div>`;
+  });
+  dm.forEach(mx=>{
+    h+=`<div class="jac-evento-card jac-ec-mls">
+      <div style="color:#22c55e;font-size:20px;line-height:1;flex-shrink:0">🏠</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--text)">${mx.titulo||mx.mls_code||'Propiedad MLS'}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">Seguimiento MLS${mx.zona?' · '+mx.zona:''}${mx.precio?' · $'+Number(mx.precio).toLocaleString():''}</div>
+      </div>
+      <span style="font-size:9px;background:#22c55e22;color:#22c55e;padding:2px 8px;border-radius:10px;font-weight:700;flex-shrink:0">Seguimiento</span>
+    </div>`;
+  });
+  if(!h) h=`<div style="color:var(--muted);font-size:13px;padding:16px 0;text-align:center">Sin eventos para ${label}</div>`;
+  el.innerHTML=h;
+}
+
+function jacSwitchTab(tab){
+  ['agenda','semana','tareas','metas','diario','reuniones','notas2'].forEach(t=>{
+    const btn=document.getElementById('jac-atab-'+t);
+    const cnt=document.getElementById('jac-atab-content-'+t);
+    if(btn) btn.classList.toggle('jac-atab-active',t===tab);
+    if(cnt) cnt.style.display=(t===tab)?'':'none';
+  });
+  if(tab==='semana') jacRenderSemana();
+  if(tab==='tareas') jacRenderTareasTab();
+  if(tab==='reuniones') jacRenderReunionesTab();
+}
+
+function jacRenderSemana(){
+  const el=document.getElementById('jac-semana-grid'); if(!el) return;
+  const today=new Date();
+  const sow=new Date(today); sow.setDate(today.getDate()-today.getDay());
+  const dias=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  let h=`<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:8px">`;
+  for(let i=0;i<7;i++){
+    const dd=new Date(sow); dd.setDate(sow.getDate()+i);
+    const ds=dd.toISOString().slice(0,10);
+    const isT=dd.toDateString()===today.toDateString();
+    const dc=citas.filter(c=>c.fecha===ds);
+    const dt=tasks.filter(t=>t.due===ds);
+    h+=`<div onclick="jacSelectDay('${ds}');showPanel('agenda')" style="background:var(--card);border:1px solid ${isT?'var(--accent)':'var(--border)'};border-radius:10px;padding:10px;min-height:120px;cursor:pointer;transition:.1s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='${isT?'var(--accent)':'var(--border)'}'">
+      <div style="font-size:10px;font-weight:600;color:${isT?'var(--accent)':'var(--muted)'}">${dias[i]}</div>
+      <div style="font-size:${isT?22:17}px;font-weight:700;color:${isT?'var(--accent)':'var(--text)'};margin:3px 0 8px">${dd.getDate()}</div>
+      ${dc.map(c=>`<div style="font-size:9px;background:#f9731618;color:#f97316;border-radius:4px;padding:2px 5px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📅 ${c.cliente||c.tipo}</div>`).join('')}
+      ${dt.map(t=>`<div style="font-size:9px;background:#818cf818;color:#818cf8;border-radius:4px;padding:2px 5px;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">📌 ${t.title||t.desc||'Tarea'}</div>`).join('')}
+    </div>`;
+  }
+  h+=`</div><div style="margin-top:14px;font-size:11px;color:var(--muted);text-align:center">Semana del ${sow.toLocaleDateString('es-PA',{day:'numeric',month:'long'})} al ${new Date(sow.getTime()+6*86400000).toLocaleDateString('es-PA',{day:'numeric',month:'long',year:'numeric'})}</div>`;
+  el.innerHTML=h;
+}
+
+function jacRenderTareasTab(){
+  const el=document.getElementById('jac-atab-tareas-list'); if(!el) return;
+  const pending=tasks.filter(t=>t.status!=='Completada').sort((a,b)=>(a.due||'').localeCompare(b.due||''));
+  const done=tasks.filter(t=>t.status==='Completada').slice(0,8);
+  const priC={Alta:'#f87171',Media:'#fbbf24',Baja:'#4ade80'};
+  const renderT=list=>list.map(t=>{
+    const clr=priC[t.priority]||'var(--muted)';
+    const isDone=t.status==='Completada';
+    return `<div class="jac-evento-card jac-ec-tarea">
+      <div onclick="(function(){if(typeof toggleTaskStatusById==='function')toggleTaskStatusById('${t.id}');})()" style="width:20px;height:20px;border-radius:50%;background:${isDone?'#818cf8':'transparent'};border:2px solid #818cf8;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;cursor:pointer;flex-shrink:0">${isDone?'✓':''}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:13px;color:var(--text);${isDone?'text-decoration:line-through;opacity:.6':''}">${t.title||t.desc||'Sin descripción'}</div>
+        <div style="font-size:11px;color:var(--muted);margin-top:2px">${t.due?'📅 '+t.due+' · ':''}<span style="color:${clr}">${t.priority||'Normal'}</span></div>
+      </div>
+      <span style="font-size:9px;background:#818cf822;color:#818cf8;padding:2px 8px;border-radius:10px;font-weight:700;flex-shrink:0">${t.status||'Pendiente'}</span>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+    <span style="font-weight:700;font-size:14px">Tareas Pendientes (${pending.length})</span>
+    <button class="btn btn-primary btn-sm" onclick="openModal('modalTarea')">+ Nueva Tarea</button>
+  </div>
+  ${pending.length?renderT(pending):'<div style="color:var(--muted);text-align:center;padding:30px 0">Sin tareas pendientes 🎉</div>'}
+  ${done.length?`<div style="font-weight:600;font-size:12px;color:var(--muted);margin:16px 0 10px;text-transform:uppercase;letter-spacing:.05em">Completadas</div>${renderT(done)}`:''}`;
+}
+
+function jacRenderReunionesTab(){
+  const el=document.getElementById('jac-reuniones-list'); if(!el) return;
+  const reu=citas.filter(c=>c.tipo&&(c.tipo.toLowerCase().includes('reuni')||c.tipo.toLowerCase().includes('meeting')));
+  if(!reu.length){
+    el.innerHTML=`<div style="text-align:center;padding:60px 0;color:var(--muted);font-size:14px">Sin reuniones programadas<br><small style="font-size:12px;margin-top:6px;display:block">Agrega una cita de tipo "Reunión" para verla aquí</small></div>`;
+    return;
+  }
+  el.innerHTML=reu.map(r=>`<div class="jac-evento-card jac-ec-cita">
+    <div style="color:#f97316;font-size:20px;flex-shrink:0">🤝</div>
+    <div style="flex:1">
+      <div style="font-weight:600;font-size:13px;color:var(--text)">${r.cliente}</div>
+      <div style="font-size:11px;color:var(--muted);margin-top:2px">📅 ${r.fecha} · ⏰ ${r.hora||'—'}${r.ubicacion?' · '+r.ubicacion:''}</div>
+    </div>
+  </div>`).join('');}
+
+// Función auxiliar para toggle de tarea desde agenda
+function toggleTaskStatusById(id){
+  const t=tasks.find(x=>x.id===id||x.id===parseInt(id));
+  if(!t) return;
+  t.status=t.status==='Completada'?'Pendiente':'Completada';
+  if(typeof _sbSave==='function') _sbSave('tareas_crm',t,{upsert:true}).catch(()=>{});
+  renderCalendar();
+  if(document.getElementById('jac-atab-tareas-list')&&document.getElementById('jac-atab-content-tareas')?.style.display!=='none') jacRenderTareasTab();
+}
 
 // ============================================================
 // ACTIVITY
