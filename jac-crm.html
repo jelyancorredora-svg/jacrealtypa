@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>JAC Realty CRM · Portal Agentes</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -11073,46 +11076,44 @@ function openMiPerfil(){
 }
 
 // ============================================================
-// ██████████  BLINDAJE SUPABASE — SYNC ENGINE v1  ██████████
+// ██████████  BLINDAJE SUPABASE — SYNC ENGINE v2  ██████████
 // Supabase = guardado principal │ localStorage = cola offline
+// + Realtime subscriptions (live updates entre dispositivos)
+// + Version check (cache-bust automático al desplegar)
 // ============================================================
 (function(){
-  const _SQ_KEY='_jac_sq'; // localStorage key para la cola
+  const _SQ_KEY='_jac_sq';
   const _MAX_RETRY=5;
   const _RETRY_DELAY_MS=4000;
-  const _PING_INTERVAL_MS=20000; // chequeo de conexión cada 20 s
+  const _PING_INTERVAL_MS=20000;
+  const _LAST_SYNC_KEY='_jac_last_sync_ts';
   let _flushing=false;
   let _online=navigator.onLine;
   let _sbAlive=false;
 
-  /* ── Cola en localStorage ── */
-  function _getQueue(){
-    try{ return JSON.parse(localStorage.getItem(_SQ_KEY)||'[]'); }catch(e){ return []; }
-  }
-  function _setQueue(q){
-    try{ localStorage.setItem(_SQ_KEY, JSON.stringify(q)); }catch(e){}
-  }
-  function _enqueue(op){
-    const q=_getQueue();
-    q.push({...op, _retries:0, _ts:Date.now()});
-    _setQueue(q);
-    _refreshSyncBar();
-  }
+  // ── Cola offline ──────────────────────────────────────────
+  function _getQueue(){ try{return JSON.parse(localStorage.getItem(_SQ_KEY)||'[]');}catch(e){return[];} }
+  function _setQueue(q){ try{localStorage.setItem(_SQ_KEY,JSON.stringify(q));}catch(e){} }
+  function _enqueue(op){ const q=_getQueue(); q.push({...op,_retries:0,_ts:Date.now()}); _setQueue(q); _refreshSyncBar(); }
 
-  /* ── Barra de estado visual ── */
+  // ── Barra de estado visual ────────────────────────────────
   window._syncStatus=function(state,msg){
     const bar=document.getElementById('sync-bar');
     const lbl=document.getElementById('sync-bar-msg');
     if(!bar||!lbl) return;
-    bar.className=''; // clear
-    if(state==='hidden'){ bar.classList.add('sb-hidden'); return; }
+    bar.className='';
+    if(state==='hidden'){bar.classList.add('sb-hidden');return;}
     bar.classList.add('sb-'+state);
     lbl.textContent=msg||'';
-    // Auto-ocultar si todo OK y no hay cola
-    if(state==='ok'){
-      setTimeout(()=>{ if(_getQueue().length===0) window._syncStatus('hidden'); }, 3500);
-    }
+    if(state==='ok') setTimeout(()=>{if(_getQueue().length===0)window._syncStatus('hidden');},3500);
   };
+
+  function _fmtLastSync(){
+    const ts=localStorage.getItem(_LAST_SYNC_KEY);
+    if(!ts) return '';
+    const d=new Date(parseInt(ts));
+    return ' · último sync '+d.toLocaleTimeString('es-PA',{hour:'2-digit',minute:'2-digit'});
+  }
 
   function _refreshSyncBar(){
     const q=_getQueue();
@@ -11123,58 +11124,54 @@ function openMiPerfil(){
     } else if(q.length>0){
       window._syncStatus('queue','🔄 Sincronizando '+q.length+' pendiente'+(q.length!==1?'s':'')+'…');
     } else {
-      window._syncStatus('ok','✅ Supabase sincronizado');
+      window._syncStatus('ok','✅ Supabase OK'+_fmtLastSync());
     }
   }
 
-  /* ── Verificar que Supabase responde ── */
+  // ── Ping Supabase ─────────────────────────────────────────
   async function _ping(){
     if(!sb) return false;
     try{
-      // ping ligero: pedir 1 fila de una tabla pequeña
       const r=await Promise.race([
         sb.from('agentes_crm').select('id').limit(1),
         new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),6000))
       ]);
       return !r.error;
-    }catch(e){ return false; }
+    }catch(e){return false;}
   }
 
-  /* ── Guardar en Supabase con reintentos y fallback a cola ── */
-  window._sbSave=async function(table, record, opts={}){
-    // opts: { upsert: bool, onConflict: string }
+  // ── Guardar en Supabase (principal) ──────────────────────
+  window._sbSave=async function(table,record,opts={}){
     if(!sb||!_online){
-      _enqueue({op:'upsert', table, record, opts});
+      _enqueue({op:'upsert',table,record,opts});
       _refreshSyncBar();
       return {queued:true};
     }
-    window._syncStatus('syncing','🔄 Guardando en Supabase…');
+    window._syncStatus('syncing','🔄 Guardando…');
     try{
-      let q=sb.from(table);
       let res;
-      if(opts.upsert){
-        res=await q.upsert(record, opts.onConflict?{onConflict:opts.onConflict}:{});
-      } else if(record.id){
-        res=await q.upsert(record);
+      if(opts.upsert||record.id){
+        res=await sb.from(table).upsert(record,opts.onConflict?{onConflict:opts.onConflict}:{});
       } else {
-        res=await q.insert([record]);
+        res=await sb.from(table).insert([record]);
       }
       if(res.error) throw res.error;
       _sbAlive=true;
+      localStorage.setItem(_LAST_SYNC_KEY, String(Date.now()));
       _refreshSyncBar();
       return res;
     }catch(err){
       _sbAlive=false;
-      _enqueue({op:'upsert', table, record, opts});
-      window._syncStatus('offline','❌ Error Supabase — guardado en cola');
-      return {queued:true, error:err};
+      _enqueue({op:'upsert',table,record,opts});
+      window._syncStatus('offline','❌ Error Supabase — en cola');
+      return {queued:true,error:err};
     }
   };
 
-  /* ── Eliminar en Supabase con fallback a cola ── */
-  window._sbDelete=async function(table, id){
+  // ── Eliminar en Supabase ──────────────────────────────────
+  window._sbDelete=async function(table,id){
     if(!sb||!_online){
-      _enqueue({op:'delete', table, id});
+      _enqueue({op:'delete',table,id});
       _refreshSyncBar();
       return {queued:true};
     }
@@ -11183,26 +11180,26 @@ function openMiPerfil(){
       const res=await sb.from(table).delete().eq('id',id);
       if(res.error) throw res.error;
       _sbAlive=true;
+      localStorage.setItem(_LAST_SYNC_KEY,String(Date.now()));
       _refreshSyncBar();
       return res;
     }catch(err){
       _sbAlive=false;
-      _enqueue({op:'delete', table, id});
-      window._syncStatus('offline','❌ Error Supabase — eliminación en cola');
-      return {queued:true, error:err};
+      _enqueue({op:'delete',table,id});
+      window._syncStatus('offline','❌ Error — eliminación en cola');
+      return {queued:true,error:err};
     }
   };
 
-  /* ── Vaciar la cola cuando vuelve la conexión ── */
+  // ── Vaciar cola offline ───────────────────────────────────
   window._flushQueue=async function(){
     if(_flushing||!sb) return;
     const q=_getQueue();
-    if(q.length===0){ _sbAlive=true; _refreshSyncBar(); return; }
+    if(q.length===0){_sbAlive=true;_refreshSyncBar();return;}
     _flushing=true;
-    window._syncStatus('syncing','🔄 Sincronizando '+q.length+' operación'+(q.length!==1?'es':'')+' en cola…');
-    // Verificar que Supabase responde antes de intentar
+    window._syncStatus('syncing','🔄 Vaciando cola ('+q.length+')…');
     const alive=await _ping();
-    if(!alive){ _sbAlive=false; _flushing=false; _refreshSyncBar(); return; }
+    if(!alive){_sbAlive=false;_flushing=false;_refreshSyncBar();return;}
     _sbAlive=true;
     const remaining=[];
     for(const item of q){
@@ -11212,80 +11209,156 @@ function openMiPerfil(){
           const r=await sb.from(item.table).delete().eq('id',item.id);
           ok=!r.error;
         } else {
-          const r=item.opts?.upsert||item.record?.id
-            ? await sb.from(item.table).upsert(item.record, item.opts?.onConflict?{onConflict:item.opts.onConflict}:{})
+          const r=(item.opts?.upsert||item.record?.id)
+            ? await sb.from(item.table).upsert(item.record,item.opts?.onConflict?{onConflict:item.opts.onConflict}:{})
             : await sb.from(item.table).insert([item.record]);
           ok=!r.error;
         }
-      }catch(e){ ok=false; }
-      if(!ok){
-        item._retries=(item._retries||0)+1;
-        if(item._retries<_MAX_RETRY) remaining.push(item);
-        // else: descartamos tras _MAX_RETRY intentos fallidos
-      }
+      }catch(e){ok=false;}
+      if(!ok){ item._retries=(item._retries||0)+1; if(item._retries<_MAX_RETRY) remaining.push(item); }
     }
     _setQueue(remaining);
     _flushing=false;
+    localStorage.setItem(_LAST_SYNC_KEY,String(Date.now()));
     _refreshSyncBar();
-    if(remaining.length>0){
-      // Reintentar tras pausa
-      setTimeout(window._flushQueue, _RETRY_DELAY_MS);
-    } else {
-      window._syncStatus('ok','✅ Todo sincronizado con Supabase');
-    }
+    if(remaining.length>0) setTimeout(window._flushQueue,_RETRY_DELAY_MS);
+    else window._syncStatus('ok','✅ Todo sincronizado'+_fmtLastSync());
   };
 
-  /* ── Listeners de red ── */
+  // ── Force sync manual ────────────────────────────────────
+  window._forceSync=async function(){
+    window._syncStatus('syncing','🔄 Sync manual…');
+    await window._flushQueue();
+    if(typeof loadLeads==='function') loadLeads();
+    if(typeof loadCitas==='function') loadCitas();
+    if(typeof loadTareas==='function') loadTareas();
+    if(typeof loadMlsGuardadas==='function') loadMlsGuardadas();
+    toast('🔄 Sync manual completado');
+  };
+
+  // ── Realtime: suscripciones live ─────────────────────────
+  window._initRealtime=function(){
+    if(!sb||!window.supabase) return;
+    // Suscribir a cambios en leads_crm
+    sb.channel('crm_rt_leads')
+      .on('postgres_changes',{event:'*',schema:'public',table:'leads_crm'},(payload)=>{
+        if(typeof loadLeads==='function'){ loadLeads(); toast('📡 CRM actualizado — leads',1500); }
+      }).subscribe();
+    // Suscribir a citas_crm
+    sb.channel('crm_rt_citas')
+      .on('postgres_changes',{event:'*',schema:'public',table:'citas_crm'},(payload)=>{
+        if(typeof loadCitas==='function'){ loadCitas(); }
+        if(typeof renderCalendar==='function') setTimeout(renderCalendar,400);
+      }).subscribe();
+    // Suscribir a tareas_crm
+    sb.channel('crm_rt_tareas')
+      .on('postgres_changes',{event:'*',schema:'public',table:'tareas_crm'},(payload)=>{
+        if(typeof loadTareas==='function'){ loadTareas(); }
+      }).subscribe();
+    // Suscribir a mls_seguimiento
+    sb.channel('crm_rt_mls')
+      .on('postgres_changes',{event:'*',schema:'public',table:'mls_seguimiento'},(payload)=>{
+        if(typeof loadMlsGuardadas==='function'){ loadMlsGuardadas(); }
+      }).subscribe();
+    // Suscribir a agenda
+    sb.channel('crm_rt_agenda')
+      .on('postgres_changes',{event:'*',schema:'public',table:'agenda'},(payload)=>{
+        if(typeof renderCalendar==='function') setTimeout(renderCalendar,400);
+      }).subscribe();
+    console.log('🔴 Supabase Realtime: suscripciones activas');
+  };
+
+  // ── Listeners de red ──────────────────────────────────────
   window.addEventListener('online',()=>{
     _online=true;
     toast('🌐 Conexión restaurada — sincronizando…');
-    setTimeout(window._flushQueue, 800);
+    setTimeout(window._flushQueue,800);
   });
   window.addEventListener('offline',()=>{
-    _online=false;
-    _sbAlive=false;
-    _refreshSyncBar();
+    _online=false; _sbAlive=false; _refreshSyncBar();
   });
 
-  /* ── Health check periódico ── */
+  // ── Health check periódico ────────────────────────────────
   async function _healthCheck(){
     if(!_online||!sb) return;
     const alive=await _ping();
     const prev=_sbAlive;
     _sbAlive=alive;
-    if(!prev && alive){
-      // Reconexión detectada — vaciar cola + resync MLS
-      setTimeout(window._flushQueue, 500);
-      setTimeout(()=>{ if(typeof loadMlsGuardadas==='function') loadMlsGuardadas(); }, 1200);
-      setTimeout(()=>{ if(typeof loadMlsListados==='function') loadMlsListados(); }, 2500);
+    if(!prev&&alive){
+      setTimeout(window._flushQueue,500);
+      setTimeout(()=>{if(typeof loadMlsGuardadas==='function') loadMlsGuardadas();},1200);
+      setTimeout(()=>{if(typeof loadMlsListados==='function') loadMlsListados();},2500);
     }
     _refreshSyncBar();
   }
-  setInterval(_healthCheck, _PING_INTERVAL_MS);
+  setInterval(_healthCheck,_PING_INTERVAL_MS);
 
-  /* ── Inicialización: mostrar estado al cargar ── */
+  // ── Version check (cache-bust automático) ────────────────
+  // Descarga version.json con timestamp para saltarse el CDN
+  // Si la versión cambió → recarga la página automáticamente
+  async function _checkVersion(){
+    try{
+      const r=await fetch('/version.json?_='+Date.now(),{cache:'no-cache'});
+      if(!r.ok) return;
+      const {v}=await r.json();
+      if(!v) return;
+      const stored=localStorage.getItem('_crm_app_ver');
+      if(stored&&stored!==v){
+        console.log('[CRM] Nueva versión detectada:',v,'→ recargando…');
+        localStorage.setItem('_crm_app_ver',v);
+        // Mostrar aviso antes de recargar
+        const bar=document.getElementById('sync-bar');
+        const lbl=document.getElementById('sync-bar-msg');
+        if(bar&&lbl){ bar.className='sb-queue'; lbl.textContent='🆕 Nueva versión disponible — recargando…'; }
+        setTimeout(()=>location.reload(true),1200);
+      } else {
+        localStorage.setItem('_crm_app_ver',v);
+      }
+    }catch(e){ /* sin version.json → ignorar */ }
+  }
+
+  // ── Inicialización ────────────────────────────────────────
   window.addEventListener('load',()=>{
     setTimeout(async()=>{
+      // 1. Check versión nueva
+      _checkVersion();
+      // 2. Flush cola offline
       const q=_getQueue();
       if(q.length>0){
-        window._syncStatus('queue','📦 '+q.length+' operación'+(q.length!==1?'es':'')+' pendiente'+(q.length!==1?'s':'')+' — sincronizando…');
+        window._syncStatus('queue','📦 '+q.length+' pendiente'+(q.length!==1?'s':'')+' — sincronizando…');
         await window._flushQueue();
       } else {
         const alive=await _ping();
         _sbAlive=alive;
-        if(alive) window._syncStatus('ok','✅ Supabase conectado');
-        else window._syncStatus('offline','⚠️ Supabase sin respuesta — modo offline');
+        if(alive){ window._syncStatus('ok','✅ Supabase conectado'+_fmtLastSync()); }
+        else { window._syncStatus('offline','⚠️ Supabase sin respuesta — modo offline'); }
         setTimeout(()=>window._syncStatus('hidden'),4000);
       }
+      // 3. Activar Realtime
+      setTimeout(window._initRealtime,2000);
     },1500);
   });
 
-  /* ── Exponer cola para diagnóstico (dev) ── */
+  // ── Diagnóstico ───────────────────────────────────────────
   window._getSyncQueue=_getQueue;
-  window._clearSyncQueue=()=>{ _setQueue([]); _refreshSyncBar(); };
+  window._clearSyncQueue=()=>{_setQueue([]);_refreshSyncBar();};
 
 })();
 // ══════════════════════════════════════════════════════════════
+
+// ── Botón Force Sync en la barra de estado ───────────────────
+// Añadido dinámicamente al sync-bar al cargar
+document.addEventListener('DOMContentLoaded',()=>{
+  const bar=document.getElementById('sync-bar');
+  if(bar){
+    const btn=document.createElement('button');
+    btn.textContent='↺ Sync';
+    btn.title='Forzar sincronización con Supabase';
+    btn.style.cssText='margin-left:10px;padding:2px 8px;font-size:11px;font-weight:700;border-radius:6px;border:1px solid rgba(255,255,255,.3);background:rgba(255,255,255,.1);color:inherit;cursor:pointer';
+    btn.onclick=()=>{ if(typeof window._forceSync==='function') window._forceSync(); };
+    bar.appendChild(btn);
+  }
+});
 
 </script>
 </body>
